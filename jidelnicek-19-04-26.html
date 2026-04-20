@@ -6,6 +6,8 @@
 <title>Jídelníček 22. 4. – 28. 4. 2026</title>
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script>emailjs.init('2O9xlPmD5Yc5OXnAI');</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: 'Segoe UI', Arial, sans-serif; background: #f5f5f5; color: #333; }
@@ -585,13 +587,14 @@
 
 <!-- EMAIL SEKCE -->
 <div class="email-section">
-  <h2>📧 Poslat přehled emailem</h2>
-  <p>Zadej svůj email — otevře se předvyplněná zpráva s aktuálním jídelníčkem a nákupním seznamem.</p>
+  <h2>📧 Odeslat jídelníček emailem</h2>
+  <p>Zadej email — vygeneruje se PDF s aktivními filtry a recepty a odešle jako příloha.</p>
   <div class="email-form">
     <input type="email" id="email-input" class="email-input" placeholder="tvuj@email.cz">
-    <button id="email-send-btn" class="email-send-btn">Připravit email</button>
+    <button id="pdf-download-btn" class="email-send-btn" style="background:#1565c0;">Stáhnout PDF</button>
+    <button id="email-send-btn" class="email-send-btn">Odeslat PDF emailem</button>
   </div>
-  <div class="email-notice" id="email-notice">Email bude odeslán přímo — není potřeba otvírat poštovního klienta.</div>
+  <div class="email-notice" id="email-notice">PDF obsahuje přehled jídelníčku dle filtrů a plné recepty s proklikem na konkrétní recept.</div>
 </div>
 
 </main>
@@ -1161,124 +1164,229 @@
     cb.addEventListener('change', recalcTotals);
   });
 
-  // --- Email sestavení ---
-  const DAY_LABELS  = { st:'Středa', ct:'Čtvrtek', pa:'Pátek', so:'Sobota', ne:'Neděle', po:'Pondělí', ut:'Úterý' };
-  const MEAL_LABELS = { snidane:'Snídaně', obed:'Oběd', vecere:'Večeře' };
+  // --- PDF: strip HTML tagů a emoji ---
+  function stripHtml(html) {
+    const d = document.createElement('div');
+    d.innerHTML = String(html || '');
+    return (d.textContent || '')
+      .replace(/[\u{1F300}-\u{1F9FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]/gu, '')
+      .replace(/[⏱💡📖🛒🏷]/g, '')
+      .replace(/\s+/g, ' ').trim();
+  }
 
+  // --- Sestavení PDF dokumentu ---
+  function buildDocDefinition() {
+    const DL = { st:'Středa', ct:'Čtvrtek', pa:'Pátek', so:'Sobota', ne:'Neděle', po:'Pondělí', ut:'Úterý' };
+    const ML = { snidane:'Snídaně', obed:'Oběd', vecere:'Večeře' };
+
+    const visibleMeals = [];
+    const recipeOrder  = [];
+
+    document.querySelectorAll('.day-card:not(.hidden)').forEach(card => {
+      const dayKey = card.dataset.day;
+      const dateEl = card.querySelector('.date');
+      card.querySelectorAll('.meal-row:not(.hidden)').forEach(row => {
+        const mealKey = row.dataset.meal;
+        const nameEl  = row.querySelector('.meal-name[data-recipe]');
+        if (!nameEl) return;
+        const id    = nameEl.dataset.recipe;
+        const title = stripHtml(nameEl.innerHTML);
+        visibleMeals.push({
+          dayName:  DL[dayKey] || dayKey,
+          date:     dateEl ? dateEl.textContent : '',
+          mealType: ML[mealKey] || mealKey,
+          title, id,
+          desc: stripHtml(row.querySelector('.meal-desc')?.innerHTML || ''),
+          meta: stripHtml(row.querySelector('.meal-meta')?.textContent || '')
+        });
+        if (!recipeOrder.includes(id)) recipeOrder.push(id);
+      });
+    });
+
+    const daysStr  = [...activeDays].map(d => DL[d] || d).join(', ') || '–';
+    const mealsStr = [...activeMeals].map(m => ML[m] || m).join(', ') || '–';
+
+    // Tabulka přehledu jídel
+    const tableBody = [
+      [
+        { text: 'Den / Datum',  bold: true, color: '#fff', fontSize: 8, margin: [3,3,3,3] },
+        { text: 'Chod',         bold: true, color: '#fff', fontSize: 8, margin: [3,3,3,3] },
+        { text: 'Název jídla',  bold: true, color: '#fff', fontSize: 8, margin: [3,3,3,3] },
+        { text: 'Popis a čas',  bold: true, color: '#fff', fontSize: 8, margin: [3,3,3,3] }
+      ],
+      ...visibleMeals.map(m => [
+        { stack: [
+            { text: m.dayName, fontSize: 9, bold: true },
+            { text: m.date, fontSize: 7, color: '#777' }
+          ], margin: [3,2,3,2] },
+        { text: m.mealType, fontSize: 8, bold: true,
+          color: m.mealType === 'Snídaně' ? '#f57f17' : m.mealType === 'Oběd' ? '#2e7d32' : '#1565c0',
+          margin: [3,2,3,2] },
+        { text: m.title, linkToDestination: m.id, color: '#1565c0',
+          decoration: 'underline', fontSize: 9, margin: [3,2,3,2] },
+        { stack: [
+            { text: m.desc, fontSize: 8, color: '#555' },
+            { text: m.meta, fontSize: 7, color: '#999', italics: true }
+          ], margin: [3,2,3,2] }
+      ])
+    ];
+
+    // Recepty
+    const recipesContent = [];
+    recipeOrder.forEach(recipeId => {
+      const r = recipes[recipeId];
+      if (!r) return;
+
+      const block = [
+        { text: r.title, id: recipeId, fontSize: 17, bold: true, color: '#2e7d32', margin: [0,0,0,3] },
+        { canvas: [{ type: 'line', x1: 0, y1: 0, x2: 515, y2: 0, lineWidth: 2, lineColor: '#2e7d32' }], margin: [0,0,0,6] },
+        { text: stripHtml(r.meta), fontSize: 9, color: '#888', italics: true, margin: [0,0,0,10] },
+        { text: 'Suroviny', fontSize: 11, bold: true, color: '#444', margin: [0,0,0,4] },
+        { ul: r.ingredients.map(i => ({ text: stripHtml(i), fontSize: 9, lineHeight: 1.4 })), margin: [0,0,0,12] },
+        { text: 'Postup', fontSize: 11, bold: true, color: '#444', margin: [0,0,0,4] },
+        { ol: r.steps.map(s => ({ text: stripHtml(s), fontSize: 9, lineHeight: 1.4 })) }
+      ];
+
+      if (r.tip) {
+        block.push({
+          table: {
+            widths: ['*'],
+            body: [[{ text: 'Tip: ' + r.tip, fontSize: 9, color: '#2e7d32', italics: true, margin: [8,6,8,6] }]]
+          },
+          layout: { hLineWidth: () => 0, vLineWidth: i => i === 0 ? 3 : 0, vLineColor: () => '#2e7d32' },
+          margin: [0,12,0,0]
+        });
+      }
+
+      recipesContent.push({ stack: block, pageBreak: 'before' });
+    });
+
+    return {
+      info: { title: 'Jídelníček 22. 4. – 28. 4. 2026' },
+      pageSize: 'A4',
+      pageMargins: [40, 50, 40, 50],
+      footer: (p, n) => ({
+        text: `${p} / ${n}  ·  Jídelníček 22. 4. – 28. 4. 2026`,
+        alignment: 'center', fontSize: 8, color: '#aaa', margin: [40, 10, 40, 0]
+      }),
+      content: [
+        // Záhlaví strany 1
+        {
+          table: { widths: ['*'], body: [[{
+            stack: [
+              { text: 'Jídelníček 22. 4. – 28. 4. 2026', fontSize: 15, bold: true, color: '#fff' },
+              { text: 'Kaufland akční nabídky  ·  Pro 4 osoby  ·  Vytvořeno: 19. 4. 2026',
+                fontSize: 8, color: '#c8e6c9', margin: [0,3,0,0] }
+            ], margin: [12,10,12,10]
+          }]] },
+          layout: { fillColor: () => '#2e7d32', hLineWidth: () => 0, vLineWidth: () => 0 },
+          margin: [0,0,0,16]
+        },
+        // Aktivní filtry
+        { text: 'Aktivní filtry', fontSize: 11, bold: true, color: '#2e7d32', margin: [0,0,0,6] },
+        {
+          table: {
+            widths: [60, '*'],
+            body: [
+              [{ text: 'Dny:', fontSize: 9, bold: true }, { text: daysStr, fontSize: 9 }],
+              [{ text: 'Chody:', fontSize: 9, bold: true }, { text: mealsStr, fontSize: 9 }]
+            ]
+          },
+          layout: 'lightHorizontalLines',
+          margin: [0,0,0,16]
+        },
+        // Přehled jídelníčku
+        { text: 'Přehled jídelníčku', fontSize: 11, bold: true, color: '#2e7d32', margin: [0,0,0,4] },
+        { text: 'Kliknutím na podtržený název jídla přejdete na recept v tomto dokumentu.',
+          fontSize: 8, color: '#999', italics: true, margin: [0,0,0,6] },
+        {
+          table: {
+            widths: [70, 45, 160, '*'],
+            headerRows: 1,
+            body: tableBody
+          },
+          layout: {
+            fillColor: ri => ri === 0 ? '#2e7d32' : ri % 2 === 0 ? '#f5f5f5' : null,
+            hLineColor: () => '#e0e0e0',
+            vLineColor: () => '#e0e0e0',
+            hLineWidth: (i, node) => i === 0 || i === node.table.body.length ? 1 : 0.5,
+            vLineWidth: () => 0.5
+          }
+        },
+        // Recepty (každý recept na nové stránce)
+        ...recipesContent
+      ],
+      defaultStyle: { font: 'Roboto' }
+    };
+  }
+
+  // --- Tlačítko: Stáhnout PDF ---
+  document.getElementById('pdf-download-btn').addEventListener('click', () => {
+    const btn = document.getElementById('pdf-download-btn');
+    if (typeof pdfMake === 'undefined') { alert('PDF knihovna se načítá, zkuste za chvíli.'); return; }
+    btn.disabled = true;
+    btn.textContent = 'Generuji…';
+    setTimeout(() => {
+      pdfMake.createPdf(buildDocDefinition()).download('jidelnicek.pdf');
+      setTimeout(() => { btn.disabled = false; btn.textContent = 'Stáhnout PDF'; }, 1500);
+    }, 30);
+  });
+
+  // --- Tlačítko: Odeslat PDF emailem ---
   document.getElementById('email-send-btn').addEventListener('click', () => {
     const emailAddr = document.getElementById('email-input').value.trim();
     if (!emailAddr || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailAddr)) {
       alert('Zadej prosím platnou emailovou adresu.');
       return;
     }
-
-    const periodEl = document.querySelector('header h1');
-    const period   = periodEl ? periodEl.textContent : 'Jídelníček';
-
-    // Aktivní filtry
-    const daysStr  = [...activeDays].map(d => DAY_LABELS[d] || d).join(', ') || '–';
-    const mealsStr = [...activeMeals].map(m => MEAL_LABELS[m] || m).join(', ') || '–';
-
-    // Jídelníček — viditelné dny a chody
-    let menuLines = [];
-    document.querySelectorAll('.day-card:not(.hidden)').forEach(card => {
-      const dayKey  = card.dataset.day;
-      const dayName = DAY_LABELS[dayKey] || dayKey;
-      const dateEl  = card.querySelector('.date');
-      const dateTxt = dateEl ? dateEl.textContent : '';
-      menuLines.push(`\n${dayName} (${dateTxt})`);
-      menuLines.push('─'.repeat(30));
-      card.querySelectorAll('.meal-row:not(.hidden)').forEach(row => {
-        const mealKey  = row.dataset.meal;
-        const mealName = MEAL_LABELS[mealKey] || mealKey;
-        const jidlo    = row.querySelector('.meal-name');
-        const popis    = row.querySelector('.meal-desc');
-        menuLines.push(`  ${mealName}: ${jidlo ? jidlo.textContent.trim().replace(/📖/g,'').trim() : ''}`);
-        if (popis) menuLines.push(`    ${popis.textContent.trim()}`);
-      });
-    });
-
-    // Nákupní seznam
-    let shopLines  = [];
-    let toBuyTotal = 0;
-    let inStockTotal = 0;
-
-    document.querySelectorAll('#shopping-table tbody tr[data-days]:not(.hidden)').forEach(row => {
-      const cb     = row.querySelector('.item-check');
-      const name   = row.cells[1] ? row.cells[1].textContent.trim() : '';
-      const qty    = row.cells[2] ? row.cells[2].textContent.trim() : '';
-      const price  = parseInt(cb.dataset.price) || 0;
-      const priceCell = row.querySelector('.item-price');
-      const priceStr  = priceCell ? priceCell.textContent.trim() : `${price} Kč`;
-
-      if (cb.checked) {
-        inStockTotal += price;
-        shopLines.push(`  [✕] ${name.padEnd(35)} ${qty.padEnd(10)} ${priceStr}  ← mám doma`);
-      } else {
-        toBuyTotal += price;
-        shopLines.push(`  [ ] ${name.padEnd(35)} ${qty.padEnd(10)} ${priceStr}`);
-      }
-    });
-
-    const subject = `${period} – Nákupní seznam`;
-
-    const body = [
-      period,
-      '═'.repeat(50),
-      '',
-      'FILTRY',
-      `Dny:   ${daysStr}`,
-      `Chody: ${mealsStr}`,
-      '',
-      '═'.repeat(50),
-      'JÍDELNÍČEK',
-      '═'.repeat(50),
-      ...menuLines,
-      '',
-      '═'.repeat(50),
-      'NÁKUPNÍ SEZNAM',
-      '═'.repeat(50),
-      `  ${'Položka'.padEnd(36)} ${'Množství'.padEnd(10)} Cena`,
-      '  ' + '─'.repeat(58),
-      ...shopLines,
-      '  ' + '─'.repeat(58),
-      `  K nákupu:  ${toBuyTotal.toLocaleString('cs-CZ')} Kč`,
-      `  Mám doma:  ${inStockTotal.toLocaleString('cs-CZ')} Kč`,
-      '',
-      '─'.repeat(50),
-      'Vygenerováno z jídelníčku na pragodavid.github.io/testweb',
-    ].join('\n');
+    if (typeof pdfMake === 'undefined') { alert('PDF knihovna se načítá, zkuste za chvíli.'); return; }
 
     const btn    = document.getElementById('email-send-btn');
     const notice = document.getElementById('email-notice');
-
-    btn.disabled    = true;
-    btn.textContent = 'Odesílám…';
+    btn.disabled = true;
+    btn.textContent = 'Generuji PDF…';
     notice.style.color = '#888';
-    notice.textContent = 'Odesílám email…';
+    notice.textContent = 'Generuji PDF dokument…';
 
-    emailjs.send('service_2h3ehkd', 'template_seall0o', {
-      to_email: emailAddr,
-      subject:  subject,
-      message:  body,
-    })
-    .then(() => {
-      btn.textContent    = '✓ Odesláno';
-      notice.style.color = '#2e7d32';
-      notice.textContent = `Email byl úspěšně odeslán na ${emailAddr}.`;
-      setTimeout(() => {
-        btn.disabled    = false;
-        btn.textContent = 'Připravit email';
-        notice.style.color = '#888';
-        notice.textContent = 'Email bude odeslán přímo — není potřeba otvírat poštovního klienta.';
-      }, 4000);
-    })
-    .catch(err => {
-      btn.disabled    = false;
-      btn.textContent = 'Připravit email';
-      notice.style.color = '#d32f2f';
-      notice.textContent = `Chyba při odesílání: ${err.text || JSON.stringify(err)}`;
-    });
+    setTimeout(() => {
+      pdfMake.createPdf(buildDocDefinition()).getBlob(blob => {
+        btn.textContent = 'Odesílám…';
+        notice.textContent = 'Odesílám email s přílohou…';
+
+        const file = new File([blob], 'jidelnicek.pdf', { type: 'application/pdf' });
+        const fd   = new FormData();
+        fd.append('service_id',  'service_2h3ehkd');
+        fd.append('template_id', 'template_seall0o');
+        fd.append('user_id',     '2O9xlPmD5Yc5OXnAI');
+        fd.append('to_email',    emailAddr);
+        fd.append('subject',     'Jídelníček – PDF příloha');
+        fd.append('message',     'V příloze se nachází PDF s jídelníčkem dle vašeho výběru.');
+        fd.append('attachment',  file, 'jidelnicek.pdf');
+
+        fetch('https://api.emailjs.com/api/v1.0/email/send-form', {
+          method: 'POST',
+          body: fd
+        })
+        .then(r => {
+          if (!r.ok) return r.text().then(t => Promise.reject(t));
+          btn.textContent    = '✓ Odesláno';
+          notice.style.color = '#2e7d32';
+          notice.textContent = `Email s PDF byl odeslán na ${emailAddr}.`;
+          setTimeout(() => {
+            btn.disabled = false;
+            btn.textContent = 'Odeslat PDF emailem';
+            notice.style.color = '#888';
+            notice.textContent = 'PDF obsahuje přehled jídelníčku dle filtrů a plné recepty s proklikem na konkrétní recept.';
+          }, 4000);
+        })
+        .catch(err => {
+          btn.disabled    = false;
+          btn.textContent = 'Odeslat PDF emailem';
+          notice.style.color = '#d32f2f';
+          notice.textContent = `Chyba: ${typeof err === 'string' ? err : JSON.stringify(err)}`;
+        });
+      });
+    }, 30);
   });
 </script>
 </body>
