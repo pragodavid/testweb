@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Jídelníček 22. 4. – 28. 4. 2026</title>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>emailjs.init('2O9xlPmD5Yc5OXnAI');</script>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: 'Segoe UI', Arial, sans-serif; background: #f5f5f5; color: #333; }
@@ -119,7 +121,32 @@
   .row-total td { font-weight: 700; background: #e8f5e9; }
   .row-grand td { font-weight: 700; font-size: 1rem; background: #c8e6c9; }
   .price-col { text-align: right; white-space: nowrap; }
-  .item-check { width: 18px; height: 18px; cursor: pointer; accent-color: #2e7d32; }
+  .item-check {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #bbb;
+    border-radius: 4px;
+    cursor: pointer;
+    position: relative;
+    background: #fff;
+    flex-shrink: 0;
+    transition: background 0.15s, border-color 0.15s;
+    vertical-align: middle;
+  }
+  .item-check:checked { background: #d32f2f; border-color: #d32f2f; }
+  .item-check:checked::after {
+    content: '✕';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1;
+  }
   .checked-row td { opacity: 0.45; text-decoration: line-through; }
 
   .total-box {
@@ -131,6 +158,59 @@
     border-top: 2px solid #e0e0e0;
   }
   #grand-total { font-size: 1.3rem; }
+
+  /* Email sekce */
+  .email-section {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    margin-bottom: 2rem;
+    overflow: hidden;
+  }
+  .email-section h2 {
+    background: #4a148c;
+    color: #fff;
+    padding: 0.8rem 1.2rem;
+    font-size: 1rem;
+  }
+  .email-section p { padding: 0.6rem 1.2rem 0; font-size: 0.88rem; color: #555; }
+  .email-form {
+    display: flex;
+    gap: 0.6rem;
+    padding: 0.8rem 1.2rem 1rem;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .email-input {
+    flex: 1;
+    min-width: 200px;
+    padding: 0.5rem 0.8rem;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 0.92rem;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .email-input:focus { border-color: #4a148c; }
+  .email-send-btn {
+    background: #4a148c;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 0.5rem 1.2rem;
+    font-size: 0.92rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s;
+    white-space: nowrap;
+  }
+  .email-send-btn:hover { background: #6a1dbc; }
+  .email-send-btn:disabled { background: #bbb; cursor: default; }
+  .email-notice {
+    padding: 0 1.2rem 0.8rem;
+    font-size: 0.8rem;
+    color: #888;
+  }
 
   .hidden { display: none !important; }
 
@@ -204,7 +284,9 @@
     .filter-group + .filter-group { border-left: none; padding-left: 0; border-top: 1px solid #eee; padding-top: 0.4rem; width: 100%; }
     .meal-row { flex-direction: column; gap: 0.4rem; }
     .meal-type { align-self: flex-start; }
-    .shopping-table th:nth-child(2), .shopping-table td:nth-child(2) { display: none; }
+    .shopping-section { overflow-x: auto; }
+    .shopping-table th:nth-child(3), .shopping-table td:nth-child(3),
+    .shopping-table th:nth-child(4), .shopping-table td:nth-child(4) { display: none; }
   }
 </style>
 </head>
@@ -442,6 +524,7 @@
 <!-- NÁKUPNÍ SEZNAM -->
 <div class="shopping-section">
   <h2>🛒 Nákupní seznam</h2>
+  <p style="padding:0.6rem 1.2rem 0.4rem;font-size:0.88rem;color:#555;">Zde můžeš položky vyřadit z nákupního seznamu, protože je máš v domácích zásobách.</p>
   <table class="shopping-table" id="shopping-table">
     <thead>
       <tr>
@@ -498,6 +581,17 @@
     &nbsp;|&nbsp; Zaškrtnuto: <span id="checked-total">0 Kč</span>
     &nbsp;|&nbsp; Zbývá: <span id="remaining-total">1 562 Kč</span>
   </div>
+</div>
+
+<!-- EMAIL SEKCE -->
+<div class="email-section">
+  <h2>📧 Poslat přehled emailem</h2>
+  <p>Zadej svůj email — otevře se předvyplněná zpráva s aktuálním jídelníčkem a nákupním seznamem.</p>
+  <div class="email-form">
+    <input type="email" id="email-input" class="email-input" placeholder="tvuj@email.cz">
+    <button id="email-send-btn" class="email-send-btn">Připravit email</button>
+  </div>
+  <div class="email-notice" id="email-notice">Email bude odeslán přímo — není potřeba otvírat poštovního klienta.</div>
 </div>
 
 </main>
@@ -1065,6 +1159,126 @@
 
   document.querySelectorAll('.item-check').forEach(cb => {
     cb.addEventListener('change', recalcTotals);
+  });
+
+  // --- Email sestavení ---
+  const DAY_LABELS  = { st:'Středa', ct:'Čtvrtek', pa:'Pátek', so:'Sobota', ne:'Neděle', po:'Pondělí', ut:'Úterý' };
+  const MEAL_LABELS = { snidane:'Snídaně', obed:'Oběd', vecere:'Večeře' };
+
+  document.getElementById('email-send-btn').addEventListener('click', () => {
+    const emailAddr = document.getElementById('email-input').value.trim();
+    if (!emailAddr || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailAddr)) {
+      alert('Zadej prosím platnou emailovou adresu.');
+      return;
+    }
+
+    const periodEl = document.querySelector('header h1');
+    const period   = periodEl ? periodEl.textContent : 'Jídelníček';
+
+    // Aktivní filtry
+    const daysStr  = [...activeDays].map(d => DAY_LABELS[d] || d).join(', ') || '–';
+    const mealsStr = [...activeMeals].map(m => MEAL_LABELS[m] || m).join(', ') || '–';
+
+    // Jídelníček — viditelné dny a chody
+    let menuLines = [];
+    document.querySelectorAll('.day-card:not(.hidden)').forEach(card => {
+      const dayKey  = card.dataset.day;
+      const dayName = DAY_LABELS[dayKey] || dayKey;
+      const dateEl  = card.querySelector('.date');
+      const dateTxt = dateEl ? dateEl.textContent : '';
+      menuLines.push(`\n${dayName} (${dateTxt})`);
+      menuLines.push('─'.repeat(30));
+      card.querySelectorAll('.meal-row:not(.hidden)').forEach(row => {
+        const mealKey  = row.dataset.meal;
+        const mealName = MEAL_LABELS[mealKey] || mealKey;
+        const jidlo    = row.querySelector('.meal-name');
+        const popis    = row.querySelector('.meal-desc');
+        menuLines.push(`  ${mealName}: ${jidlo ? jidlo.textContent.trim().replace(/📖/g,'').trim() : ''}`);
+        if (popis) menuLines.push(`    ${popis.textContent.trim()}`);
+      });
+    });
+
+    // Nákupní seznam
+    let shopLines  = [];
+    let toBuyTotal = 0;
+    let inStockTotal = 0;
+
+    document.querySelectorAll('#shopping-table tbody tr[data-days]:not(.hidden)').forEach(row => {
+      const cb     = row.querySelector('.item-check');
+      const name   = row.cells[1] ? row.cells[1].textContent.trim() : '';
+      const qty    = row.cells[2] ? row.cells[2].textContent.trim() : '';
+      const price  = parseInt(cb.dataset.price) || 0;
+      const priceCell = row.querySelector('.item-price');
+      const priceStr  = priceCell ? priceCell.textContent.trim() : `${price} Kč`;
+
+      if (cb.checked) {
+        inStockTotal += price;
+        shopLines.push(`  [✕] ${name.padEnd(35)} ${qty.padEnd(10)} ${priceStr}  ← mám doma`);
+      } else {
+        toBuyTotal += price;
+        shopLines.push(`  [ ] ${name.padEnd(35)} ${qty.padEnd(10)} ${priceStr}`);
+      }
+    });
+
+    const subject = `${period} – Nákupní seznam`;
+
+    const body = [
+      period,
+      '═'.repeat(50),
+      '',
+      'FILTRY',
+      `Dny:   ${daysStr}`,
+      `Chody: ${mealsStr}`,
+      '',
+      '═'.repeat(50),
+      'JÍDELNÍČEK',
+      '═'.repeat(50),
+      ...menuLines,
+      '',
+      '═'.repeat(50),
+      'NÁKUPNÍ SEZNAM',
+      '═'.repeat(50),
+      `  ${'Položka'.padEnd(36)} ${'Množství'.padEnd(10)} Cena`,
+      '  ' + '─'.repeat(58),
+      ...shopLines,
+      '  ' + '─'.repeat(58),
+      `  K nákupu:  ${toBuyTotal.toLocaleString('cs-CZ')} Kč`,
+      `  Mám doma:  ${inStockTotal.toLocaleString('cs-CZ')} Kč`,
+      '',
+      '─'.repeat(50),
+      'Vygenerováno z jídelníčku na pragodavid.github.io/testweb',
+    ].join('\n');
+
+    const btn    = document.getElementById('email-send-btn');
+    const notice = document.getElementById('email-notice');
+
+    btn.disabled    = true;
+    btn.textContent = 'Odesílám…';
+    notice.style.color = '#888';
+    notice.textContent = 'Odesílám email…';
+
+    emailjs.send('service_2h3ehkd', 'template_seall0o', {
+      to_email: emailAddr,
+      subject:  subject,
+      message:  body,
+    })
+    .then(() => {
+      btn.textContent    = '✓ Odesláno';
+      notice.style.color = '#2e7d32';
+      notice.textContent = `Email byl úspěšně odeslán na ${emailAddr}.`;
+      setTimeout(() => {
+        btn.disabled    = false;
+        btn.textContent = 'Připravit email';
+        notice.style.color = '#888';
+        notice.textContent = 'Email bude odeslán přímo — není potřeba otvírat poštovního klienta.';
+      }, 4000);
+    })
+    .catch(err => {
+      btn.disabled    = false;
+      btn.textContent = 'Připravit email';
+      notice.style.color = '#d32f2f';
+      notice.textContent = `Chyba při odesílání: ${err.text || JSON.stringify(err)}`;
+    });
   });
 </script>
 </body>
