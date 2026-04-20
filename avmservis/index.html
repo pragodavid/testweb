@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>AVMservis — Hlášení závady</title>
+<script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>emailjs.init('2O9xlPmD5Yc5OXnAI');</script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #1a1a2e;
+    color: #eee;
+    min-height: 100vh;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  .screen { display: none; }
+  .screen.active { display: flex; flex-direction: column; min-height: 100vh; }
+
+  /* Header */
+  .app-header {
+    background: #e65100;
+    padding: 1rem 1.2rem 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    flex-shrink: 0;
+  }
+  .app-header .logo { font-size: 1.6rem; line-height: 1; }
+  .app-header h1 { font-size: 1.1rem; font-weight: 700; color: #fff; }
+  .app-header .subtitle { font-size: 0.75rem; color: rgba(255,255,255,0.8); margin-top: 0.1rem; }
+
+  /* ── SCREEN 1: SCANNER ───────────────────────────── */
+  .scan-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 1.2rem;
+    gap: 1rem;
+  }
+  .scan-hint {
+    text-align: center;
+    color: #aaa;
+    font-size: 0.88rem;
+    line-height: 1.4;
+  }
+  #reader {
+    border-radius: 12px;
+    overflow: hidden;
+    background: #000;
+    min-height: 200px;
+  }
+  #reader video { border-radius: 12px; width: 100% !important; }
+  #reader img { border-radius: 12px; }
+
+  .manual-section {
+    margin-top: auto;
+    background: #16213e;
+    border-radius: 12px;
+    padding: 1rem;
+  }
+  .manual-section label { font-size: 0.78rem; color: #aaa; display: block; margin-bottom: 0.5rem; }
+  .manual-row { display: flex; gap: 0.5rem; }
+  .manual-section input {
+    flex: 1;
+    background: #0f3460;
+    border: 1px solid #444;
+    border-radius: 8px;
+    color: #eee;
+    padding: 0.6rem 0.8rem;
+    font-size: 0.92rem;
+  }
+  .manual-section input::placeholder { color: #555; }
+  .manual-section input:focus { outline: none; border-color: #e65100; }
+  .btn-manual {
+    background: #e65100;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 0.6rem 1rem;
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+
+  /* ── SCREEN 2: FORM ──────────────────────────────── */
+  .form-container {
+    flex: 1;
+    padding: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    overflow-y: auto;
+    padding-bottom: 2rem;
+  }
+
+  .device-badge {
+    background: #16213e;
+    border: 2px solid #e65100;
+    border-radius: 10px;
+    padding: 0.8rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+  .device-badge .badge-icon { font-size: 1.4rem; flex-shrink: 0; }
+  .device-badge .badge-info { flex: 1; min-width: 0; }
+  .device-badge .badge-label { font-size: 0.72rem; color: #aaa; }
+  .device-badge .badge-id {
+    font-weight: 700;
+    font-size: 1rem;
+    color: #e65100;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .btn-rescan {
+    background: none;
+    border: 1px solid #555;
+    color: #aaa;
+    border-radius: 6px;
+    padding: 0.35rem 0.7rem;
+    font-size: 0.75rem;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+
+  .section-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #aaa;
+    margin-bottom: 0.5rem;
+  }
+  .required-star { color: #e65100; }
+
+  /* Defect type */
+  .defect-types { display: flex; gap: 0.5rem; }
+  .defect-btn {
+    flex: 1;
+    background: #16213e;
+    border: 2px solid #333;
+    border-radius: 10px;
+    padding: 0.8rem 0.3rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.15s;
+    color: #777;
+  }
+  .defect-btn .d-icon { font-size: 1.4rem; display: block; margin-bottom: 0.3rem; }
+  .defect-btn .d-name { font-size: 0.68rem; font-weight: 600; line-height: 1.3; }
+  .defect-btn.sel-functional { border-color: #d32f2f; background: rgba(211,47,47,0.12); color: #ef9a9a; }
+  .defect-btn.sel-visual     { border-color: #f9a825; background: rgba(249,168,37,0.12); color: #ffe082; }
+  .defect-btn.sel-case       { border-color: #1565c0; background: rgba(21,101,192,0.12); color: #90caf9; }
+
+  /* Severity */
+  .severity-toggle {
+    display: flex;
+    background: #16213e;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #333;
+  }
+  .sev-btn {
+    flex: 1;
+    padding: 0.65rem;
+    text-align: center;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #666;
+    border: none;
+    background: none;
+    transition: all 0.15s;
+  }
+  .sev-btn.sel-critical { background: #b71c1c; color: #fff; }
+  .sev-btn.sel-normal   { background: #2e7d32; color: #fff; }
+
+  /* Textarea */
+  .field-textarea {
+    width: 100%;
+    background: #16213e;
+    border: 2px solid #333;
+    border-radius: 10px;
+    color: #eee;
+    padding: 0.8rem;
+    font-size: 0.92rem;
+    font-family: inherit;
+    min-height: 100px;
+    resize: vertical;
+    transition: border-color 0.15s;
+  }
+  .field-textarea:focus { outline: none; border-color: #e65100; }
+  .field-textarea.err-border { border-color: #d32f2f; }
+
+  /* Photo */
+  .photo-area {
+    background: #16213e;
+    border: 2px dashed #444;
+    border-radius: 10px;
+    min-height: 150px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    transition: border-color 0.15s;
+    position: relative;
+    overflow: hidden;
+  }
+  .photo-area:hover { border-color: #e65100; }
+  .photo-area.has-photo { border-style: solid; border-color: #e65100; padding: 0; }
+  .photo-area img { width: 100%; height: 200px; object-fit: cover; display: block; }
+  .photo-hint-icon { font-size: 2rem; }
+  .photo-hint-text { color: #777; font-size: 0.85rem; }
+  .photo-hint-sub  { color: #555; font-size: 0.75rem; }
+  .btn-retake {
+    position: absolute;
+    top: 0.6rem;
+    right: 0.6rem;
+    background: rgba(0,0,0,0.75);
+    border: none;
+    color: #fff;
+    border-radius: 6px;
+    padding: 0.35rem 0.7rem;
+    font-size: 0.78rem;
+    cursor: pointer;
+  }
+  #photo-input { display: none; }
+
+  /* Text input */
+  .field-input {
+    width: 100%;
+    background: #16213e;
+    border: 2px solid #333;
+    border-radius: 10px;
+    color: #eee;
+    padding: 0.8rem;
+    font-size: 0.92rem;
+    font-family: inherit;
+    transition: border-color 0.15s;
+  }
+  .field-input:focus { outline: none; border-color: #e65100; }
+  .field-input::placeholder { color: #555; }
+
+  /* Error messages */
+  .err-msg {
+    color: #ef9a9a;
+    font-size: 0.8rem;
+    margin-top: 0.3rem;
+    display: none;
+  }
+  .err-msg.show { display: block; }
+
+  .err-general {
+    background: rgba(211,47,47,0.1);
+    border: 1px solid rgba(211,47,47,0.3);
+    border-radius: 8px;
+    padding: 0.7rem 1rem;
+    color: #ef9a9a;
+    font-size: 0.85rem;
+    text-align: center;
+    display: none;
+  }
+  .err-general.show { display: block; }
+
+  /* Submit */
+  .btn-submit {
+    background: #e65100;
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    padding: 1rem;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    width: 100%;
+    transition: background 0.15s;
+  }
+  .btn-submit:hover:not(:disabled) { background: #bf360c; }
+  .btn-submit:disabled { background: #444; color: #777; cursor: default; }
+
+  /* ── SCREEN 3: CONFIRM ───────────────────────────── */
+  .confirm-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1.2rem;
+    gap: 1.2rem;
+    text-align: center;
+  }
+  .confirm-icon { font-size: 4rem; }
+  .confirm-title { font-size: 1.4rem; font-weight: 700; color: #81c784; }
+  .confirm-subtitle { font-size: 0.88rem; color: #aaa; }
+  .confirm-card {
+    background: #16213e;
+    border-radius: 12px;
+    padding: 1rem 1.2rem;
+    width: 100%;
+    text-align: left;
+  }
+  .confirm-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 0.5rem;
+    padding: 0.45rem 0;
+    border-bottom: 1px solid #2a2a4a;
+    font-size: 0.88rem;
+  }
+  .confirm-row:last-child { border-bottom: none; }
+  .confirm-row .ck { color: #888; flex-shrink: 0; }
+  .confirm-row .cv { color: #eee; font-weight: 600; text-align: right; }
+  .btn-again {
+    background: none;
+    color: #e65100;
+    border: 2px solid #e65100;
+    border-radius: 12px;
+    padding: 0.9rem;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    width: 100%;
+    transition: background 0.15s;
+  }
+  .btn-again:hover { background: rgba(230,81,0,0.1); }
+</style>
+</head>
+<body>
+
+<!-- ══ SCREEN 1 — SKENOVÁNÍ ══════════════════════════ -->
+<div class="screen active" id="screen-scan">
+  <div class="app-header">
+    <span class="logo">🔧</span>
+    <div>
+      <h1>AVMservis</h1>
+      <div class="subtitle">Hlášení závady zařízení</div>
+    </div>
+  </div>
+  <div class="scan-container">
+    <p class="scan-hint">Nasměruj kameru na QR kód nebo čárový kód zařízení</p>
+    <div id="reader"></div>
+    <div class="manual-section">
+      <label>Kód nelze naskenovat? Zadej ručně:</label>
+      <div class="manual-row">
+        <input type="text" id="manual-code" placeholder="Sériové číslo nebo inventární kód" autocomplete="off">
+        <button class="btn-manual" onclick="useManualCode()">→ OK</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SCREEN 2 — FORMULÁŘ ══════════════════════════ -->
+<div class="screen" id="screen-form">
+  <div class="app-header">
+    <span class="logo">📋</span>
+    <div>
+      <h1>Hlášení závady</h1>
+      <div class="subtitle">Vyplň detaily závady</div>
+    </div>
+  </div>
+  <div class="form-container">
+
+    <!-- Zařízení -->
+    <div class="device-badge">
+      <span class="badge-icon">📦</span>
+      <div class="badge-info">
+        <div class="badge-label">Naskenované zařízení</div>
+        <div class="badge-id" id="display-device-id">—</div>
+      </div>
+      <button class="btn-rescan" onclick="startRescan()">↺ Znovu</button>
+    </div>
+
+    <!-- Typ závady -->
+    <div>
+      <div class="section-label">Typ závady <span class="required-star">*</span></div>
+      <div class="defect-types">
+        <button class="defect-btn" data-type="Funkční závada" onclick="selectDefect(this,'functional')">
+          <span class="d-icon">🔴</span>
+          <span class="d-name">Funkční závada</span>
+        </button>
+        <button class="defect-btn" data-type="Vizuální závada" onclick="selectDefect(this,'visual')">
+          <span class="d-icon">🟡</span>
+          <span class="d-name">Vizuální závada</span>
+        </button>
+        <button class="defect-btn" data-type="Závada Flight Case" onclick="selectDefect(this,'case')">
+          <span class="d-icon">📦</span>
+          <span class="d-name">Flight Case</span>
+        </button>
+      </div>
+      <div class="err-msg" id="err-type">Vyber typ závady.</div>
+    </div>
+
+    <!-- Závažnost -->
+    <div>
+      <div class="section-label">Závažnost <span class="required-star">*</span></div>
+      <div class="severity-toggle">
+        <button class="sev-btn" id="sev-critical" onclick="selectSeverity('critical')">🔴 Kritická — nefunkční</button>
+        <button class="sev-btn" id="sev-normal"   onclick="selectSeverity('normal')">🟢 Běžná — funguje</button>
+      </div>
+    </div>
+
+    <!-- Popis -->
+    <div>
+      <div class="section-label">Popis závady <span class="required-star">*</span></div>
+      <textarea class="field-textarea" id="defect-desc" placeholder="Popiš co se děje, za jakých podmínek k závadě dochází…"></textarea>
+      <div class="err-msg" id="err-desc">Vyplň popis závady.</div>
+    </div>
+
+    <!-- Fotografie -->
+    <div>
+      <div class="section-label">Fotografie závady <span class="required-star">*</span></div>
+      <div class="photo-area" id="photo-area" onclick="triggerPhoto()">
+        <div id="photo-placeholder" style="display:flex;flex-direction:column;align-items:center;gap:0.4rem;padding:1.5rem;">
+          <span class="photo-hint-icon">📷</span>
+          <span class="photo-hint-text">Klepni pro vyfocení závady</span>
+          <span class="photo-hint-sub">nebo vyber z galerie</span>
+        </div>
+        <img id="photo-preview" alt="Náhled fotky" style="display:none">
+        <button class="btn-retake" id="btn-retake" style="display:none" onclick="event.stopPropagation(); retakePhoto()">📷 Přefotit</button>
+      </div>
+      <input type="file" id="photo-input" accept="image/*" capture="environment" onchange="handlePhoto(this)">
+      <div class="err-msg" id="err-photo">Přilož fotografii závady.</div>
+    </div>
+
+    <!-- Technik -->
+    <div>
+      <div class="section-label">Jméno technika <span style="font-size:0.7rem;color:#555;text-transform:none;font-weight:400;">(volitelné)</span></div>
+      <input type="text" class="field-input" id="tech-name" placeholder="Tvoje jméno nebo přezdívka" autocomplete="name">
+    </div>
+
+    <div class="err-general" id="err-general"></div>
+    <button class="btn-submit" id="btn-submit" onclick="submitReport()">📤 Odeslat hlášení</button>
+  </div>
+</div>
+
+<!-- ══ SCREEN 3 — POTVRZENÍ ══════════════════════════ -->
+<div class="screen" id="screen-confirm">
+  <div class="app-header">
+    <span class="logo">✅</span>
+    <div>
+      <h1>Odesláno</h1>
+      <div class="subtitle">Závada byla nahlášena</div>
+    </div>
+  </div>
+  <div class="confirm-container">
+    <div class="confirm-icon">✅</div>
+    <div class="confirm-title">Závada nahlášena!</div>
+    <div class="confirm-subtitle">Servisní tým byl informován emailem.</div>
+    <div class="confirm-card" id="confirm-card"></div>
+    <button class="btn-again" onclick="resetApp()">🔄 Nahlásit další závadu</button>
+  </div>
+</div>
+
+<script>
+  // ── CONFIG ────────────────────────────────────────────
+  const EMAILJS_SERVICE  = 'service_2h3ehkd';
+  const EMAILJS_TEMPLATE = 'template_seall0o';
+  const RECIPIENT_EMAIL  = 'pragodavid@gmail.com';
+  const IMGBB_API_KEY    = ''; // Doplň po registraci na imgbb.com → Account → API
+  // ─────────────────────────────────────────────────────
+
+  let scannedId      = '';
+  let defectType     = '';
+  let severity       = '';
+  let photoFile      = null;
+  let photoDataUrl   = null;
+  let scannerRunning = false;
+
+  const scanner = new Html5Qrcode('reader');
+
+  // ── SCANNER ──────────────────────────────────────────
+  function startScanner() {
+    if (scannerRunning) return;
+    scanner.start(
+      { facingMode: 'environment' },
+      { fps: 10, qrbox: { width: 260, height: 180 } },
+      (decoded) => {
+        stopScanner();
+        scannedId = decoded;
+        openForm(decoded);
+      },
+      () => {}
+    ).then(() => {
+      scannerRunning = true;
+    }).catch(() => {
+      document.getElementById('reader').innerHTML =
+        '<p style="color:#777;text-align:center;padding:2rem 1rem;font-size:0.88rem;">⚠ Kamera není dostupná — zadej kód ručně níže.</p>';
+    });
+  }
+
+  function stopScanner() {
+    if (!scannerRunning) return;
+    scanner.stop().catch(() => {});
+    scannerRunning = false;
+  }
+
+  function useManualCode() {
+    const code = document.getElementById('manual-code').value.trim();
+    if (!code) { document.getElementById('manual-code').focus(); return; }
+    stopScanner();
+    scannedId = code;
+    openForm(code);
+  }
+
+  function startRescan() {
+    showScreen('screen-scan');
+    document.getElementById('manual-code').value = '';
+    startScanner();
+  }
+
+  // ── SCREENS ──────────────────────────────────────────
+  function showScreen(id) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    window.scrollTo(0, 0);
+  }
+
+  function openForm(deviceId) {
+    document.getElementById('display-device-id').textContent = deviceId;
+    resetForm();
+    showScreen('screen-form');
+  }
+
+  function resetForm() {
+    defectType   = '';
+    severity     = '';
+    photoFile    = null;
+    photoDataUrl = null;
+    document.querySelectorAll('.defect-btn').forEach(b => b.className = 'defect-btn');
+    document.querySelectorAll('.sev-btn').forEach(b => b.className = 'sev-btn');
+    document.getElementById('defect-desc').value = '';
+    document.getElementById('defect-desc').classList.remove('err-border');
+    document.getElementById('tech-name').value = '';
+    document.getElementById('photo-preview').style.display = 'none';
+    document.getElementById('photo-preview').src = '';
+    document.getElementById('photo-placeholder').style.display = 'flex';
+    document.getElementById('btn-retake').style.display = 'none';
+    document.getElementById('photo-area').classList.remove('has-photo');
+    document.getElementById('photo-input').value = '';
+    document.querySelectorAll('.err-msg').forEach(e => e.classList.remove('show'));
+    document.getElementById('err-general').classList.remove('show');
+    const btn = document.getElementById('btn-submit');
+    btn.disabled = false;
+    btn.textContent = '📤 Odeslat hlášení';
+  }
+
+  // ── DEFECT TYPE ──────────────────────────────────────
+  function selectDefect(btn, type) {
+    document.querySelectorAll('.defect-btn').forEach(b => b.className = 'defect-btn');
+    btn.classList.add('sel-' + type);
+    defectType = btn.dataset.type;
+    document.getElementById('err-type').classList.remove('show');
+  }
+
+  // ── SEVERITY ─────────────────────────────────────────
+  function selectSeverity(sev) {
+    document.getElementById('sev-critical').className = 'sev-btn';
+    document.getElementById('sev-normal').className   = 'sev-btn';
+    document.getElementById('sev-' + sev).classList.add('sel-' + sev);
+    severity = sev === 'critical' ? 'Kritická' : 'Běžná';
+  }
+
+  // ── PHOTO ─────────────────────────────────────────────
+  function triggerPhoto() {
+    document.getElementById('photo-input').click();
+  }
+
+  function retakePhoto() {
+    photoFile = null;
+    photoDataUrl = null;
+    document.getElementById('photo-preview').style.display = 'none';
+    document.getElementById('photo-preview').src = '';
+    document.getElementById('photo-placeholder').style.display = 'flex';
+    document.getElementById('btn-retake').style.display = 'none';
+    document.getElementById('photo-area').classList.remove('has-photo');
+    document.getElementById('photo-input').value = '';
+  }
+
+  function handlePhoto(input) {
+    if (!input.files || !input.files[0]) return;
+    photoFile = input.files[0];
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      photoDataUrl = e.target.result;
+      const preview = document.getElementById('photo-preview');
+      preview.src = photoDataUrl;
+      preview.style.display = 'block';
+      document.getElementById('photo-placeholder').style.display = 'none';
+      document.getElementById('btn-retake').style.display = 'block';
+      document.getElementById('photo-area').classList.add('has-photo');
+      document.getElementById('err-photo').classList.remove('show');
+    };
+    reader.readAsDataURL(photoFile);
+  }
+
+  // ── UPLOAD FOTKY ─────────────────────────────────────
+  async function uploadPhoto() {
+    if (!photoFile) return null;
+    if (!IMGBB_API_KEY) return '[foto bez hostingu — doplň IMGBB_API_KEY]';
+    const formData = new FormData();
+    formData.append('image', photoFile);
+    try {
+      const res  = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, { method: 'POST', body: formData });
+      const data = await res.json();
+      return data.success ? data.data.url : '[upload selhal]';
+    } catch {
+      return '[upload selhal — síťová chyba]';
+    }
+  }
+
+  // ── SUBMIT ────────────────────────────────────────────
+  async function submitReport() {
+    let valid = true;
+
+    if (!defectType) {
+      document.getElementById('err-type').classList.add('show');
+      valid = false;
+    }
+    if (!document.getElementById('defect-desc').value.trim()) {
+      document.getElementById('err-desc').classList.add('show');
+      document.getElementById('defect-desc').classList.add('err-border');
+      valid = false;
+    }
+    if (!photoDataUrl) {
+      document.getElementById('err-photo').classList.add('show');
+      valid = false;
+    }
+    if (!severity) selectSeverity('normal');
+    if (!valid) return;
+
+    const btn = document.getElementById('btn-submit');
+    btn.disabled = true;
+    btn.textContent = '⏳ Nahrávám foto…';
+
+    const photoUrl  = await uploadPhoto();
+    const techName  = document.getElementById('tech-name').value.trim() || 'Neuvedeno';
+    const desc      = document.getElementById('defect-desc').value.trim();
+    const timestamp = new Date().toLocaleString('cs-CZ');
+
+    btn.textContent = '⏳ Odesílám…';
+
+    const message = [
+      '╔══════════════════════════════════╗',
+      '  HLÁŠENÍ ZÁVADY — AVMservis',
+      '╚══════════════════════════════════╝',
+      '',
+      `Zařízení  :  ${scannedId}`,
+      `Typ závady:  ${defectType}`,
+      `Závažnost :  ${severity}`,
+      `Technik   :  ${techName}`,
+      `Datum/čas :  ${timestamp}`,
+      '',
+      'POPIS:',
+      '──────────────────────────────────',
+      desc,
+      '',
+      '──────────────────────────────────',
+      `Fotografie: ${photoUrl || '—'}`,
+      '',
+      '══════════════════════════════════',
+    ].join('\n');
+
+    try {
+      await emailjs.send(EMAILJS_SERVICE, EMAILJS_TEMPLATE, {
+        to_email: RECIPIENT_EMAIL,
+        subject : `[AVMservis] ${defectType} — ${scannedId} (${severity})`,
+        message : message,
+      });
+
+      // Potvrzení
+      document.getElementById('confirm-card').innerHTML = `
+        <div class="confirm-row"><span class="ck">Zařízení</span><span class="cv">${scannedId}</span></div>
+        <div class="confirm-row"><span class="ck">Typ závady</span><span class="cv">${defectType}</span></div>
+        <div class="confirm-row"><span class="ck">Závažnost</span><span class="cv">${severity}</span></div>
+        <div class="confirm-row"><span class="ck">Technik</span><span class="cv">${techName}</span></div>
+        <div class="confirm-row"><span class="ck">Odesláno v</span><span class="cv">${timestamp}</span></div>
+      `;
+      showScreen('screen-confirm');
+
+    } catch (err) {
+      btn.disabled = false;
+      btn.textContent = '📤 Odeslat hlášení';
+      const el = document.getElementById('err-general');
+      el.textContent = `Chyba při odesílání: ${err.text || JSON.stringify(err)}`;
+      el.classList.add('show');
+    }
+  }
+
+  // ── RESET ─────────────────────────────────────────────
+  function resetApp() {
+    scannedId = '';
+    document.getElementById('manual-code').value = '';
+    showScreen('screen-scan');
+    startScanner();
+  }
+
+  // Start scanner on load
+  startScanner();
+</script>
+</body>
+</html>
