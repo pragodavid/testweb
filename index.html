@@ -1206,6 +1206,54 @@
     const daysStr  = [...activeDays].map(d => DL[d] || d).join(', ') || '–';
     const mealsStr = [...activeMeals].map(m => ML[m] || m).join(', ') || '–';
 
+    // Nákupní seznam — sebrání dat z DOM (viditelné řádky)
+    const shopAkce    = [];
+    const shopRegular = [];
+    let   shopTotal   = 0;
+
+    document.querySelectorAll('#shopping-table tbody tr[data-days]:not(.hidden)').forEach(row => {
+      const isAkce = row.classList.contains('row-akce');
+      // Klonuj buňku a odstraň badge „AKCE" text
+      const nameClone = row.cells[1] ? row.cells[1].cloneNode(true) : null;
+      if (nameClone) nameClone.querySelectorAll('.akce').forEach(el => el.remove());
+      const name      = (nameClone?.textContent || '').replace(/\s+/g, ' ').trim();
+      const qty       = row.cells[2]?.textContent.trim() || '';
+      const priceUnit = row.cells[3]?.textContent.trim() || '–';
+      const priceStr  = row.querySelector('.item-price')?.textContent.trim() || '';
+      const price     = parseInt(row.querySelector('.item-check')?.dataset.price) || 0;
+      const item      = { isAkce, name, qty, priceUnit, priceStr, price };
+      (isAkce ? shopAkce : shopRegular).push(item);
+      shopTotal += price;
+    });
+
+    const allShopItems = [...shopAkce, ...shopRegular];
+
+    const shopTableBody = [
+      [
+        { text: 'Položka',   bold: true, color: '#fff', fontSize: 8, margin: [3,3,3,3] },
+        { text: 'Množství',  bold: true, color: '#fff', fontSize: 8, margin: [3,3,3,3] },
+        { text: 'Cena/ks',   bold: true, color: '#fff', fontSize: 8, margin: [3,3,3,3] },
+        { text: 'Celkem',    bold: true, color: '#fff', fontSize: 8, margin: [3,3,3,3] }
+      ],
+      ...allShopItems.map(item => [
+        {
+          stack: [
+            ...(item.isAkce ? [{ text: 'AKCE', fontSize: 6, bold: true, color: '#ff6f00', margin: [0,0,0,1] }] : []),
+            { text: item.name, fontSize: 9 }
+          ],
+          margin: [3,2,3,2]
+        },
+        { text: item.qty,       fontSize: 8, color: '#555', margin: [3,2,3,2] },
+        { text: item.priceUnit, fontSize: 8, color: '#555', alignment: 'right', margin: [3,2,3,2] },
+        { text: item.priceStr,  fontSize: 9, bold: true,    alignment: 'right', margin: [3,2,3,2] }
+      ]),
+      [
+        { text: 'CELKEM', bold: true, colSpan: 3, fontSize: 9, color: '#1565c0', margin: [3,5,3,5] },
+        {}, {},
+        { text: shopTotal.toLocaleString('cs-CZ') + ' Kč', bold: true, fontSize: 10, color: '#1565c0', alignment: 'right', margin: [3,5,3,5] }
+      ]
+    ];
+
     // Tabulka přehledu jídel
     const tableBody = [
       [
@@ -1313,6 +1361,30 @@
             vLineWidth: () => 0.5
           }
         },
+        // Nákupní seznam — nová stránka
+        { text: 'Nákupní seznam', fontSize: 13, bold: true, color: '#1565c0',
+          pageBreak: 'before', margin: [0,0,0,4] },
+        { text: 'Zobrazeny položky odpovídající aktivním filtrům (dny a chody).',
+          fontSize: 8, color: '#999', italics: true, margin: [0,0,0,8] },
+        {
+          table: {
+            widths: ['*', 65, 60, 55],
+            headerRows: 1,
+            body: shopTableBody
+          },
+          layout: {
+            fillColor: (ri, node) => {
+              if (ri === 0) return '#1565c0';
+              if (ri === node.table.body.length - 1) return '#e3f2fd';
+              const item = allShopItems[ri - 1];
+              return item?.isAkce ? '#fff8e1' : (ri % 2 === 0 ? '#f5f5f5' : null);
+            },
+            hLineColor: () => '#e0e0e0',
+            vLineColor: () => '#e0e0e0',
+            hLineWidth: (i, node) => i === 0 || i === node.table.body.length ? 1 : 0.5,
+            vLineWidth: () => 0.5
+          }
+        },
         // Recepty (každý recept na nové stránce)
         ...recipesContent
       ],
@@ -1349,42 +1421,66 @@
     notice.textContent = 'Generuji PDF dokument…';
 
     setTimeout(() => {
-      pdfMake.createPdf(buildDocDefinition()).getBlob(blob => {
-        btn.textContent = 'Odesílám…';
+      const pdfDoc = pdfMake.createPdf(buildDocDefinition());
+
+      pdfDoc.getBlob(blob => {
+        btn.textContent    = 'Odesílám…';
         notice.textContent = 'Odesílám email s přílohou…';
 
         const file = new File([blob], 'jidelnicek.pdf', { type: 'application/pdf' });
-        const fd   = new FormData();
-        fd.append('service_id',  'service_2h3ehkd');
-        fd.append('template_id', 'template_seall0o');
-        fd.append('user_id',     '2O9xlPmD5Yc5OXnAI');
-        fd.append('to_email',    emailAddr);
-        fd.append('subject',     'Jídelníček – PDF příloha');
-        fd.append('message',     'V příloze se nachází PDF s jídelníčkem dle vašeho výběru.');
-        fd.append('attachment',  file, 'jidelnicek.pdf');
 
-        fetch('https://api.emailjs.com/api/v1.0/email/send-form', {
-          method: 'POST',
-          body: fd
-        })
-        .then(r => {
-          if (!r.ok) return r.text().then(t => Promise.reject(t));
-          btn.textContent    = '✓ Odesláno';
-          notice.style.color = '#2e7d32';
-          notice.textContent = `Email s PDF byl odeslán na ${emailAddr}.`;
-          setTimeout(() => {
-            btn.disabled = false;
-            btn.textContent = 'Odeslat PDF emailem';
-            notice.style.color = '#888';
-            notice.textContent = 'PDF obsahuje přehled jídelníčku dle filtrů a plné recepty s proklikem na konkrétní recept.';
-          }, 4000);
-        })
-        .catch(err => {
-          btn.disabled    = false;
-          btn.textContent = 'Odeslat PDF emailem';
-          notice.style.color = '#d32f2f';
-          notice.textContent = `Chyba: ${typeof err === 'string' ? err : JSON.stringify(err)}`;
-        });
+        // Stáhnout PDF lokálně (záloha pro případ, že příloha nedorazí)
+        const blobUrl = URL.createObjectURL(blob);
+        const dlLink  = document.createElement('a');
+        dlLink.href     = blobUrl;
+        dlLink.download = 'jidelnicek.pdf';
+        dlLink.click();
+        setTimeout(() => URL.revokeObjectURL(blobUrl), 5000);
+
+        // Sestavit form pro emailjs.sendForm() — jedině tak SDK pošle soubor
+        const form = document.createElement('form');
+        form.style.display = 'none';
+
+        const addHidden = (name, val) => {
+          const inp = document.createElement('input');
+          inp.type = 'hidden'; inp.name = name; inp.value = val;
+          form.appendChild(inp);
+        };
+        addHidden('to_email', emailAddr);
+        addHidden('subject',  'Jídelníček – PDF příloha');
+        addHidden('message',  'V příloze se nachází PDF s jídelníčkem dle vašeho výběru.');
+
+        const fileInput = document.createElement('input');
+        fileInput.type = 'file';
+        fileInput.name = 'attachment';
+        try {
+          const dt = new DataTransfer();
+          dt.items.add(file);
+          fileInput.files = dt.files;
+        } catch (e) { /* DataTransfer nedostupný */ }
+        form.appendChild(fileInput);
+        document.body.appendChild(form);
+
+        emailjs.sendForm('service_2h3ehkd', 'template_seall0o', form)
+          .then(() => {
+            if (document.body.contains(form)) document.body.removeChild(form);
+            btn.textContent    = '✓ Odesláno';
+            notice.style.color = '#2e7d32';
+            notice.textContent = `Email odeslán na ${emailAddr}. PDF bylo také staženo do Stahování.`;
+            setTimeout(() => {
+              btn.disabled       = false;
+              btn.textContent    = 'Odeslat PDF emailem';
+              notice.style.color = '#888';
+              notice.textContent = 'PDF obsahuje přehled jídelníčku dle filtrů, nákupní seznam a recepty s proklikem.';
+            }, 5000);
+          })
+          .catch(err => {
+            if (document.body.contains(form)) document.body.removeChild(form);
+            btn.disabled       = false;
+            btn.textContent    = 'Odeslat PDF emailem';
+            notice.style.color = '#d32f2f';
+            notice.textContent = `Chyba odesílání: ${err.text || JSON.stringify(err)}. PDF bylo staženo do Stahování.`;
+          });
       });
     }, 30);
   });
