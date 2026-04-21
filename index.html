@@ -649,7 +649,7 @@ function renderDays() {
       <div class="flex items-center justify-between bg-white rounded-t-xl shadow-sm px-4 py-2.5">
         <div>
           <h2 class="text-base font-bold text-gray-800">${day.dayFull}
-            <span class="text-gray-400 font-normal text-sm ml-1">${day.date.slice(5).replace('-','.')}.2026</span>
+            <span class="text-gray-400 font-normal text-sm ml-1">${day.date.slice(8)}.${day.date.slice(5,7)}.</span>
           </h2>
           <span class="text-xs text-gray-400">${typeLabels[day.weather.type]}</span>
         </div>
