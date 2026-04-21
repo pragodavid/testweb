@@ -1,0 +1,515 @@
+{
+  "generatedAt": "2026-04-21",
+  "weather": [
+    {"date":"2026-04-21","dayAbbr":"Út","dayFull":"Úterý","dayId":"ut","maxTemp":11.7,"minTemp":5.2,"code":3,"icon":"☁️","type":"vydatne"},
+    {"date":"2026-04-22","dayAbbr":"St","dayFull":"Středa","dayId":"st","maxTemp":14.4,"minTemp":3.6,"code":3,"icon":"☁️","type":"vydatne"},
+    {"date":"2026-04-23","dayAbbr":"Čt","dayFull":"Čtvrtek","dayId":"ct","maxTemp":17.4,"minTemp":6.4,"code":3,"icon":"☁️","type":"smisene"},
+    {"date":"2026-04-24","dayAbbr":"Pá","dayFull":"Pátek","dayId":"pa","maxTemp":17.0,"minTemp":6.2,"code":2,"icon":"🌤️","type":"smisene"},
+    {"date":"2026-04-25","dayAbbr":"So","dayFull":"Sobota","dayId":"so","maxTemp":19.5,"minTemp":6.2,"code":3,"icon":"☁️","type":"smisene"},
+    {"date":"2026-04-26","dayAbbr":"Ne","dayFull":"Neděle","dayId":"ne","maxTemp":12.2,"minTemp":5.9,"code":2,"icon":"🌤️","type":"vydatne"},
+    {"date":"2026-04-27","dayAbbr":"Po","dayFull":"Pondělí","dayId":"po","maxTemp":13.4,"minTemp":2.2,"code":3,"icon":"☁️","type":"vydatne"}
+  ],
+  "kauflandDeals": [
+    {"id":"k1","name":"Losos filet (chlazený)","price":24.90,"unit":"100g","origPrice":54.80,"discount":54,"cat":"ryby"},
+    {"id":"k2","name":"Vepřová pečeně K-Mistři","price":89.90,"unit":"kg","origPrice":228.90,"discount":60,"cat":"maso"},
+    {"id":"k3","name":"Šumavský Eidam sýr","price":16.90,"unit":"100g","origPrice":39.90,"discount":57,"cat":"mlecne"},
+    {"id":"k4","name":"Olma Florian jogurt","price":5.90,"unit":"150g","origPrice":15.90,"discount":62,"cat":"mlecne"},
+    {"id":"k5","name":"Olma máslo","price":28.90,"unit":"250g","origPrice":33.90,"discount":15,"cat":"mlecne"},
+    {"id":"k6","name":"Slunka slunečnicový olej","price":34.90,"unit":"1L","origPrice":74.90,"discount":53,"cat":"oleje"},
+    {"id":"k7","name":"Těstoviny (různé druhy)","price":27.90,"unit":"500g","origPrice":44.90,"discount":38,"cat":"suche"},
+    {"id":"k8","name":"Vinica mražená zelenina","price":18.90,"unit":"450g","origPrice":26.90,"discount":30,"cat":"mrazena"}
+  ],
+  "recipes": {
+    "rst_sn1": {
+      "id":"rst_sn1","source":"restart","sourceLabel":"Restart hubnutí","sourceUrl":"https://restarthubnuti.cz/batatova-placka-s-vejcem-snidane-pri-hubnuti-ktera-zasyti/",
+      "meal":"snidane","mealLabel":"Snídaně","name":"Batátová placka s vejcem","time":"20 min","calories":"~380 kcal","tag":"vydatne",
+      "ingredients":[
+        {"name":"batáty","qty":"800 g","isAkce":false},
+        {"name":"vejce","qty":"4 ks","isAkce":false},
+        {"name":"celozrnná špaldová mouka","qty":"8 lžic","isAkce":false},
+        {"name":"slunečnicový olej Slunka 🏷️","qty":"2 lžíce","isAkce":true},
+        {"name":"sůl, pepř","qty":"dle chuti","isAkce":false}
+      ],
+      "steps":[
+        "Batáty oloupejte a nastrouhejte nahrubo.",
+        "Smíchejte s vejci, moukou, solí a pepřem do těsta.",
+        "Na pánvi rozehřejte olej a lžící nabírejte těsto.",
+        "Smažte z obou stran 3–4 min do zlatova.",
+        "Podávejte teplé, doplněné tvarohom nebo čerstvou salsou."
+      ]
+    },
+    "rst_sn2": {
+      "id":"rst_sn2","source":"restart","sourceLabel":"Restart hubnutí","sourceUrl":"https://restarthubnuti.cz/syrove-toasty-pri-hubnuti-krupave-a-vic-zasyti/",
+      "meal":"snidane","mealLabel":"Snídaně","name":"Sýrové toasty při hubnutí","time":"15 min","calories":"~340 kcal","tag":"vydatne",
+      "ingredients":[
+        {"name":"celozrnný chléb","qty":"8 plátků","isAkce":false},
+        {"name":"žervé / tvaroh","qty":"200 g","isAkce":false},
+        {"name":"Šumavský Eidam sýr 🏷️","qty":"200 g","isAkce":true},
+        {"name":"vejce","qty":"4 ks","isAkce":false},
+        {"name":"pažitka, sůl, pepř","qty":"dle chuti","isAkce":false}
+      ],
+      "steps":[
+        "Chléb opečte v toustovači.",
+        "Natřete žervé, navrch nastrouhejte eidam.",
+        "Na plech vyložte toasty, přidejte vejce jako sunny side up.",
+        "Zapečte v troubě 180 °C po dobu 10 min.",
+        "Posypte pažitkou, solí a pepřem."
+      ]
+    },
+    "rst_sn3": {
+      "id":"rst_sn3","source":"restart","sourceLabel":"Restart hubnutí","sourceUrl":"https://restarthubnuti.cz/datlovy-jogurt-rychly-dezert-pri-hubnuti-ze-4-surovin/",
+      "meal":"snidane","mealLabel":"Snídaně","name":"Datlový jogurt s ořechy","time":"5 min","calories":"~290 kcal","tag":"lehke",
+      "ingredients":[
+        {"name":"Olma Florian jogurt 🏷️","qty":"4 × 150 g","isAkce":true},
+        {"name":"datle bez pecky","qty":"8 ks","isAkce":false},
+        {"name":"vlašské ořechy","qty":"4 lžíce","isAkce":false},
+        {"name":"skořice, med","qty":"dle chuti","isAkce":false}
+      ],
+      "steps":[
+        "Datle rozkrojte a nakrájejte na menší kousky.",
+        "Vmíchejte do jogurtu spolu se skořicí.",
+        "Přelijte medem, posypte drcenými ořechy.",
+        "Servírujte ihned nebo uchovejte přikryté v lednici."
+      ]
+    },
+    "rst_ob1": {
+      "id":"rst_ob1","source":"restart","sourceLabel":"Restart hubnutí","sourceUrl":"https://restarthubnuti.cz/cuketove-placky-do-krabicky-lehky-obed-pri-hubnuti-ktery-te-neuspi/",
+      "meal":"obed","mealLabel":"Oběd","name":"Cuketové placky do krabičky","time":"25 min","calories":"~320 kcal","tag":"lehke",
+      "ingredients":[
+        {"name":"cuketa","qty":"480 g","isAkce":false},
+        {"name":"vejce","qty":"4 ks","isAkce":false},
+        {"name":"celozrnná špaldová mouka","qty":"8 lžic","isAkce":false},
+        {"name":"slunečnicový olej Slunka 🏷️","qty":"na smažení","isAkce":true},
+        {"name":"žervé / tvaroh","qty":"200 g","isAkce":false},
+        {"name":"mozzarella","qty":"125 g","isAkce":false},
+        {"name":"rajče, salátové listy","qty":"2 ks / hrst","isAkce":false}
+      ],
+      "steps":[
+        "Cuketu najemno nastrouhejte, lehce osolte a nechte 5 min stát, pak vytlačte přebytečnou vodu.",
+        "Smíchejte s vejci a moukou do hladkého těsta.",
+        "Na oleji smažte placky 2–3 min z každé strany dozlatova.",
+        "Nechte mírně vychladnout.",
+        "Naplňte žervé, salátem, plátky rajčete a mozzarellou."
+      ]
+    },
+    "rst_ob2": {
+      "id":"rst_ob2","source":"restart","sourceLabel":"Restart hubnutí","sourceUrl":"https://restarthubnuti.cz/kapustove-bochanky-s-krutim-masem-a-kari-omackou/",
+      "meal":"obed","mealLabel":"Oběd","name":"Kapustové bochánky s krůtím masem","time":"35 min","calories":"~420 kcal","tag":"vydatne",
+      "ingredients":[
+        {"name":"mleté krůtí maso","qty":"600 g","isAkce":false},
+        {"name":"kapusta","qty":"0,5 hlávky","isAkce":false},
+        {"name":"vejce","qty":"2 ks","isAkce":false},
+        {"name":"mouka","qty":"4 lžíce","isAkce":false},
+        {"name":"kari","qty":"2 lžičky","isAkce":false},
+        {"name":"slunečnicový olej Slunka 🏷️","qty":"na smažení","isAkce":true},
+        {"name":"Olma Florian jogurt 🏷️","qty":"150 g","isAkce":true},
+        {"name":"sůl, pepř","qty":"dle chuti","isAkce":false}
+      ],
+      "steps":[
+        "Kapustu jemně nasekejte a blanšírujte 3 min ve vroucí vodě.",
+        "Smíchejte krůtí maso, kapustu, vejce, mouku, sůl a pepř.",
+        "Tvarujte bochánky a smažte na oleji 4 min z každé strany.",
+        "Kari omáčku připravte smícháním jogurtu, kari, soli a špetky česneku.",
+        "Podávejte bochánky přelité omáčkou."
+      ]
+    },
+    "rst_ob3": {
+      "id":"rst_ob3","source":"restart","sourceLabel":"Restart hubnutí","sourceUrl":"https://restarthubnuti.cz/pecena-ryze-se-zeleninou-a-halloumi/",
+      "meal":"obed","mealLabel":"Oběd","name":"Pečená rýže se zeleninou a halloumi","time":"45 min","calories":"~450 kcal","tag":"vydatne",
+      "ingredients":[
+        {"name":"rýže kulatozrnná","qty":"400 g","isAkce":false},
+        {"name":"Vinica mražená zelenina 🏷️","qty":"450 g","isAkce":true},
+        {"name":"halloumi","qty":"200 g","isAkce":false},
+        {"name":"kuřecí vývar","qty":"700 ml","isAkce":false},
+        {"name":"kurkuma, sůl, pepř","qty":"dle chuti","isAkce":false},
+        {"name":"slunečnicový olej Slunka 🏷️","qty":"2 lžíce","isAkce":true}
+      ],
+      "steps":[
+        "Troubu předehřejte na 200 °C.",
+        "Rýži rozmíchejte s vývárem, kurkumou a olejem v pekáčku.",
+        "Přidejte rozmraženou zeleninu a promíchejte.",
+        "Halloumi nakrájejte a rozložte navrch.",
+        "Pečte 35–40 min, dokud rýže nevsákne veškerou tekutinu."
+      ]
+    },
+    "rst_ob4": {
+      "id":"rst_ob4","source":"restart","sourceLabel":"Restart hubnutí","sourceUrl":"https://restarthubnuti.cz/syrovo-masovy-wrap-vecere-pri-hubnuti-s-mene-sacharidy-a-bez-hladu/",
+      "meal":"obed","mealLabel":"Oběd","name":"Masovo-sýrový wrap s vepřovým","time":"20 min","calories":"~480 kcal","tag":"vydatne",
+      "ingredients":[
+        {"name":"tortilly celozrnné","qty":"8 ks","isAkce":false},
+        {"name":"vepřová pečeně K-Mistři 🏷️","qty":"400 g","isAkce":true},
+        {"name":"Šumavský Eidam sýr 🏷️","qty":"200 g","isAkce":true},
+        {"name":"ledový salát","qty":"1 hlávka","isAkce":false},
+        {"name":"rajče","qty":"2 ks","isAkce":false},
+        {"name":"Olma Florian jogurt 🏷️","qty":"150 g","isAkce":true},
+        {"name":"dijonská hořčice","qty":"2 lžičky","isAkce":false}
+      ],
+      "steps":[
+        "Vepřové nakrájejte na tenké plátky a opečte na suché pánvi 3–4 min.",
+        "Eidam nastrouhejte, salát nakrájejte, rajče na plátky.",
+        "Jogurt smíchejte s hořčicí na dresink.",
+        "Na tortillu naložte salát, maso, eidam, rajče a přelijte dresinkem.",
+        "Zabalte pevně a ihned podávejte."
+      ]
+    },
+    "rst_ve1": {
+      "id":"rst_ve1","source":"restart","sourceLabel":"Restart hubnutí","sourceUrl":"https://restarthubnuti.cz/domaci-kebab-z-plechu-vecere-pri-hubnuti-bez-kompromisu/",
+      "meal":"vecere","mealLabel":"Večeře","name":"Domácí kebab z plechu","time":"30 min","calories":"~490 kcal","tag":"vydatne",
+      "ingredients":[
+        {"name":"mleté hovězí/vepřové","qty":"700 g","isAkce":false},
+        {"name":"cibule","qty":"2 ks","isAkce":false},
+        {"name":"čerstvá petržel","qty":"2 hrsti","isAkce":false},
+        {"name":"citron (kůra)","qty":"2 ks","isAkce":false},
+        {"name":"kmín mletý","qty":"4 lžičky","isAkce":false},
+        {"name":"uzená paprika","qty":"4 lžičky","isAkce":false},
+        {"name":"sušený česnek","qty":"2 lžičky","isAkce":false},
+        {"name":"Olma Florian jogurt 🏷️","qty":"2 × 150 g","isAkce":true},
+        {"name":"dijonská hořčice","qty":"4 lžičky","isAkce":false},
+        {"name":"chilli, sůl","qty":"dle chuti","isAkce":false}
+      ],
+      "steps":[
+        "Troubu předehřejte na 200 °C.",
+        "Maso smíchejte s nadrobno nasekanou cibulí, petrželí, kůrou z citronu a veškerým kořením.",
+        "Rozložte vrstvou 2 cm na plech vystlaný pečicím papírem; nožem přikrojte pruhy kebab stylu.",
+        "Pečte 15 min, otočte a dopečte dalších 5 min.",
+        "Omáčku připravte z jogurtu, hořčice, chilli a soli; podávejte se zeleninou nebo v pita chlebu."
+      ]
+    },
+    "rst_ve2": {
+      "id":"rst_ve2","source":"restart","sourceLabel":"Restart hubnutí","sourceUrl":"https://restarthubnuti.cz/brokolicovy-kolac-se-syrem-a-vejci-vecere-pri-hubnuti-bez-peciva/",
+      "meal":"vecere","mealLabel":"Večeře","name":"Brokolicový koláč se sýrem a vejci","time":"40 min","calories":"~380 kcal","tag":"smisene",
+      "ingredients":[
+        {"name":"brokolice","qty":"600 g (1 hlávka)","isAkce":false},
+        {"name":"vejce","qty":"4 ks","isAkce":false},
+        {"name":"Šumavský Eidam sýr 🏷️","qty":"200 g","isAkce":true},
+        {"name":"tvaroh","qty":"200 g","isAkce":false},
+        {"name":"mouka","qty":"4 lžíce","isAkce":false},
+        {"name":"Olma máslo 🏷️","qty":"20 g (na formu)","isAkce":true},
+        {"name":"muškátový oříšek, sůl, pepř","qty":"dle chuti","isAkce":false}
+      ],
+      "steps":[
+        "Brokolici rozdělte na růžičky a povařte 5 min; slijte a hrubě nasekejte.",
+        "Smíchejte vejce, tvaroh, nastrouhané eidam, mouku, sůl, pepř a muškát.",
+        "Přimíchejte brokolici.",
+        "Formu vymažte máslem, nalijte směs.",
+        "Pečte 30 min na 180 °C do zlatavě ztuhnutí."
+      ]
+    },
+    "rst_ve3": {
+      "id":"rst_ve3","source":"restart","sourceLabel":"Restart hubnutí","sourceUrl":"https://restarthubnuti.cz/bramborovy-kolac-s-porkem-a-fetou/",
+      "meal":"vecere","mealLabel":"Večeře","name":"Bramborový koláč s pórkem a fetou","time":"50 min","calories":"~410 kcal","tag":"vydatne",
+      "ingredients":[
+        {"name":"brambory","qty":"800 g","isAkce":false},
+        {"name":"póry","qty":"2 ks","isAkce":false},
+        {"name":"feta sýr","qty":"200 g","isAkce":false},
+        {"name":"vejce","qty":"4 ks","isAkce":false},
+        {"name":"Olma máslo 🏷️","qty":"50 g","isAkce":true},
+        {"name":"tymián, sůl, pepř","qty":"dle chuti","isAkce":false}
+      ],
+      "steps":[
+        "Brambory uváříme doměkka, slijeme a rozmačkáme s máslem.",
+        "Pórek nakrájejte na kolečka a orestujte na másle 5 min.",
+        "Do vymazané formy dejte polovinu bramborové kaše.",
+        "Navrch rozložte pórek a rozdrobenou fetu.",
+        "Přikryjte zbylou kaší a pečte 35 min na 180 °C."
+      ]
+    },
+    "kd_sn1": {
+      "id":"kd_sn1","source":"kucharkadc","sourceLabel":"Kuchařka pro dceru","sourceUrl":"https://www.kucharkaprodceru.cz/",
+      "meal":"snidane","mealLabel":"Snídaně","name":"Jogurtový parfait s granolou a ovocem","time":"5 min","calories":"~310 kcal","tag":"lehke",
+      "ingredients":[
+        {"name":"Olma Florian jogurt 🏷️","qty":"4 × 150 g","isAkce":true},
+        {"name":"granola","qty":"8 lžic (120 g)","isAkce":false},
+        {"name":"sezónní ovoce (jahody/borůvky)","qty":"200 g","isAkce":false},
+        {"name":"med","qty":"4 lžičky","isAkce":false}
+      ],
+      "steps":[
+        "Do skleničky nebo misky dejte vrstvu jogurtu.",
+        "Přidejte granolu a čerstvé ovoce.",
+        "Opakujte vrstvení dle libosti.",
+        "Překapejte medem a podávejte ihned."
+      ]
+    },
+    "kd_sn2": {
+      "id":"kd_sn2","source":"kucharkadc","sourceLabel":"Kuchařka pro dceru","sourceUrl":"https://www.kucharkaprodceru.cz/",
+      "meal":"snidane","mealLabel":"Snídaně","name":"Míchaná vajíčka s eidamem a pažitkou","time":"10 min","calories":"~370 kcal","tag":"vydatne",
+      "ingredients":[
+        {"name":"vejce","qty":"8 ks","isAkce":false},
+        {"name":"Olma máslo 🏷️","qty":"40 g","isAkce":true},
+        {"name":"celozrnný chléb","qty":"8 plátků","isAkce":false},
+        {"name":"Šumavský Eidam sýr 🏷️","qty":"200 g","isAkce":true},
+        {"name":"čerstvá pažitka","qty":"1 svazek","isAkce":false},
+        {"name":"sůl, pepř","qty":"dle chuti","isAkce":false}
+      ],
+      "steps":[
+        "Máslo rozpusťte v pánvi na mírném ohni.",
+        "Vejce rozklepněte, osolte, opepřete a míchejte vařečkou.",
+        "Sejmout z ohně těsně před ztuhnutím – vajíčka dojdou sama.",
+        "Podávejte na teplém chlebu.",
+        "Navrch nastrouhejte eidam a posypte nasekanou pažitkou."
+      ]
+    },
+    "kd_sn3": {
+      "id":"kd_sn3","source":"kucharkadc","sourceLabel":"Kuchařka pro dceru","sourceUrl":"https://www.kucharkaprodceru.cz/",
+      "meal":"snidane","mealLabel":"Snídaně","name":"Ovesná kaše s jogurtem a ovocem","time":"10 min","calories":"~350 kcal","tag":"vydatne",
+      "ingredients":[
+        {"name":"ovesné vločky","qty":"400 g","isAkce":false},
+        {"name":"mléko","qty":"800 ml","isAkce":false},
+        {"name":"Olma Florian jogurt 🏷️","qty":"2 × 150 g","isAkce":true},
+        {"name":"sezónní ovoce","qty":"200 g","isAkce":false},
+        {"name":"med, skořice","qty":"dle chuti","isAkce":false}
+      ],
+      "steps":[
+        "Vločky zalijte mlékem a přiveďte k varu.",
+        "Za stálého míchání vařte na mírném ohni 5 min do zhoustnutí.",
+        "Ochuťte medem a skořicí.",
+        "Nalijte do misek a přidejte jogurt.",
+        "Zdobte čerstvým ovocem."
+      ]
+    },
+    "kd_ob1": {
+      "id":"kd_ob1","source":"kucharkadc","sourceLabel":"Kuchařka pro dceru","sourceUrl":"https://www.kucharkaprodceru.cz/pomalu-peceny-losos/",
+      "meal":"obed","mealLabel":"Oběd","name":"Pomalu pečený losos s bylinkovou omáčkou","time":"50 min","calories":"~410 kcal","tag":"smisene",
+      "ingredients":[
+        {"name":"losos filet (chlazený) 🏷️","qty":"700 g","isAkce":true},
+        {"name":"olivový olej","qty":"2 lžíce","isAkce":false},
+        {"name":"citron","qty":"1 ks","isAkce":false},
+        {"name":"čerstvá petržel","qty":"1 hrst","isAkce":false},
+        {"name":"červená cibule","qty":"1 ks","isAkce":false},
+        {"name":"sůl, pepř","qty":"dle chuti","isAkce":false}
+      ],
+      "steps":[
+        "Troubu předehřejte na 95 °C. Vařte 1,5 l vody a nalijte do hlubokého pekáčku na spodním roštu (vodní lázeň).",
+        "Losos položte kůží dolů na papír vystlaný plech.",
+        "Lehce osolte, opepřete a pokapejte olejem a citronovou šťávou.",
+        "Pečte přesně 40 minut – maso bude jemně tuhé, snadno se odděluje vidličkou.",
+        "Podávejte zdobené petrželí, plátky červené cibule a klínky citronu."
+      ]
+    },
+    "kd_ob2": {
+      "id":"kd_ob2","source":"kucharkadc","sourceLabel":"Kuchařka pro dceru","sourceUrl":"https://www.kucharkaprodceru.cz/recepty-z-kureciho-masa/",
+      "meal":"obed","mealLabel":"Oběd","name":"Kuřecí prsa dušená v pórku","time":"30 min","calories":"~390 kcal","tag":"smisene",
+      "ingredients":[
+        {"name":"kuřecí prsa","qty":"4 ks (800 g)","isAkce":false},
+        {"name":"póry","qty":"2 ks","isAkce":false},
+        {"name":"kuřecí vývar","qty":"500 ml","isAkce":false},
+        {"name":"Olma máslo 🏷️","qty":"60 g","isAkce":true},
+        {"name":"citronová šťáva","qty":"1 lžíce","isAkce":false},
+        {"name":"sušená majoránka, sůl, pepř","qty":"dle chuti","isAkce":false}
+      ],
+      "steps":[
+        "Póry očistěte a nakrájejte na kolečka. V kastrolu je poduste s polovinou másla a vývarem 8–10 min.",
+        "Kuřecí prsa nakrájejte podélně na dva plátky, osolte a opepřete.",
+        "Vložte do póru, přikryjte pokličkou a duste 10 min.",
+        "Maso vyjměte. Zredukujte vývar na polovinu, vmíchejte zbylé máslo, dochuťte citronem.",
+        "Podávejte prsa přelitá pórkovým základem."
+      ]
+    },
+    "kd_ob3": {
+      "id":"kd_ob3","source":"kucharkadc","sourceLabel":"Kuchařka pro dceru","sourceUrl":"https://www.kucharkaprodceru.cz/",
+      "meal":"obed","mealLabel":"Oběd","name":"Vepřová pečeně na česneku s bramborami","time":"100 min","calories":"~590 kcal","tag":"vydatne",
+      "ingredients":[
+        {"name":"vepřová pečeně K-Mistři 🏷️","qty":"1 kg","isAkce":true},
+        {"name":"brambory","qty":"800 g","isAkce":false},
+        {"name":"česnek","qty":"6 stroužků","isAkce":false},
+        {"name":"smetana 30%","qty":"200 ml","isAkce":false},
+        {"name":"slunečnicový olej Slunka 🏷️","qty":"3 lžíce","isAkce":true},
+        {"name":"tymián, rozmarýn, sůl, pepř","qty":"dle chuti","isAkce":false}
+      ],
+      "steps":[
+        "Maso naplňte stroužky česneku (propíchněte nožem a vsuňte česnek), potřete olejem, solí a bylinkami.",
+        "Na rozehřátém oleji opečte maso ze všech stran 5 min.",
+        "Zalijte 200 ml vody, přikryjte a pečte v troubě 160 °C po dobu 80 min.",
+        "Brambory uvařte doměkka.",
+        "Z výpeku připravte omáčku se smetanou; podávejte s bramborami."
+      ]
+    },
+    "kd_ob4": {
+      "id":"kd_ob4","source":"kucharkadc","sourceLabel":"Kuchařka pro dceru","sourceUrl":"https://www.kucharkaprodceru.cz/",
+      "meal":"obed","mealLabel":"Oběd","name":"Těstovinový salát s lososem a kapary","time":"20 min","calories":"~450 kcal","tag":"smisene",
+      "ingredients":[
+        {"name":"těstoviny (farfalle/penne) 🏷️","qty":"500 g","isAkce":true},
+        {"name":"losos filet (chlazený) 🏷️","qty":"400 g","isAkce":true},
+        {"name":"kapary","qty":"100 g","isAkce":false},
+        {"name":"slunečnicový olej Slunka 🏷️","qty":"3 lžíce","isAkce":true},
+        {"name":"citron","qty":"1 ks","isAkce":false},
+        {"name":"čerstvá petržel, sůl, pepř","qty":"dle chuti","isAkce":false}
+      ],
+      "steps":[
+        "Těstoviny uvařte al dente dle návodu; slijte a propláchněte studenou vodou.",
+        "Losos na pánvi opečte na oleji 3 min z každé strany; nakrájejte na kousky.",
+        "Těstoviny, losos, kapary, olej a citronovou šťávu promíchejte.",
+        "Dochuťte solí a pepřem.",
+        "Posypte nasekanou petrželí a podávejte."
+      ]
+    },
+    "kd_ve1": {
+      "id":"kd_ve1","source":"kucharkadc","sourceLabel":"Kuchařka pro dceru","sourceUrl":"https://www.kucharkaprodceru.cz/recept-na-file/",
+      "meal":"vecere","mealLabel":"Večeře","name":"Losos v mléčném pórku","time":"25 min","calories":"~430 kcal","tag":"vydatne",
+      "ingredients":[
+        {"name":"losos filet (chlazený) 🏷️","qty":"600 g","isAkce":true},
+        {"name":"póry","qty":"2 ks","isAkce":false},
+        {"name":"smetana 30%","qty":"300 ml","isAkce":false},
+        {"name":"Olma máslo 🏷️","qty":"40 g","isAkce":true},
+        {"name":"citron","qty":"0,5 ks","isAkce":false},
+        {"name":"sůl, pepř, muškát","qty":"dle chuti","isAkce":false}
+      ],
+      "steps":[
+        "Pórek nakrájejte na tenká kolečka a poduste na másle v širší pánvi 5 min.",
+        "Zalijte smetanou, přiveďte k mírnému varu.",
+        "Losos nakrájejte na 4 filety a vložte do smetanového pórku.",
+        "Přikryjte pokličkou a duste 10 min.",
+        "Dochuťte citronovou šťávou, solí, pepřem a muškátem."
+      ]
+    },
+    "kd_ve2": {
+      "id":"kd_ve2","source":"kucharkadc","sourceLabel":"Kuchařka pro dceru","sourceUrl":"https://www.kucharkaprodceru.cz/fish-and-chips/",
+      "meal":"vecere","mealLabel":"Večeře","name":"Fish & Chips z lososa","time":"45 min","calories":"~550 kcal","tag":"vydatne",
+      "ingredients":[
+        {"name":"losos filet (chlazený) 🏷️","qty":"600 g","isAkce":true},
+        {"name":"brambory","qty":"800 g","isAkce":false},
+        {"name":"mouka","qty":"100 g","isAkce":false},
+        {"name":"vejce","qty":"2 ks","isAkce":false},
+        {"name":"strouhanka","qty":"150 g","isAkce":false},
+        {"name":"slunečnicový olej Slunka 🏷️","qty":"na smažení","isAkce":true},
+        {"name":"sůl, citron","qty":"dle chuti","isAkce":false}
+      ],
+      "steps":[
+        "Brambory nakrájejte na klínky, osolte a pečte 35 min na 200 °C.",
+        "Losos nakrájejte na kousky 4×4 cm.",
+        "Obalte postupně v mouce, rozšlehaném vejci a strouhance.",
+        "Smažte na oleji z obou stran 3–4 min dozlatova.",
+        "Podávejte ihned s pečenými klínky a plátkem citronu."
+      ]
+    },
+    "kd_ve3": {
+      "id":"kd_ve3","source":"kucharkadc","sourceLabel":"Kuchařka pro dceru","sourceUrl":"https://www.kucharkaprodceru.cz/",
+      "meal":"vecere","mealLabel":"Večeře","name":"Zapečené těstoviny s eidamem a zeleninou","time":"35 min","calories":"~500 kcal","tag":"vydatne",
+      "ingredients":[
+        {"name":"těstoviny (penne/rigatoni) 🏷️","qty":"500 g","isAkce":true},
+        {"name":"Šumavský Eidam sýr 🏷️","qty":"300 g","isAkce":true},
+        {"name":"Vinica mražená zelenina 🏷️","qty":"450 g","isAkce":true},
+        {"name":"smetana 30%","qty":"200 ml","isAkce":false},
+        {"name":"česnek","qty":"3 stroužky","isAkce":false},
+        {"name":"Olma máslo 🏷️","qty":"20 g (na formu)","isAkce":true},
+        {"name":"sůl, pepř, muškát","qty":"dle chuti","isAkce":false}
+      ],
+      "steps":[
+        "Těstoviny uvařte al dente; slijte.",
+        "Zeleninu rozmrazte a smíchejte s těstovinami v míse.",
+        "Smetanu s prolisovaným česnekem ohřejte, ochuťte solí, pepřem a muškátem.",
+        "Formu vymažte máslem, nalijte těstoviny se zeleninou, přelijte smetanou.",
+        "Posypte nastrouhané eidamem a zapečte 20 min na 200 °C do zlatavé kůrky."
+      ]
+    }
+  },
+  "mealPlan": [
+    {
+      "date":"2026-04-21","dayAbbr":"Út","dayFull":"Úterý","dayId":"ut",
+      "weather":{"maxTemp":11.7,"minTemp":5.2,"icon":"☁️","type":"vydatne"},
+      "meals":{
+        "snidane":{"restart":"rst_sn1","kucharkadc":"kd_sn1"},
+        "obed":{"restart":"rst_ob2","kucharkadc":"kd_ob1"},
+        "vecere":{"restart":"rst_ve1","kucharkadc":"kd_ve1"}
+      }
+    },
+    {
+      "date":"2026-04-22","dayAbbr":"St","dayFull":"Středa","dayId":"st",
+      "weather":{"maxTemp":14.4,"minTemp":3.6,"icon":"☁️","type":"vydatne"},
+      "meals":{
+        "snidane":{"restart":"rst_sn2","kucharkadc":"kd_sn2"},
+        "obed":{"restart":"rst_ob3","kucharkadc":"kd_ob2"},
+        "vecere":{"restart":"rst_ve2","kucharkadc":"kd_ve2"}
+      }
+    },
+    {
+      "date":"2026-04-23","dayAbbr":"Čt","dayFull":"Čtvrtek","dayId":"ct",
+      "weather":{"maxTemp":17.4,"minTemp":6.4,"icon":"☁️","type":"smisene"},
+      "meals":{
+        "snidane":{"restart":"rst_sn3","kucharkadc":"kd_sn3"},
+        "obed":{"restart":"rst_ob1","kucharkadc":"kd_ob4"},
+        "vecere":{"restart":"rst_ve3","kucharkadc":"kd_ve3"}
+      }
+    },
+    {
+      "date":"2026-04-24","dayAbbr":"Pá","dayFull":"Pátek","dayId":"pa",
+      "weather":{"maxTemp":17.0,"minTemp":6.2,"icon":"🌤️","type":"smisene"},
+      "meals":{
+        "snidane":{"restart":"rst_sn1","kucharkadc":"kd_sn1"},
+        "obed":{"restart":"rst_ob4","kucharkadc":"kd_ob3"},
+        "vecere":{"restart":"rst_ve1","kucharkadc":"kd_ve1"}
+      }
+    },
+    {
+      "date":"2026-04-25","dayAbbr":"So","dayFull":"Sobota","dayId":"so",
+      "weather":{"maxTemp":19.5,"minTemp":6.2,"icon":"☁️","type":"smisene"},
+      "meals":{
+        "snidane":{"restart":"rst_sn2","kucharkadc":"kd_sn2"},
+        "obed":{"restart":"rst_ob2","kucharkadc":"kd_ob1"},
+        "vecere":{"restart":"rst_ve2","kucharkadc":"kd_ve2"}
+      }
+    },
+    {
+      "date":"2026-04-26","dayAbbr":"Ne","dayFull":"Neděle","dayId":"ne",
+      "weather":{"maxTemp":12.2,"minTemp":5.9,"icon":"🌤️","type":"vydatne"},
+      "meals":{
+        "snidane":{"restart":"rst_sn3","kucharkadc":"kd_sn3"},
+        "obed":{"restart":"rst_ob3","kucharkadc":"kd_ob2"},
+        "vecere":{"restart":"rst_ve3","kucharkadc":"kd_ve3"}
+      }
+    },
+    {
+      "date":"2026-04-27","dayAbbr":"Po","dayFull":"Pondělí","dayId":"po",
+      "weather":{"maxTemp":13.4,"minTemp":2.2,"icon":"☁️","type":"vydatne"},
+      "meals":{
+        "snidane":{"restart":"rst_sn1","kucharkadc":"kd_sn1"},
+        "obed":{"restart":"rst_ob1","kucharkadc":"kd_ob4"},
+        "vecere":{"restart":"rst_ve1","kucharkadc":"kd_ve1"}
+      }
+    }
+  ],
+  "shoppingList": [
+    {"id":"sl_k1","name":"🏷️ Losos filet (chlazený)","qty":"2 kg","price":498.00,"isAkce":true,"source":"kucharkadc","note":"24,90 Kč/100g – sleva 54 %"},
+    {"id":"sl_k2","name":"🏷️ Vepřová pečeně K-Mistři","qty":"1,5 kg","price":134.85,"isAkce":true,"source":null,"note":"89,90 Kč/kg – sleva 60 %"},
+    {"id":"sl_k3","name":"🏷️ Šumavský Eidam sýr","qty":"600 g","price":101.40,"isAkce":true,"source":null,"note":"16,90 Kč/100g – sleva 57 %"},
+    {"id":"sl_k4","name":"🏷️ Olma Florian jogurt","qty":"8 ks (150g)","price":47.20,"isAkce":true,"source":null,"note":"5,90 Kč/ks – sleva 62 %"},
+    {"id":"sl_k5","name":"🏷️ Olma máslo","qty":"2 × 250 g","price":57.80,"isAkce":true,"source":null,"note":"28,90 Kč/250g – sleva 15 %"},
+    {"id":"sl_k6","name":"🏷️ Slunka slunečnicový olej","qty":"1 L","price":34.90,"isAkce":true,"source":null,"note":"34,90 Kč/L – sleva 53 %"},
+    {"id":"sl_k7","name":"🏷️ Těstoviny (penne/farfalle)","qty":"2 × 500 g","price":55.80,"isAkce":true,"source":"kucharkadc","note":"27,90 Kč/500g – sleva 38 %"},
+    {"id":"sl_k8","name":"🏷️ Vinica mražená zelenina","qty":"2 × 450 g","price":37.80,"isAkce":true,"source":null,"note":"18,90 Kč/450g – sleva 30 %"},
+    {"id":"sl_r1","name":"Vejce","qty":"24 ks","price":85.00,"isAkce":false,"source":null},
+    {"id":"sl_r2","name":"Brambory","qty":"2 kg","price":50.00,"isAkce":false,"source":null},
+    {"id":"sl_r3","name":"Celozrnný chléb","qty":"2 bochníky","price":70.00,"isAkce":false,"source":null},
+    {"id":"sl_r4","name":"Póry","qty":"4 ks","price":60.00,"isAkce":false,"source":null},
+    {"id":"sl_r5","name":"Cibule (červená i bílá)","qty":"6 ks","price":30.00,"isAkce":false,"source":null},
+    {"id":"sl_r6","name":"Česnek","qty":"1 hlávka","price":15.00,"isAkce":false,"source":null},
+    {"id":"sl_r7","name":"Citróny","qty":"4 ks","price":32.00,"isAkce":false,"source":null},
+    {"id":"sl_r8","name":"Čerstvá petržel a pažitka","qty":"2 svazky","price":30.00,"isAkce":false,"source":null},
+    {"id":"sl_r9","name":"Smetana 30%","qty":"2 × 200 ml","price":50.00,"isAkce":false,"source":null},
+    {"id":"sl_r10","name":"Tvaroh / žervé","qty":"500 g","price":45.00,"isAkce":false,"source":null},
+    {"id":"sl_r11","name":"Med","qty":"250 ml","price":55.00,"isAkce":false,"source":null},
+    {"id":"sl_r12","name":"Mouka (celozrnná špaldová)","qty":"500 g","price":35.00,"isAkce":false,"source":null},
+    {"id":"sl_r13","name":"Sezónní ovoce (jahody/borůvky)","qty":"400 g","price":65.00,"isAkce":false,"source":null},
+    {"id":"sl_r14","name":"Batáty","qty":"1,6 kg","price":72.00,"isAkce":false,"source":"restart"},
+    {"id":"sl_r15","name":"Cuketa","qty":"500 g","price":30.00,"isAkce":false,"source":"restart"},
+    {"id":"sl_r16","name":"Brokolice","qty":"1 hlávka (600 g)","price":35.00,"isAkce":false,"source":"restart"},
+    {"id":"sl_r17","name":"Kapusta","qty":"0,5 hlávky","price":25.00,"isAkce":false,"source":"restart"},
+    {"id":"sl_r18","name":"Halloumi sýr","qty":"200 g","price":89.00,"isAkce":false,"source":"restart"},
+    {"id":"sl_r19","name":"Feta sýr","qty":"200 g","price":55.00,"isAkce":false,"source":"restart"},
+    {"id":"sl_r20","name":"Mozzarella","qty":"125 g","price":35.00,"isAkce":false,"source":"restart"},
+    {"id":"sl_r21","name":"Celozrnné tortilly","qty":"8 ks","price":45.00,"isAkce":false,"source":"restart"},
+    {"id":"sl_r22","name":"Rýže kulatozrnná","qty":"400 g","price":30.00,"isAkce":false,"source":"restart"},
+    {"id":"sl_r23","name":"Datle bez pecky","qty":"200 g","price":45.00,"isAkce":false,"source":"restart"},
+    {"id":"sl_r24","name":"Vlašské ořechy","qty":"150 g","price":55.00,"isAkce":false,"source":"restart"},
+    {"id":"sl_r25","name":"Mleté maso (hovězí/vepřové mix)","qty":"700 g","price":91.00,"isAkce":false,"source":"restart"},
+    {"id":"sl_r26","name":"Mleté krůtí maso","qty":"600 g","price":72.00,"isAkce":false,"source":"restart"},
+    {"id":"sl_r27","name":"Dijonská hořčice","qty":"1 sklenička","price":35.00,"isAkce":false,"source":"restart"},
+    {"id":"sl_r28","name":"Kuřecí prsa","qty":"4 ks (800 g)","price":280.00,"isAkce":false,"source":"kucharkadc"},
+    {"id":"sl_r29","name":"Granola","qty":"400 g","price":65.00,"isAkce":false,"source":"kucharkadc"},
+    {"id":"sl_r30","name":"Ovesné vločky","qty":"400 g","price":25.00,"isAkce":false,"source":"kucharkadc"},
+    {"id":"sl_r31","name":"Mléko","qty":"1 L","price":30.00,"isAkce":false,"source":"kucharkadc"},
+    {"id":"sl_r32","name":"Kapary","qty":"100 g","price":35.00,"isAkce":false,"source":"kucharkadc"},
+    {"id":"sl_r33","name":"Kuřecí vývar","qty":"1 L","price":35.00,"isAkce":false,"source":"kucharkadc"},
+    {"id":"sl_r34","name":"Strouhanka","qty":"150 g","price":20.00,"isAkce":false,"source":"kucharkadc"}
+  ]
+}
