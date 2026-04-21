@@ -73,12 +73,15 @@
     .btn-dc.active[data-meal="snidane"] { background: var(--c-breakfast); border-color: var(--c-breakfast); color: #fff; }
     .btn-dc.active[data-meal="obed"]    { background: var(--c-lunch);     border-color: var(--c-lunch);     color: #fff; }
     .btn-dc.active[data-meal="vecere"]  { background: var(--c-dinner);    border-color: var(--c-dinner);    color: #fff; }
-    .dc-select {
-      font-size: 11px; background: #fff; color: #374151;
-      border: 1px solid #cbd5e1; border-radius: 4px;
-      padding: 2px 4px; cursor: pointer; outline: none; max-width: 90px;
+    .dc-src-pair { display: flex; gap: 2px; }
+    .dc-src-pair[aria-disabled="true"] { opacity: .35; pointer-events: none; }
+    .btn-src {
+      padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 700;
+      color: #94a3b8; background: #e2e8f0; border: 1px solid #cbd5e1;
+      cursor: pointer; transition: all .15s; white-space: nowrap;
     }
-    .dc-select:disabled { opacity: .4; cursor: default; }
+    .btn-src.active[data-src="restart"]    { background: var(--c-restart);    border-color: var(--c-restart);    color: #fff; }
+    .btn-src.active[data-src="kucharkadc"] { background: var(--c-kucharkadc); border-color: var(--c-kucharkadc); color: #fff; }
     .dc-sep { width: 1px; height: 18px; background: #cbd5e1; margin: 0 2px; }
 
     /* Shopping list */
@@ -356,9 +359,9 @@ const appState = {
 const dayState = {};
 DAY_ORDER.forEach(d => {
   dayState[d] = {
-    snidane: { show: true, source: 'both' },
-    obed:    { show: true, source: 'both' },
-    vecere:  { show: true, source: 'both' }
+    snidane: { show: true, source: 'restart' },
+    obed:    { show: true, source: 'restart' },
+    vecere:  { show: true, source: 'restart' }
   };
 });
 
@@ -393,7 +396,7 @@ function applyDayFilter(dayId) {
 
     const src = ds[meal].source;
     section.querySelectorAll('.recipe-card').forEach(card => {
-      card.style.display = (src === 'both' || src === card.dataset.source) ? '' : 'none';
+      card.style.display = src === card.dataset.source ? '' : 'none';
     });
   });
 }
@@ -467,16 +470,20 @@ function toggleDayMeal(dayId, meal, btn) {
   const st = dayState[dayId][meal];
   st.show = !st.show;
   btn.classList.toggle('active', st.show);
-  const sel = document.getElementById(`dcsel-${dayId}-${meal}`);
-  if (sel) sel.disabled = !st.show;
+  const srcPair = document.getElementById(`dcsrc-${dayId}-${meal}`);
+  if (srcPair) srcPair.setAttribute('aria-disabled', st.show ? 'false' : 'true');
   applyDayFilter(dayId);
   updateShoppingVisibility();
   recalcTotal();
 }
 
-/* ─── Per-day controls: change source ─── */
-function setDayMealSource(dayId, meal, src) {
+/* ─── Per-day controls: change source (exclusive — R or K, never both) ─── */
+function setDayMealSource(dayId, meal, src, group) {
   dayState[dayId][meal].source = src;
+  if (group) {
+    group.querySelectorAll('.btn-src').forEach(b =>
+      b.classList.toggle('active', b.dataset.src === src));
+  }
   applyDayFilter(dayId);
   updateShoppingVisibility();
   recalcTotal();
@@ -489,9 +496,7 @@ function getActiveSources() {
     if (!appState.activeDays.has(dayId)) return;
     ['snidane','obed','vecere'].forEach(meal => {
       if (!dayState[dayId][meal].show) return;
-      const src = dayState[dayId][meal].source;
-      if (src === 'both' || src === 'restart')    s.add('restart');
-      if (src === 'both' || src === 'kucharkadc') s.add('kucharkadc');
+      s.add(dayState[dayId][meal].source);
     });
   });
   return s;
@@ -570,7 +575,7 @@ function renderDays() {
         </div>
       </div>
 
-      <!-- OPRAVA 4: per-day controls přímo na kartě -->
+      <!-- Per-day controls: toggle meal + exclusive source -->
       <div class="day-controls">
         ${mealConfig.map(mc => {
           const ds = dayState[day.dayId][mc.key];
@@ -582,14 +587,18 @@ function renderDays() {
                       onclick="toggleDayMeal('${day.dayId}','${mc.key}',this)">
                 ${mc.label}
               </button>
-              <select class="dc-select"
-                      id="dcsel-${day.dayId}-${mc.key}"
-                      onchange="setDayMealSource('${day.dayId}','${mc.key}',this.value)"
-                      ${ds.show ? '' : 'disabled'}>
-                <option value="both"       ${ds.source==='both'       ?'selected':''}>Oba</option>
-                <option value="restart"    ${ds.source==='restart'    ?'selected':''}>Restart</option>
-                <option value="kucharkadc" ${ds.source==='kucharkadc' ?'selected':''}>Kuchařka</option>
-              </select>
+              <div class="dc-src-pair" id="dcsrc-${day.dayId}-${mc.key}" aria-disabled="${ds.show ? 'false' : 'true'}">
+                <button class="btn-src ${ds.source==='restart' ? 'active' : ''}"
+                        data-src="restart"
+                        onclick="setDayMealSource('${day.dayId}','${mc.key}','restart',this.closest('.dc-src-pair'))">
+                  Restart
+                </button>
+                <button class="btn-src ${ds.source==='kucharkadc' ? 'active' : ''}"
+                        data-src="kucharkadc"
+                        onclick="setDayMealSource('${day.dayId}','${mc.key}','kucharkadc',this.closest('.dc-src-pair'))">
+                  Kuchařka
+                </button>
+              </div>
             </div>
             ${mc.key !== 'vecere' ? '<div class="dc-sep"></div>' : ''}`;
         }).join('')}
@@ -606,7 +615,7 @@ function renderMealSection(mc, day) {
   return `
     <div class="meal-section mb-1.5" data-meal="${mc.key}">
       <div class="meal-header ${mc.cls}">${mc.label}</div>
-      <div class="meal-grid grid gap-2 mt-1" style="grid-template-columns:1fr 1fr">
+      <div class="meal-grid grid gap-2 mt-1" style="grid-template-columns:1fr">
         ${renderCard(recipesData[ids.restart])}
         ${renderCard(recipesData[ids.kucharkadc])}
       </div>
