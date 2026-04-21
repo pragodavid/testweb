@@ -341,6 +341,51 @@ const shoppingData = [
   {id:"sl_r33",name:"Strouhanka",               qty:"150 g",     price:20.00, isAkce:false,source:"kucharkadc"}
 ];
 
+/* ─── Explicit mapping: shopping item → recipe IDs that require it ─── */
+const shoppingRecipeIds = {
+  sl_k1: ['kd_ob1','kd_ob4','kd_ve1','kd_ve2'],
+  sl_k2: ['rst_ob4','kd_ob3'],
+  sl_k3: ['rst_sn2','rst_ob4','rst_ve2','kd_sn2','kd_ve3'],
+  sl_k4: ['rst_sn3','rst_ob2','rst_ob4','rst_ve1','kd_sn1','kd_sn3'],
+  sl_k5: ['rst_ve2','rst_ve3','kd_sn2','kd_ob2','kd_ve1','kd_ve3'],
+  sl_k6: ['rst_sn1','rst_ob1','rst_ob2','rst_ob3','kd_ob3','kd_ob4','kd_ve2'],
+  sl_k7: ['kd_ob4','kd_ve3'],
+  sl_k8: ['rst_ob3','kd_ve3'],
+  sl_r1: ['rst_sn1','rst_sn2','rst_ob1','rst_ob2','rst_ve2','rst_ve3','kd_sn2','kd_ve2'],
+  sl_r2: ['rst_ve3','kd_ob3','kd_ve2'],
+  sl_r3: ['rst_sn2','kd_sn2'],
+  sl_r4: ['rst_ve3','kd_ob2','kd_ve1'],
+  sl_r5: ['rst_ve1','kd_ob1'],
+  sl_r6: ['rst_ve1','kd_ob3','kd_ve3'],
+  sl_r7: ['rst_ve1','kd_ob1','kd_ob2','kd_ob4','kd_ve1','kd_ve2'],
+  sl_r8: ['rst_sn2','rst_ve1','kd_ob1','kd_ob4','kd_sn2'],
+  sl_r9: ['kd_ob3','kd_ve1','kd_ve3'],
+  sl_r10:['rst_sn2','rst_ob1','rst_ve2'],
+  sl_r11:['rst_sn3','kd_sn1','kd_sn3'],
+  sl_r12:['rst_sn1','rst_ob1','rst_ob2','rst_ve2','kd_ve2'],
+  sl_r13:['kd_sn1','kd_sn3'],
+  sl_r14:['rst_sn1'],
+  sl_r15:['rst_ob1'],
+  sl_r16:['rst_ve2'],
+  sl_r17:['rst_ob2'],
+  sl_r18:['rst_ob3'],
+  sl_r19:['rst_ve3'],
+  sl_r20:['rst_ob1'],
+  sl_r21:['rst_ob4'],
+  sl_r22:['rst_ob3'],
+  sl_r23:['rst_sn3'],
+  sl_r24:['rst_ve1'],
+  sl_r25:['rst_ob2'],
+  sl_r26:['rst_ob4','rst_ve1'],
+  sl_r27:['kd_ob2'],
+  sl_r28:['kd_sn1'],
+  sl_r29:['kd_sn3'],
+  sl_r30:['kd_sn3'],
+  sl_r31:['kd_ob4'],
+  sl_r32:['rst_ob3','kd_ob2'],
+  sl_r33:['kd_ve2']
+};
+
 /* ══════════════════════════════════════════════
    APP STATE
 ══════════════════════════════════════════════ */
@@ -502,8 +547,41 @@ function getActiveSources() {
   return s;
 }
 
+/* ─── Active recipe IDs based on current day+meal+source state ─── */
+function getActiveRecipeIds() {
+  const ids = new Set();
+  mealPlanData.forEach(day => {
+    if (!appState.activeDays.has(day.dayId)) return;
+    ['snidane','obed','vecere'].forEach(meal => {
+      const ds = dayState[day.dayId][meal];
+      if (!ds.show) return;
+      const rid = day.meals[meal][ds.source];
+      if (rid) ids.add(rid);
+    });
+  });
+  return ids;
+}
+
+/* ─── Compute which days+meals use a shopping item ─── */
+function getItemDaysMeals(itemId) {
+  const rids = shoppingRecipeIds[itemId];
+  if (!rids || rids.length === 0) return {days:'', meals:''};
+  const days = new Set(), meals = new Set();
+  mealPlanData.forEach(day => {
+    ['snidane','obed','vecere'].forEach(meal => {
+      ['restart','kucharkadc'].forEach(src => {
+        if (rids.includes(day.meals[meal][src])) {
+          days.add(day.dayId);
+          meals.add(meal);
+        }
+      });
+    });
+  });
+  return {days:[...days].join(' '), meals:[...meals].join(' ')};
+}
+
 function updateShoppingVisibility() {
-  const activeSrc = getActiveSources();
+  const activeRids = getActiveRecipeIds();
   const noDays = appState.activeDays.size === 0;
   let lastHeader = null, sectionHasItems = false;
 
@@ -513,10 +591,16 @@ function updateShoppingVisibility() {
       lastHeader = row; sectionHasItems = false;
       return;
     }
-    const src = row.dataset.source || '';
-    let vis = !noDays;
-    if (src === 'restart')    vis = vis && activeSrc.has('restart');
-    if (src === 'kucharkadc') vis = vis && activeSrc.has('kucharkadc');
+    const itemId = row.id ? row.id.replace('shop-', '') : '';
+    const rids = shoppingRecipeIds[itemId];
+    let vis = false;
+    if (!noDays) {
+      if (!rids || rids.length === 0) {
+        vis = true; // položka bez mapování: vždy zobrazit
+      } else {
+        vis = rids.some(rid => activeRids.has(rid));
+      }
+    }
     if (appState.showOnlyAkce && !row.classList.contains('row-akce')) vis = false;
     row.style.display = vis ? '' : 'none';
     if (vis) sectionHasItems = true;
@@ -664,9 +748,12 @@ function renderShopping() {
       tbody.insertAdjacentHTML('beforeend',
         `<tr ${srcAttr} class="shop-section-header"><td colspan="5">${labels[section]||section}</td></tr>`);
     }
-    const srcAttr = item.source ? `data-source="${item.source}"` : '';
+    const {days, meals} = getItemDaysMeals(item.id);
+    const srcAttr  = item.source ? `data-source="${item.source}"` : '';
+    const dayAttr  = days  ? `data-day="${days}"`   : '';
+    const mealAttr = meals ? `data-meal="${meals}"` : '';
     tbody.insertAdjacentHTML('beforeend',
-      `<tr ${srcAttr} class="${item.isAkce?'row-akce':''} border-b hover:bg-gray-50"
+      `<tr ${srcAttr} ${dayAttr} ${mealAttr} class="${item.isAkce?'row-akce':''} border-b hover:bg-gray-50"
           data-price="${item.price}" id="shop-${item.id}">
         <td class="p-2"><input type="checkbox" onchange="toggleShopItem(this.closest('tr'))" class="w-4 h-4 cursor-pointer"></td>
         <td class="p-2 font-medium text-sm">${item.name}</td>
