@@ -1,5 +1,11 @@
 {
   "generatedAt": "2026-04-21",
+  "kauflandValidity": {
+    "from": "2026-04-22",
+    "to": "2026-04-28",
+    "fromLabel": "od středy 22. 4.",
+    "fullLabel": "22. 4. – 28. 4. 2026"
+  },
   "weather": [
     {"date":"2026-04-21","dayAbbr":"Út","dayFull":"Úterý","dayId":"ut","maxTemp":11.7,"minTemp":5.2,"code":3,"icon":"☁️","type":"vydatne"},
     {"date":"2026-04-22","dayAbbr":"St","dayFull":"Středa","dayId":"st","maxTemp":14.4,"minTemp":3.6,"code":3,"icon":"☁️","type":"vydatne"},

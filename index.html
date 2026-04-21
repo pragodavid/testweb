@@ -11,53 +11,75 @@
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
   <style>
     :root {
-      --c-header: #2e7d32;
-      --c-breakfast: #f9a825;
-      --c-lunch: #388e3c;
-      --c-dinner: #1565c0;
-      --c-action: #ff6f00;
-      --c-restart: #00695c;
+      --c-header:     #2e7d32;
+      --c-breakfast:  #f9a825;
+      --c-lunch:      #388e3c;
+      --c-dinner:     #1565c0;
+      --c-action:     #ff6f00;
+      --c-restart:    #00695c;
       --c-kucharkadc: #6a1d8a;
-      --c-bg: #e8f5e9;
-      --c-checked: #d32f2f;
+      --c-bg:         #e8f5e9;
+      --c-checked:    #d32f2f;
     }
     body { background: var(--c-bg); font-family: 'Segoe UI', system-ui, sans-serif; }
 
     /* ── Sticky bar ── */
     .sticky-bar { position: sticky; top: 0; z-index: 50; background: var(--c-header); box-shadow: 0 2px 8px rgba(0,0,0,.25); }
-    .filter-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; padding: 5px 0; }
-    .filter-label { font-size: 11px; font-weight: 700; color: rgba(255,255,255,.7); white-space: nowrap; min-width: 52px; }
+    .filter-row { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; padding: 5px 0; }
+    .filter-label { font-size: 11px; font-weight: 700; color: rgba(255,255,255,.65); white-space: nowrap; }
 
-    /* Day toggle buttons */
-    .btn-day { padding: 3px 9px; border-radius: 6px; font-size: 12px; font-weight: 600; color: rgba(255,255,255,.55); background: rgba(255,255,255,.1); cursor: pointer; border: 1px solid rgba(255,255,255,.15); transition: all .15s; user-select: none; }
-    .btn-day.active { color: #fff; background: rgba(255,255,255,.3); border-color: rgba(255,255,255,.4); }
-    .btn-day.shopping-day { outline: 2px solid #ffeb3b; outline-offset: 1px; }
-    .btn-quick { padding: 3px 7px; border-radius: 4px; font-size: 11px; color: rgba(255,255,255,.65); background: transparent; border: 1px solid rgba(255,255,255,.2); cursor: pointer; }
+    /* Day toggle buttons — dynamically rendered, order follows shopping day */
+    .btn-day { padding: 3px 10px; border-radius: 6px; font-size: 12px; font-weight: 600;
+               color: rgba(255,255,255,.5); background: rgba(255,255,255,.1);
+               cursor: pointer; border: 1px solid rgba(255,255,255,.15); transition: all .15s; user-select: none; }
+    .btn-day.active { color: #fff; background: rgba(255,255,255,.28); border-color: rgba(255,255,255,.4); }
+    .btn-day.shopping-day { outline: 2px solid #ffeb3b; outline-offset: 2px; color: #ffeb3b !important; }
+    .btn-quick { padding: 2px 8px; border-radius: 4px; font-size: 11px; color: rgba(255,255,255,.6);
+                 background: transparent; border: 1px solid rgba(255,255,255,.2); cursor: pointer; }
     .btn-quick:hover { background: rgba(255,255,255,.15); color: #fff; }
-
-    /* Meal toggle + source select */
-    .meal-group { display: flex; align-items: center; gap: 3px; background: rgba(0,0,0,.15); border-radius: 7px; padding: 3px 6px; }
-    .btn-meal { padding: 2px 7px; border-radius: 5px; font-size: 12px; font-weight: 700; color: rgba(255,255,255,.5); background: transparent; border: none; cursor: pointer; transition: all .15s; }
-    .btn-meal.active { color: #fff; background: rgba(255,255,255,.22); }
-    .src-select { font-size: 11px; background: rgba(255,255,255,.12); color: #fff; border: none; border-radius: 4px; padding: 2px 4px; cursor: pointer; outline: none; }
-    .src-select option { background: #1b5e20; color: #fff; }
 
     /* Source badges */
     .src-badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 20px; color: white; margin-bottom: 4px; }
-    .src-badge.restart { background: var(--c-restart); }
+    .src-badge.restart    { background: var(--c-restart); }
     .src-badge.kucharkadc { background: var(--c-kucharkadc); }
 
-    /* Recipe card */
-    .recipe-card { border-left: 4px solid #ccc; background: white; border-radius: 8px; padding: 12px; cursor: pointer; transition: box-shadow .2s, transform .1s; }
+    /* Recipe cards */
+    .recipe-card { border-left: 4px solid #ccc; background: white; border-radius: 8px; padding: 12px;
+                   cursor: pointer; transition: box-shadow .2s, transform .1s; }
     .recipe-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,.15); transform: translateY(-2px); }
-    .recipe-card[data-source="restart"] { border-left-color: var(--c-restart); }
+    .recipe-card[data-source="restart"]    { border-left-color: var(--c-restart); }
     .recipe-card[data-source="kucharkadc"] { border-left-color: var(--c-kucharkadc); }
 
-    /* Meal section header strip */
-    .meal-header { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; padding: 5px 10px; border-radius: 6px 6px 0 0; color: white; }
+    /* Meal header strips */
+    .meal-header { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px;
+                   padding: 4px 10px; border-radius: 6px 6px 0 0; color: white; }
     .meal-snidane { background: var(--c-breakfast); }
     .meal-obed    { background: var(--c-lunch); }
     .meal-vecere  { background: var(--c-dinner); }
+
+    /* ── Per-day controls (NOVÉ) ── */
+    .day-controls {
+      display: flex; gap: 8px; flex-wrap: wrap;
+      padding: 6px 10px; background: #f1f5f9;
+      border-radius: 0 0 8px 8px; margin-bottom: 6px;
+      border: 1px solid #e2e8f0; border-top: none;
+    }
+    .dc-group { display: flex; align-items: center; gap: 3px; }
+    .btn-dc {
+      padding: 3px 9px; border-radius: 5px; font-size: 12px; font-weight: 700;
+      color: #94a3b8; background: #e2e8f0; border: 1px solid #cbd5e1;
+      cursor: pointer; transition: all .15s; white-space: nowrap;
+    }
+    .btn-dc.active[data-meal="snidane"] { background: var(--c-breakfast); border-color: var(--c-breakfast); color: #fff; }
+    .btn-dc.active[data-meal="obed"]    { background: var(--c-lunch);     border-color: var(--c-lunch);     color: #fff; }
+    .btn-dc.active[data-meal="vecere"]  { background: var(--c-dinner);    border-color: var(--c-dinner);    color: #fff; }
+    .dc-select {
+      font-size: 11px; background: #fff; color: #374151;
+      border: 1px solid #cbd5e1; border-radius: 4px;
+      padding: 2px 4px; cursor: pointer; outline: none; max-width: 90px;
+    }
+    .dc-select:disabled { opacity: .4; cursor: default; }
+    .dc-sep { width: 1px; height: 18px; background: #cbd5e1; margin: 0 2px; }
 
     /* Shopping list */
     .row-akce { background: #fff8e1 !important; }
@@ -65,8 +87,8 @@
     .shop-section-header td { background: #f3f4f6; font-weight: 700; font-size: 11px; color: #555; padding: 6px 8px !important; }
 
     /* Tag pills */
-    .tag-vydatne { background: var(--c-dinner); color: #fff; }
-    .tag-smisene { background: var(--c-lunch); color: #fff; }
+    .tag-vydatne { background: var(--c-dinner);    color: #fff; }
+    .tag-smisene { background: var(--c-lunch);     color: #fff; }
     .tag-lehke   { background: var(--c-breakfast); color: #fff; }
 
     /* Modal */
@@ -74,34 +96,34 @@
     .modal-overlay.active { display: flex; justify-content: center; align-items: flex-start; padding: 20px; }
     .modal-box { background: white; border-radius: 12px; max-width: 560px; width: 100%; padding: 24px; position: relative; margin: auto; }
 
-    /* Header select */
-    .header-select { background: rgba(255,255,255,.15); color: #fff; border: 1px solid rgba(255,255,255,.3); border-radius: 6px; padding: 4px 8px; font-size: 13px; cursor: pointer; outline: none; }
+    /* Header elements */
+    .header-select { background: rgba(255,255,255,.15); color: #fff; border: 1px solid rgba(255,255,255,.3);
+                     border-radius: 6px; padding: 4px 8px; font-size: 13px; cursor: pointer; outline: none; }
     .header-select option { background: #1b5e20; color: #fff; }
-    .deal-badge { display: inline-flex; align-items: center; gap: 4px; background: rgba(255,111,0,.85); color: #fff; font-size: 12px; font-weight: 700; padding: 3px 10px; border-radius: 20px; }
-
-    /* Weather chip */
+    .deal-badge { display: inline-flex; align-items: center; gap: 4px; background: rgba(255,111,0,.85);
+                  color: #fff; font-size: 12px; font-weight: 700; padding: 3px 10px; border-radius: 20px; }
     .w-chip { font-size: 11px; background: rgba(255,255,255,.18); border-radius: 20px; padding: 2px 8px; }
 
     /* Toast */
-    #toast { position: fixed; bottom: 24px; right: 24px; z-index: 9999; background: var(--c-header); color: white; padding: 12px 18px; border-radius: 8px; font-size: 13px; display: none; box-shadow: 0 4px 12px rgba(0,0,0,.3); }
+    #toast { position: fixed; bottom: 24px; right: 24px; z-index: 9999;
+             background: var(--c-header); color: white; padding: 12px 18px;
+             border-radius: 8px; font-size: 13px; display: none; box-shadow: 0 4px 12px rgba(0,0,0,.3); }
 
     @media (max-width: 640px) { .meal-grid { grid-template-columns: 1fr !important; } }
   </style>
 </head>
 <body>
 
-<!-- ══════════════════════ HEADER ══════════════════════ -->
+<!-- ══════════ HEADER ══════════ -->
 <header style="background: var(--c-header);" class="text-white px-4 py-3 shadow-lg">
   <div class="max-w-5xl mx-auto">
-
-    <!-- Top row: title + deal validity + shopping day -->
     <div class="flex flex-wrap justify-between items-start gap-3 mb-2">
       <div>
-        <h1 class="text-xl font-bold leading-tight">🥗 Chytrý Jídelníček</h1>
+        <h1 class="text-xl font-bold">🥗 Chytrý Jídelníček</h1>
         <p class="text-xs opacity-60 mt-0.5">Generováno 21. 4. 2026 · Praha</p>
       </div>
       <div class="flex flex-wrap gap-3 items-center">
-        <span class="deal-badge">🏷️ Leták Kaufland: 21. 4. – 27. 4. 2026</span>
+        <span id="letak-badge" class="deal-badge">🏷️ Leták Kaufland: …</span>
         <label class="flex items-center gap-2 text-sm font-semibold">
           🛒 Den nákupu:
           <select id="shopping-day-select" class="header-select" onchange="setShoppingDay(this.value)">
@@ -117,85 +139,41 @@
         </label>
       </div>
     </div>
-
-    <!-- Weather summary -->
     <div id="weather-summary" class="flex gap-1.5 flex-wrap"></div>
-
   </div>
 </header>
 
-<!-- ══════════════════════ STICKY FILTER BAR ══════════════════════ -->
+<!-- ══════════ STICKY BAR — jen dny, bez globálních filtrů chodů ══════════ -->
 <div class="sticky-bar">
   <div class="max-w-5xl mx-auto px-4 py-1.5">
-
-    <!-- Row 1: Day multiselect -->
     <div class="filter-row">
       <span class="filter-label">📅 Dny:</span>
-      <div class="flex gap-1 flex-wrap" id="day-filters">
-        <button class="btn-day active" data-day-id="ut" onclick="toggleDay('ut',this)">Út 21.</button>
-        <button class="btn-day active" data-day-id="st" onclick="toggleDay('st',this)">St 22.</button>
-        <button class="btn-day active" data-day-id="ct" onclick="toggleDay('ct',this)">Čt 23.</button>
-        <button class="btn-day active" data-day-id="pa" onclick="toggleDay('pa',this)">Pá 24.</button>
-        <button class="btn-day active" data-day-id="so" onclick="toggleDay('so',this)">So 25.</button>
-        <button class="btn-day active" data-day-id="ne" onclick="toggleDay('ne',this)">Ne 26.</button>
-        <button class="btn-day active" data-day-id="po" onclick="toggleDay('po',this)">Po 27.</button>
-      </div>
+      <!-- OPRAVA 3: tlačítka se dynamicky překreslují v pořadí od dne po nákupu -->
+      <div class="flex gap-1 flex-wrap" id="day-filters"></div>
       <div class="flex gap-1 ml-1">
         <button class="btn-quick" onclick="toggleAllDays(true)">Vše</button>
         <button class="btn-quick" onclick="toggleAllDays(false)">Žádný</button>
       </div>
+      <label class="flex items-center gap-1 text-xs text-white/60 cursor-pointer ml-auto">
+        <input type="checkbox" id="show-akce-only" onchange="setAkceFilter(this.checked)" class="w-3 h-3">
+        Jen AKCE
+      </label>
     </div>
-
-    <!-- Row 2: Meal filters with per-meal source selectors -->
-    <div class="filter-row">
-      <span class="filter-label">🍽️ Chody:</span>
-      <div class="meal-group">
-        <button id="btn-sn" class="btn-meal active" onclick="toggleMeal('snidane',this)" title="Snídaně">🍳 Sn</button>
-        <select id="src-snidane" class="src-select" onchange="setMealSource('snidane',this.value)" title="Zdroj snídaně">
-          <option value="both">Oba</option>
-          <option value="restart">Restart</option>
-          <option value="kucharkadc">Kuchařka</option>
-        </select>
-      </div>
-      <div class="meal-group">
-        <button id="btn-ob" class="btn-meal active" onclick="toggleMeal('obed',this)" title="Oběd">🥗 Ob</button>
-        <select id="src-obed" class="src-select" onchange="setMealSource('obed',this.value)" title="Zdroj oběda">
-          <option value="both">Oba</option>
-          <option value="restart">Restart</option>
-          <option value="kucharkadc">Kuchařka</option>
-        </select>
-      </div>
-      <div class="meal-group">
-        <button id="btn-ve" class="btn-meal active" onclick="toggleMeal('vecere',this)" title="Večeře">🍽️ Ve</button>
-        <select id="src-vecere" class="src-select" onchange="setMealSource('vecere',this.value)" title="Zdroj večeře">
-          <option value="both">Oba</option>
-          <option value="restart">Restart</option>
-          <option value="kucharkadc">Kuchařka</option>
-        </select>
-      </div>
-      <div class="flex gap-1 ml-auto">
-        <label class="flex items-center gap-1 text-xs text-white/70 cursor-pointer">
-          <input type="checkbox" id="show-akce-only" onchange="setAkceFilter(this.checked)" class="w-3 h-3">
-          Jen AKCE
-        </label>
-      </div>
-    </div>
-
   </div>
 </div>
 
-<!-- ══════════════════════ KAUFLAND DEALS STRIP ══════════════════════ -->
+<!-- Kaufland deals strip -->
 <div class="max-w-5xl mx-auto px-4 mt-3">
   <div class="bg-orange-50 border border-orange-200 rounded-xl p-2.5 flex gap-2 flex-wrap items-center">
-    <span class="font-bold text-orange-700 text-xs shrink-0">🏷️ KAUFLAND AKCE:</span>
+    <span id="deals-strip-label" class="font-bold text-orange-700 text-xs shrink-0">🏷️ KAUFLAND AKCE:</span>
     <div id="deals-strip" class="flex gap-1.5 flex-wrap text-xs"></div>
   </div>
 </div>
 
-<!-- ══════════════════════ DAY CARDS ══════════════════════ -->
+<!-- ══════════ DAY CARDS ══════════ -->
 <main class="max-w-5xl mx-auto px-4 pb-6" id="days-container"></main>
 
-<!-- ══════════════════════ SHOPPING LIST ══════════════════════ -->
+<!-- ══════════ SHOPPING LIST ══════════ -->
 <section class="max-w-5xl mx-auto px-4 pb-4">
   <div class="bg-white rounded-xl shadow p-4">
     <div class="flex justify-between items-center mb-3 flex-wrap gap-2">
@@ -217,13 +195,13 @@
       </table>
     </div>
     <div class="mt-4 flex justify-between items-center flex-wrap gap-3 border-t pt-3">
-      <div class="text-xs text-gray-500">Odškrtnuté a skryté položky se nezapočítávají</div>
+      <div class="text-xs text-gray-500">Skryté a odškrtnuté položky se nezapočítávají</div>
       <div class="text-xl font-bold">Celkem: <span id="total-price" class="text-green-700">0,00</span> Kč</div>
     </div>
   </div>
 </section>
 
-<!-- ══════════════════════ EXPORT BAR ══════════════════════ -->
+<!-- ══════════ EXPORT BAR ══════════ -->
 <div class="max-w-5xl mx-auto px-4 pb-8">
   <div class="bg-white rounded-xl shadow p-4 flex gap-3 flex-wrap">
     <button onclick="generatePDF()" class="flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 font-semibold text-sm transition">
@@ -238,45 +216,46 @@
   </div>
 </div>
 
-<!-- ══════════════════════ MODAL (one universal) ══════════════════════ -->
+<!-- ══════════ UNIVERSAL MODAL ══════════ -->
 <div class="modal-overlay" id="recipe-modal" onclick="if(event.target===this)closeModal()">
   <div class="modal-box">
-    <button onclick="closeModal()" class="absolute top-3 right-4 text-2xl text-gray-400 hover:text-gray-700 font-bold leading-none">×</button>
+    <button onclick="closeModal()" class="absolute top-3 right-4 text-2xl text-gray-400 hover:text-gray-700 font-bold">×</button>
     <div id="modal-body"></div>
   </div>
 </div>
-
 <div id="toast"></div>
 
-<!-- ══════════════════════ DATA ══════════════════════ -->
+<!-- ══════════════════════════════════════════════
+     DATA + SCRIPTS
+══════════════════════════════════════════════ -->
 <script>
 emailjs.init("2O9xlPmD5Yc5OXnAI");
 
-/* ─────────────── RECIPE DATA ─────────────── */
+/* ─── RECIPE DATA ─── */
 const recipesData = {
-  "rst_sn1":{"id":"rst_sn1","source":"restart","sourceLabel":"Restart hubnutí","sourceUrl":"https://restarthubnuti.cz/batatova-placka-s-vejcem-snidane-pri-hubnuti-ktera-zasyti/","meal":"snidane","name":"Batátová placka s vejcem","time":"20 min","calories":"~380 kcal","tag":"vydatne","ingredients":[{"name":"Batáty","qty":"800 g"},{"name":"Vejce","qty":"4 ks"},{"name":"Celozrnná špaldová mouka","qty":"8 lžic"},{"name":"🏷️ Slunečnicový olej Slunka","qty":"2 lžíce"},{"name":"Sůl, pepř","qty":"dle chuti"}],"steps":["Batáty oloupejte a nastrouhejte nahrubo.","Smíchejte s vejci, moukou, solí a pepřem do těsta.","Na pánvi rozehřejte olej a lžící nabírejte těsto.","Smažte z obou stran 3–4 min do zlatova.","Podávejte teplé, doplněné tvarohom nebo salsou."]},
-  "rst_sn2":{"id":"rst_sn2","source":"restart","sourceLabel":"Restart hubnutí","sourceUrl":"https://restarthubnuti.cz/syrove-toasty-pri-hubnuti-krupave-a-vic-zasyti/","meal":"snidane","name":"Sýrové toasty při hubnutí","time":"15 min","calories":"~340 kcal","tag":"vydatne","ingredients":[{"name":"Celozrnný chléb","qty":"8 plátků"},{"name":"Žervé / tvaroh","qty":"200 g"},{"name":"🏷️ Šumavský Eidam sýr","qty":"200 g"},{"name":"Vejce","qty":"4 ks"},{"name":"Pažitka, sůl, pepř","qty":"dle chuti"}],"steps":["Chléb opečte v toustovači.","Natřete žervé, navrch nastrouhejte eidam.","Na plech dejte toasty, přidejte vejce sunny side up.","Zapečte 180 °C / 10 min.","Posypte pažitkou a kořením."]},
-  "rst_sn3":{"id":"rst_sn3","source":"restart","sourceLabel":"Restart hubnutí","sourceUrl":"https://restarthubnuti.cz/datlovy-jogurt-rychly-dezert-pri-hubnuti-ze-4-surovin/","meal":"snidane","name":"Datlový jogurt s ořechy","time":"5 min","calories":"~290 kcal","tag":"lehke","ingredients":[{"name":"🏷️ Olma Florian jogurt","qty":"4 × 150 g"},{"name":"Datle bez pecky","qty":"8 ks"},{"name":"Vlašské ořechy","qty":"4 lžíce"},{"name":"Skořice, med","qty":"dle chuti"}],"steps":["Datle nakrájejte na kousky.","Vmíchejte do jogurtu se skořicí.","Přelijte medem a posypte ořechy.","Servírujte nebo uchovejte v lednici."]},
-  "rst_ob1":{"id":"rst_ob1","source":"restart","sourceLabel":"Restart hubnutí","sourceUrl":"https://restarthubnuti.cz/cuketove-placky-do-krabicky-lehky-obed-pri-hubnuti-ktery-te-neuspi/","meal":"obed","name":"Cuketové placky do krabičky","time":"25 min","calories":"~320 kcal","tag":"lehke","ingredients":[{"name":"Cuketa","qty":"480 g"},{"name":"Vejce","qty":"4 ks"},{"name":"Celozrnná špaldová mouka","qty":"8 lžic"},{"name":"🏷️ Slunečnicový olej Slunka","qty":"na smažení"},{"name":"Žervé / tvaroh","qty":"200 g"},{"name":"Mozzarella","qty":"125 g"},{"name":"Rajče, salátové listy","qty":"2 ks / hrst"}],"steps":["Cuketu nastrouhejte, osolte a po 5 min vytlačte vodu.","Smíchejte s vejci a moukou.","Na oleji smažte placky 2–3 min z každé strany.","Nechte vychladnout.","Naplňte žervé, salátem, rajčetem a mozzarellou."]},
-  "rst_ob2":{"id":"rst_ob2","source":"restart","sourceLabel":"Restart hubnutí","sourceUrl":"https://restarthubnuti.cz/kapustove-bochanky-s-krutim-masem-a-kari-omackou/","meal":"obed","name":"Kapustové bochánky s krůtím masem","time":"35 min","calories":"~420 kcal","tag":"vydatne","ingredients":[{"name":"Mleté krůtí maso","qty":"600 g"},{"name":"Kapusta","qty":"0,5 hlávky"},{"name":"Vejce","qty":"2 ks"},{"name":"Mouka","qty":"4 lžíce"},{"name":"Kari","qty":"2 lžičky"},{"name":"🏷️ Slunečnicový olej Slunka","qty":"na smažení"},{"name":"🏷️ Olma Florian jogurt","qty":"150 g"}],"steps":["Kapustu blanšírujte 3 min a nasekejte.","Smíchejte maso, kapustu, vejce, mouku, sůl.","Smažte bochánky 4 min z každé strany.","Připravte kari omáčku z jogurtu a kari.","Podávejte přelité omáčkou."]},
-  "rst_ob3":{"id":"rst_ob3","source":"restart","sourceLabel":"Restart hubnutí","sourceUrl":"https://restarthubnuti.cz/pecena-ryze-se-zeleninou-a-halloumi/","meal":"obed","name":"Pečená rýže se zeleninou a halloumi","time":"45 min","calories":"~450 kcal","tag":"vydatne","ingredients":[{"name":"Rýže kulatozrnná","qty":"400 g"},{"name":"🏷️ Vinica mražená zelenina","qty":"450 g"},{"name":"Halloumi","qty":"200 g"},{"name":"Kuřecí vývar","qty":"700 ml"},{"name":"Kurkuma, sůl, pepř","qty":"dle chuti"},{"name":"🏷️ Slunečnicový olej Slunka","qty":"2 lžíce"}],"steps":["Troubu na 200 °C.","Rýži s vývarem, kurkumou a olejem v pekáčku.","Přidejte zeleninu, navrch halloumi plátky.","Pečte 35–40 min do vsaknutí tekutiny.","Podávejte přímo z pekáčku."]},
-  "rst_ob4":{"id":"rst_ob4","source":"restart","sourceLabel":"Restart hubnutí","sourceUrl":"https://restarthubnuti.cz/syrovo-masovy-wrap-vecere-pri-hubnuti-s-mene-sacharidy-a-bez-hladu/","meal":"obed","name":"Masovo-sýrový wrap s vepřovým","time":"20 min","calories":"~480 kcal","tag":"vydatne","ingredients":[{"name":"Celozrnné tortilly","qty":"8 ks"},{"name":"🏷️ Vepřová pečeně K-Mistři","qty":"400 g"},{"name":"🏷️ Šumavský Eidam sýr","qty":"200 g"},{"name":"Ledový salát","qty":"1 hlávka"},{"name":"Rajče","qty":"2 ks"},{"name":"🏷️ Olma Florian jogurt","qty":"150 g"},{"name":"Dijonská hořčice","qty":"2 lžičky"}],"steps":["Maso na tenké plátky, opečte 3–4 min.","Eidam nastrouhejte, salát nakrájejte.","Smíchejte jogurt s hořčicí.","Sestavte wrap s veškerou náplní.","Pevně zabalte a podávejte."]},
-  "rst_ve1":{"id":"rst_ve1","source":"restart","sourceLabel":"Restart hubnutí","sourceUrl":"https://restarthubnuti.cz/domaci-kebab-z-plechu-vecere-pri-hubnuti-bez-kompromisu/","meal":"vecere","name":"Domácí kebab z plechu","time":"30 min","calories":"~490 kcal","tag":"vydatne","ingredients":[{"name":"Mleté maso (mix)","qty":"700 g"},{"name":"Cibule","qty":"2 ks"},{"name":"Čerstvá petržel","qty":"2 hrsti"},{"name":"Citron (kůra)","qty":"2 ks"},{"name":"Kmín, uzená paprika, česnek","qty":"dle receptu"},{"name":"🏷️ Olma Florian jogurt","qty":"2 × 150 g"},{"name":"Dijonská hořčice","qty":"4 lžičky"}],"steps":["Troubu na 200 °C.","Maso smíchejte s kořením a cibulí.","Rozložte 2 cm vrstvou, přikrojte pruhy.","Pečte 15 min, otočte a 5 min dokončete.","Omáčku z jogurtu, hořčice a chilli."]},
-  "rst_ve2":{"id":"rst_ve2","source":"restart","sourceLabel":"Restart hubnutí","sourceUrl":"https://restarthubnuti.cz/brokolicovy-kolac-se-syrem-a-vejci-vecere-pri-hubnuti-bez-peciva/","meal":"vecere","name":"Brokolicový koláč se sýrem","time":"40 min","calories":"~380 kcal","tag":"smisene","ingredients":[{"name":"Brokolice","qty":"600 g"},{"name":"Vejce","qty":"4 ks"},{"name":"🏷️ Šumavský Eidam sýr","qty":"200 g"},{"name":"Tvaroh","qty":"200 g"},{"name":"Mouka","qty":"4 lžíce"},{"name":"🏷️ Olma máslo","qty":"20 g"},{"name":"Muškát, sůl, pepř","qty":"dle chuti"}],"steps":["Brokolici povařte 5 min, nasekejte.","Smíchejte vejce, tvaroh, eidam, mouku.","Přimíchejte brokolici.","Formu vymažte máslem, nalijte směs.","Pečte 30 min na 180 °C."]},
-  "rst_ve3":{"id":"rst_ve3","source":"restart","sourceLabel":"Restart hubnutí","sourceUrl":"https://restarthubnuti.cz/bramborovy-kolac-s-porkem-a-fetou/","meal":"vecere","name":"Bramborový koláč s pórkem a fetou","time":"50 min","calories":"~410 kcal","tag":"vydatne","ingredients":[{"name":"Brambory","qty":"800 g"},{"name":"Póry","qty":"2 ks"},{"name":"Feta sýr","qty":"200 g"},{"name":"Vejce","qty":"4 ks"},{"name":"🏷️ Olma máslo","qty":"50 g"},{"name":"Tymián, sůl, pepř","qty":"dle chuti"}],"steps":["Brambory uvařte a rozmačkejte s máslem.","Pórek orestujte na másle 5 min.","Polo kaše do formy, vrstva pórku a fety.","Přikryjte zbylou kaší.","Pečte 35 min na 180 °C."]},
-  "kd_sn1":{"id":"kd_sn1","source":"kucharkadc","sourceLabel":"Kuchařka pro dceru","sourceUrl":"https://www.kucharkaprodceru.cz/","meal":"snidane","name":"Jogurtový parfait s granolou","time":"5 min","calories":"~310 kcal","tag":"lehke","ingredients":[{"name":"🏷️ Olma Florian jogurt","qty":"4 × 150 g"},{"name":"Granola","qty":"8 lžic"},{"name":"Sezónní ovoce","qty":"200 g"},{"name":"Med","qty":"4 lžičky"}],"steps":["Navrstvujte jogurt, granolu a ovoce.","Překapejte medem.","Podávejte ihned nebo přikryjte v lednici.","Varianta: přidejte chia semínka."]},
-  "kd_sn2":{"id":"kd_sn2","source":"kucharkadc","sourceLabel":"Kuchařka pro dceru","sourceUrl":"https://www.kucharkaprodceru.cz/","meal":"snidane","name":"Míchaná vajíčka s eidamem","time":"10 min","calories":"~370 kcal","tag":"vydatne","ingredients":[{"name":"Vejce","qty":"8 ks"},{"name":"🏷️ Olma máslo","qty":"40 g"},{"name":"Celozrnný chléb","qty":"8 plátků"},{"name":"🏷️ Šumavský Eidam sýr","qty":"200 g"},{"name":"Pažitka, sůl, pepř","qty":"dle chuti"}],"steps":["Máslo rozpusťte na mírném ohni.","Vejce míchejte vařečkou do krémova.","Sejmout z ohně těsně před ztuhnutím.","Servírujte na chlebu.","Posypte eidamem a pažitkou."]},
-  "kd_sn3":{"id":"kd_sn3","source":"kucharkadc","sourceLabel":"Kuchařka pro dceru","sourceUrl":"https://www.kucharkaprodceru.cz/","meal":"snidane","name":"Ovesná kaše s jogurtem a ovocem","time":"10 min","calories":"~350 kcal","tag":"vydatne","ingredients":[{"name":"Ovesné vločky","qty":"400 g"},{"name":"Mléko","qty":"800 ml"},{"name":"🏷️ Olma Florian jogurt","qty":"2 × 150 g"},{"name":"Sezónní ovoce","qty":"200 g"},{"name":"Med, skořice","qty":"dle chuti"}],"steps":["Zalijte vločky mlékem a přiveďte k varu.","Vařte 5 min za stálého míchání.","Ochuťte medem a skořicí.","Přidejte jogurt navrch.","Zdobte ovocem."]},
-  "kd_ob1":{"id":"kd_ob1","source":"kucharkadc","sourceLabel":"Kuchařka pro dceru","sourceUrl":"https://www.kucharkaprodceru.cz/pomalu-peceny-losos/","meal":"obed","name":"Pomalu pečený losos","time":"50 min","calories":"~410 kcal","tag":"smisene","ingredients":[{"name":"🏷️ Losos filet (chlazený)","qty":"700 g"},{"name":"Olivový olej","qty":"2 lžíce"},{"name":"Citron","qty":"1 ks"},{"name":"Čerstvá petržel","qty":"1 hrst"},{"name":"Červená cibule","qty":"1 ks"},{"name":"Sůl, pepř","qty":"dle chuti"}],"steps":["Troubu na 95 °C, vodní lázeň na spodním roštu.","Losos kůží dolů na papír, osolit a opepřit.","Pokapejte olejem a citronem.","Pečte 40 minut.","Podávejte s petrželí a citronem."]},
-  "kd_ob2":{"id":"kd_ob2","source":"kucharkadc","sourceLabel":"Kuchařka pro dceru","sourceUrl":"https://www.kucharkaprodceru.cz/recepty-z-kureciho-masa/","meal":"obed","name":"Kuřecí prsa dušená v pórku","time":"30 min","calories":"~390 kcal","tag":"smisene","ingredients":[{"name":"Kuřecí prsa","qty":"4 ks (800 g)"},{"name":"Póry","qty":"2 ks"},{"name":"Kuřecí vývar","qty":"500 ml"},{"name":"🏷️ Olma máslo","qty":"60 g"},{"name":"Citron, majoránka, sůl, pepř","qty":"dle chuti"}],"steps":["Pórek poduste s máslem a vývarem 8–10 min.","Kuřecí prsa rozkrojte na dva plátky.","Vložte do póru a duste 10 min.","Vyjměte maso, zredukujte vývar, přidejte máslo.","Podávejte s pórkovým základem."]},
-  "kd_ob3":{"id":"kd_ob3","source":"kucharkadc","sourceLabel":"Kuchařka pro dceru","sourceUrl":"https://www.kucharkaprodceru.cz/","meal":"obed","name":"Vepřová pečeně na česneku","time":"100 min","calories":"~590 kcal","tag":"vydatne","ingredients":[{"name":"🏷️ Vepřová pečeně K-Mistři","qty":"1 kg"},{"name":"Brambory","qty":"800 g"},{"name":"Česnek","qty":"6 stroužků"},{"name":"Smetana 30%","qty":"200 ml"},{"name":"🏷️ Slunečnicový olej Slunka","qty":"3 lžíce"},{"name":"Tymián, rozmarýn, sůl, pepř","qty":"dle chuti"}],"steps":["Maso naplňte česnekem, potřete olejem a bylinkami.","Opečte 5 min ze všech stran.","Zalijte vodou a pečte 160 °C / 80 min.","Uvařte brambory.","Z výpeku se smetanou připravte omáčku."]},
-  "kd_ob4":{"id":"kd_ob4","source":"kucharkadc","sourceLabel":"Kuchařka pro dceru","sourceUrl":"https://www.kucharkaprodceru.cz/","meal":"obed","name":"Těstovinový salát s lososem","time":"20 min","calories":"~450 kcal","tag":"smisene","ingredients":[{"name":"🏷️ Těstoviny (farfalle/penne)","qty":"500 g"},{"name":"🏷️ Losos filet (chlazený)","qty":"400 g"},{"name":"Kapary","qty":"100 g"},{"name":"🏷️ Slunečnicový olej Slunka","qty":"3 lžíce"},{"name":"Citron, petržel, sůl, pepř","qty":"dle chuti"}],"steps":["Těstoviny uvařte al dente, propláchněte.","Losos opečte 3 min z každé strany, nakrájejte.","Vše smíchejte s kapary, olejem, citronem.","Dochuťte solí a pepřem.","Posypte petrželí."]},
-  "kd_ve1":{"id":"kd_ve1","source":"kucharkadc","sourceLabel":"Kuchařka pro dceru","sourceUrl":"https://www.kucharkaprodceru.cz/recept-na-file/","meal":"vecere","name":"Losos v mléčném pórku","time":"25 min","calories":"~430 kcal","tag":"vydatne","ingredients":[{"name":"🏷️ Losos filet (chlazený)","qty":"600 g"},{"name":"Póry","qty":"2 ks"},{"name":"Smetana 30%","qty":"300 ml"},{"name":"🏷️ Olma máslo","qty":"40 g"},{"name":"Citron, sůl, pepř, muškát","qty":"dle chuti"}],"steps":["Pórek poduste na másle 5 min.","Zalijte smetanou, přiveďte k varu.","Vložte filety lososa.","Duste přikrytě 10 min.","Dochuťte citronem a kořením."]},
-  "kd_ve2":{"id":"kd_ve2","source":"kucharkadc","sourceLabel":"Kuchařka pro dceru","sourceUrl":"https://www.kucharkaprodceru.cz/fish-and-chips/","meal":"vecere","name":"Fish & Chips z lososa","time":"45 min","calories":"~550 kcal","tag":"vydatne","ingredients":[{"name":"🏷️ Losos filet (chlazený)","qty":"600 g"},{"name":"Brambory","qty":"800 g"},{"name":"Mouka, vejce, strouhanka","qty":"na obalování"},{"name":"🏷️ Slunečnicový olej Slunka","qty":"na smažení"},{"name":"Sůl, citron","qty":"dle chuti"}],"steps":["Brambory jako klínky, pečte 35 min / 200 °C.","Losos na 4×4 cm kousky.","Obalte mouka → vejce → strouhanka.","Smažte 3–4 min dozlatova.","Podávejte s klínky a citronem."]},
-  "kd_ve3":{"id":"kd_ve3","source":"kucharkadc","sourceLabel":"Kuchařka pro dceru","sourceUrl":"https://www.kucharkaprodceru.cz/","meal":"vecere","name":"Zapečené těstoviny s eidamem","time":"35 min","calories":"~500 kcal","tag":"vydatne","ingredients":[{"name":"🏷️ Těstoviny (penne)","qty":"500 g"},{"name":"🏷️ Šumavský Eidam sýr","qty":"300 g"},{"name":"🏷️ Vinica mražená zelenina","qty":"450 g"},{"name":"Smetana 30%","qty":"200 ml"},{"name":"Česnek","qty":"3 stroužky"},{"name":"🏷️ Olma máslo","qty":"20 g"}],"steps":["Těstoviny uvařte al dente.","Rozmrazenou zeleninu smíchejte s těstovinami.","Smetanu s česnekem ohřejte, přilijte.","Dejte do formy, posypte eidamem.","Zapečte 20 min / 200 °C."]}
+  "rst_sn1":{"id":"rst_sn1","source":"restart","sourceLabel":"Restart hubnutí","sourceUrl":"https://restarthubnuti.cz/batatova-placka-s-vejcem-snidane-pri-hubnuti-ktera-zasyti/","meal":"snidane","name":"Batátová placka s vejcem","time":"20 min","calories":"~380 kcal","tag":"vydatne","ingredients":[{"name":"Batáty","qty":"800 g"},{"name":"Vejce","qty":"4 ks"},{"name":"Celozrnná špaldová mouka","qty":"8 lžic"},{"name":"🏷️ Slunečnicový olej Slunka","qty":"2 lžíce"},{"name":"Sůl, pepř","qty":"dle chuti"}],"steps":["Batáty oloupejte a nastrouhejte nahrubo.","Smíchejte s vejci, moukou, solí a pepřem.","Na oleji smažte placky 3–4 min z každé strany.","Podávejte teplé s tvarohom nebo salsou."]},
+  "rst_sn2":{"id":"rst_sn2","source":"restart","sourceLabel":"Restart hubnutí","sourceUrl":"https://restarthubnuti.cz/syrove-toasty-pri-hubnuti-krupave-a-vic-zasyti/","meal":"snidane","name":"Sýrové toasty při hubnutí","time":"15 min","calories":"~340 kcal","tag":"vydatne","ingredients":[{"name":"Celozrnný chléb","qty":"8 plátků"},{"name":"Žervé / tvaroh","qty":"200 g"},{"name":"🏷️ Šumavský Eidam sýr","qty":"200 g"},{"name":"Vejce","qty":"4 ks"},{"name":"Pažitka, sůl, pepř","qty":"dle chuti"}],"steps":["Chléb opečte v toustovači.","Natřete žervé, navrch nastrouhejte eidam.","Přidejte vejce a zapečte 180 °C / 10 min.","Posypte pažitkou a kořením."]},
+  "rst_sn3":{"id":"rst_sn3","source":"restart","sourceLabel":"Restart hubnutí","sourceUrl":"https://restarthubnuti.cz/datlovy-jogurt-rychly-dezert-pri-hubnuti-ze-4-surovin/","meal":"snidane","name":"Datlový jogurt s ořechy","time":"5 min","calories":"~290 kcal","tag":"lehke","ingredients":[{"name":"🏷️ Olma Florian jogurt","qty":"4 × 150 g"},{"name":"Datle bez pecky","qty":"8 ks"},{"name":"Vlašské ořechy","qty":"4 lžíce"},{"name":"Skořice, med","qty":"dle chuti"}],"steps":["Datle nakrájejte na kousky.","Vmíchejte do jogurtu se skořicí.","Přelijte medem a posypte ořechy."]},
+  "rst_ob1":{"id":"rst_ob1","source":"restart","sourceLabel":"Restart hubnutí","sourceUrl":"https://restarthubnuti.cz/cuketove-placky-do-krabicky-lehky-obed-pri-hubnuti-ktery-te-neuspi/","meal":"obed","name":"Cuketové placky do krabičky","time":"25 min","calories":"~320 kcal","tag":"lehke","ingredients":[{"name":"Cuketa","qty":"480 g"},{"name":"Vejce","qty":"4 ks"},{"name":"Celozrnná špaldová mouka","qty":"8 lžic"},{"name":"🏷️ Slunečnicový olej Slunka","qty":"na smažení"},{"name":"Žervé, mozzarella, rajče, salát","qty":"na náplň"}],"steps":["Cuketu nastrouhejte, osolte, vytlačte vodu.","Smíchejte s vejci a moukou, smažte 2–3 min z každé strany.","Naplňte žervé, salátem, rajčetem a mozzarellou."]},
+  "rst_ob2":{"id":"rst_ob2","source":"restart","sourceLabel":"Restart hubnutí","sourceUrl":"https://restarthubnuti.cz/kapustove-bochanky-s-krutim-masem-a-kari-omackou/","meal":"obed","name":"Kapustové bochánky s krůtím masem","time":"35 min","calories":"~420 kcal","tag":"vydatne","ingredients":[{"name":"Mleté krůtí maso","qty":"600 g"},{"name":"Kapusta","qty":"0,5 hlávky"},{"name":"Vejce","qty":"2 ks"},{"name":"Mouka","qty":"4 lžíce"},{"name":"Kari","qty":"2 lžičky"},{"name":"🏷️ Slunečnicový olej Slunka","qty":"na smažení"},{"name":"🏷️ Olma Florian jogurt","qty":"150 g"}],"steps":["Kapustu blanšírujte 3 min, nasekejte.","Smíchejte maso, kapustu, vejce, mouku, sůl.","Smažte bochánky 4 min z každé strany.","Kari omáčka z jogurtu, kari a česneku."]},
+  "rst_ob3":{"id":"rst_ob3","source":"restart","sourceLabel":"Restart hubnutí","sourceUrl":"https://restarthubnuti.cz/pecena-ryze-se-zeleninou-a-halloumi/","meal":"obed","name":"Pečená rýže se zeleninou a halloumi","time":"45 min","calories":"~450 kcal","tag":"vydatne","ingredients":[{"name":"Rýže kulatozrnná","qty":"400 g"},{"name":"🏷️ Vinica mražená zelenina","qty":"450 g"},{"name":"Halloumi","qty":"200 g"},{"name":"Kuřecí vývar","qty":"700 ml"},{"name":"Kurkuma, sůl, pepř, olej","qty":"dle chuti"}],"steps":["Rýži s vývarem, kurkumou a olejem do pekáčku.","Přidejte zeleninu, navrch halloumi.","Pečte 35–40 min na 200 °C."]},
+  "rst_ob4":{"id":"rst_ob4","source":"restart","sourceLabel":"Restart hubnutí","sourceUrl":"https://restarthubnuti.cz/syrovo-masovy-wrap-vecere-pri-hubnuti-s-mene-sacharidy-a-bez-hladu/","meal":"obed","name":"Masovo-sýrový wrap s vepřovým","time":"20 min","calories":"~480 kcal","tag":"vydatne","ingredients":[{"name":"Celozrnné tortilly","qty":"8 ks"},{"name":"🏷️ Vepřová pečeně K-Mistři","qty":"400 g"},{"name":"🏷️ Šumavský Eidam sýr","qty":"200 g"},{"name":"Ledový salát, rajče","qty":"dle chuti"},{"name":"🏷️ Olma Florian jogurt + dijonská hořčice","qty":"dresink"}],"steps":["Maso opečte na tenké plátky 3–4 min.","Eidam nastrouhejte, dresink z jogurtu a hořčice.","Sestavte wrap a pevně zabalte."]},
+  "rst_ve1":{"id":"rst_ve1","source":"restart","sourceLabel":"Restart hubnutí","sourceUrl":"https://restarthubnuti.cz/domaci-kebab-z-plechu-vecere-pri-hubnuti-bez-kompromisu/","meal":"vecere","name":"Domácí kebab z plechu","time":"30 min","calories":"~490 kcal","tag":"vydatne","ingredients":[{"name":"Mleté maso (mix)","qty":"700 g"},{"name":"Cibule, petržel, citron (kůra)","qty":"dle receptu"},{"name":"Kmín, uzená paprika, česnek","qty":"dle receptu"},{"name":"🏷️ Olma Florian jogurt","qty":"2 × 150 g"},{"name":"Dijonská hořčice, chilli","qty":"omáčka"}],"steps":["Maso smíchejte s kořením, rozložte na plech.","Přikrojte kebab pruhy, pečte 200 °C / 15+5 min.","Omáčka z jogurtu, hořčice a chilli."]},
+  "rst_ve2":{"id":"rst_ve2","source":"restart","sourceLabel":"Restart hubnutí","sourceUrl":"https://restarthubnuti.cz/brokolicovy-kolac-se-syrem-a-vejci-vecere-pri-hubnuti-bez-peciva/","meal":"vecere","name":"Brokolicový koláč se sýrem","time":"40 min","calories":"~380 kcal","tag":"smisene","ingredients":[{"name":"Brokolice","qty":"600 g"},{"name":"Vejce","qty":"4 ks"},{"name":"🏷️ Šumavský Eidam sýr","qty":"200 g"},{"name":"Tvaroh, mouka","qty":"200 g / 4 lžíce"},{"name":"🏷️ Olma máslo","qty":"20 g"}],"steps":["Brokolici povařte 5 min, nasekejte.","Smíchejte vejce, tvaroh, eidam, mouku.","Do formy vymazané máslem, pečte 180 °C / 30 min."]},
+  "rst_ve3":{"id":"rst_ve3","source":"restart","sourceLabel":"Restart hubnutí","sourceUrl":"https://restarthubnuti.cz/bramborovy-kolac-s-porkem-a-fetou/","meal":"vecere","name":"Bramborový koláč s pórkem a fetou","time":"50 min","calories":"~410 kcal","tag":"vydatne","ingredients":[{"name":"Brambory","qty":"800 g"},{"name":"Póry","qty":"2 ks"},{"name":"Feta sýr, vejce","qty":"200 g / 4 ks"},{"name":"🏷️ Olma máslo","qty":"50 g"},{"name":"Tymián, sůl, pepř","qty":"dle chuti"}],"steps":["Brambory uvařte, rozmačkejte s máslem.","Pórek orestujte, vrstvěte s fetou do formy.","Přikryjte kaší, pečte 180 °C / 35 min."]},
+  "kd_sn1":{"id":"kd_sn1","source":"kucharkadc","sourceLabel":"Kuchařka pro dceru","sourceUrl":"https://www.kucharkaprodceru.cz/","meal":"snidane","name":"Jogurtový parfait s granolou","time":"5 min","calories":"~310 kcal","tag":"lehke","ingredients":[{"name":"🏷️ Olma Florian jogurt","qty":"4 × 150 g"},{"name":"Granola","qty":"8 lžic"},{"name":"Sezónní ovoce","qty":"200 g"},{"name":"Med","qty":"4 lžičky"}],"steps":["Navrstvujte jogurt, granolu a ovoce.","Překapejte medem a podávejte."]},
+  "kd_sn2":{"id":"kd_sn2","source":"kucharkadc","sourceLabel":"Kuchařka pro dceru","sourceUrl":"https://www.kucharkaprodceru.cz/","meal":"snidane","name":"Míchaná vajíčka s eidamem","time":"10 min","calories":"~370 kcal","tag":"vydatne","ingredients":[{"name":"Vejce","qty":"8 ks"},{"name":"🏷️ Olma máslo","qty":"40 g"},{"name":"Celozrnný chléb","qty":"8 plátků"},{"name":"🏷️ Šumavský Eidam sýr","qty":"200 g"},{"name":"Pažitka, sůl, pepř","qty":"dle chuti"}],"steps":["Máslo na mírný oheň, vejce míchejte do krémova.","Servírujte na chlebu s eidamem a pažitkou."]},
+  "kd_sn3":{"id":"kd_sn3","source":"kucharkadc","sourceLabel":"Kuchařka pro dceru","sourceUrl":"https://www.kucharkaprodceru.cz/","meal":"snidane","name":"Ovesná kaše s jogurtem a ovocem","time":"10 min","calories":"~350 kcal","tag":"vydatne","ingredients":[{"name":"Ovesné vločky","qty":"400 g"},{"name":"Mléko","qty":"800 ml"},{"name":"🏷️ Olma Florian jogurt","qty":"2 × 150 g"},{"name":"Sezónní ovoce, med, skořice","qty":"dle chuti"}],"steps":["Vločky s mlékem přiveďte k varu, vařte 5 min.","Ochuťte, přidejte jogurt a ovoce."]},
+  "kd_ob1":{"id":"kd_ob1","source":"kucharkadc","sourceLabel":"Kuchařka pro dceru","sourceUrl":"https://www.kucharkaprodceru.cz/pomalu-peceny-losos/","meal":"obed","name":"Pomalu pečený losos","time":"50 min","calories":"~410 kcal","tag":"smisene","ingredients":[{"name":"🏷️ Losos filet (chlazený)","qty":"700 g"},{"name":"Olivový olej","qty":"2 lžíce"},{"name":"Citron, petržel, červená cibule","qty":"dle chuti"},{"name":"Sůl, pepř","qty":"dle chuti"}],"steps":["Troubu 95 °C, vodní lázeň na spodním roštu.","Losos kůží dolů, osolit, pokapejte olejem.","Pečte 40 minut, servírujte s petrželí."]},
+  "kd_ob2":{"id":"kd_ob2","source":"kucharkadc","sourceLabel":"Kuchařka pro dceru","sourceUrl":"https://www.kucharkaprodceru.cz/recepty-z-kureciho-masa/","meal":"obed","name":"Kuřecí prsa dušená v pórku","time":"30 min","calories":"~390 kcal","tag":"smisene","ingredients":[{"name":"Kuřecí prsa","qty":"4 ks (800 g)"},{"name":"Póry","qty":"2 ks"},{"name":"Kuřecí vývar","qty":"500 ml"},{"name":"🏷️ Olma máslo","qty":"60 g"},{"name":"Citron, majoránka, sůl, pepř","qty":"dle chuti"}],"steps":["Pórek poduste s máslem a vývarem 8–10 min.","Vložte prsa rozkrojená na plátky, duste 10 min.","Zredukujte vývar, vmíchejte máslo, dochuťte."]},
+  "kd_ob3":{"id":"kd_ob3","source":"kucharkadc","sourceLabel":"Kuchařka pro dceru","sourceUrl":"https://www.kucharkaprodceru.cz/","meal":"obed","name":"Vepřová pečeně na česneku","time":"100 min","calories":"~590 kcal","tag":"vydatne","ingredients":[{"name":"🏷️ Vepřová pečeně K-Mistři","qty":"1 kg"},{"name":"Brambory","qty":"800 g"},{"name":"Česnek","qty":"6 stroužků"},{"name":"Smetana 30%","qty":"200 ml"},{"name":"🏷️ Slunečnicový olej Slunka, bylinky","qty":"dle chuti"}],"steps":["Maso naplňte česnekem, opečte 5 min ze všech stran.","Pečte 160 °C / 80 min, uvařte brambory.","Z výpeku se smetanou připravte omáčku."]},
+  "kd_ob4":{"id":"kd_ob4","source":"kucharkadc","sourceLabel":"Kuchařka pro dceru","sourceUrl":"https://www.kucharkaprodceru.cz/","meal":"obed","name":"Těstovinový salát s lososem","time":"20 min","calories":"~450 kcal","tag":"smisene","ingredients":[{"name":"🏷️ Těstoviny (farfalle)","qty":"500 g"},{"name":"🏷️ Losos filet (chlazený)","qty":"400 g"},{"name":"Kapary","qty":"100 g"},{"name":"🏷️ Slunečnicový olej Slunka","qty":"3 lžíce"},{"name":"Citron, petržel, sůl, pepř","qty":"dle chuti"}],"steps":["Těstoviny al dente, propláchněte.","Losos opečte 3 min z každé strany.","Vše smíchejte s kapary, olejem a citronem."]},
+  "kd_ve1":{"id":"kd_ve1","source":"kucharkadc","sourceLabel":"Kuchařka pro dceru","sourceUrl":"https://www.kucharkaprodceru.cz/recept-na-file/","meal":"vecere","name":"Losos v mléčném pórku","time":"25 min","calories":"~430 kcal","tag":"vydatne","ingredients":[{"name":"🏷️ Losos filet (chlazený)","qty":"600 g"},{"name":"Póry","qty":"2 ks"},{"name":"Smetana 30%","qty":"300 ml"},{"name":"🏷️ Olma máslo","qty":"40 g"},{"name":"Citron, sůl, pepř, muškát","qty":"dle chuti"}],"steps":["Pórek poduste na másle 5 min.","Přilijte smetanu, vložte losos, duste 10 min.","Dochuťte citronem a kořením."]},
+  "kd_ve2":{"id":"kd_ve2","source":"kucharkadc","sourceLabel":"Kuchařka pro dceru","sourceUrl":"https://www.kucharkaprodceru.cz/fish-and-chips/","meal":"vecere","name":"Fish & Chips z lososa","time":"45 min","calories":"~550 kcal","tag":"vydatne","ingredients":[{"name":"🏷️ Losos filet (chlazený)","qty":"600 g"},{"name":"Brambory","qty":"800 g"},{"name":"Mouka, vejce, strouhanka","qty":"na obalování"},{"name":"🏷️ Slunečnicový olej Slunka","qty":"na smažení"},{"name":"Sůl, citron","qty":"dle chuti"}],"steps":["Brambory jako klínky, pečte 200 °C / 35 min.","Losos obalte (mouka→vejce→strouhanka), smažte 3–4 min.","Podávejte s klínky a citronem."]},
+  "kd_ve3":{"id":"kd_ve3","source":"kucharkadc","sourceLabel":"Kuchařka pro dceru","sourceUrl":"https://www.kucharkaprodceru.cz/","meal":"vecere","name":"Zapečené těstoviny s eidamem","time":"35 min","calories":"~500 kcal","tag":"vydatne","ingredients":[{"name":"🏷️ Těstoviny (penne)","qty":"500 g"},{"name":"🏷️ Šumavský Eidam sýr","qty":"300 g"},{"name":"🏷️ Vinica mražená zelenina","qty":"450 g"},{"name":"Smetana 30%","qty":"200 ml"},{"name":"Česnek, 🏷️ Olma máslo","qty":"3 stroužky / 20 g"}],"steps":["Těstoviny al dente, smíchejte s rozmraženou zeleninou.","Přilijte smetanu s česnekem, posypte eidamem.","Zapečte 200 °C / 20 min."]}
 };
 
-/* ─────────────── SUPPORTING DATA ─────────────── */
+/* ─── WEATHER + DEALS + PLAN + SHOPPING ─── */
 const weatherData = [
   {date:"2026-04-21",dayAbbr:"Út",dayFull:"Úterý",  dayId:"ut",maxTemp:11.7,minTemp:5.2,icon:"☁️",type:"vydatne"},
   {date:"2026-04-22",dayAbbr:"St",dayFull:"Středa",  dayId:"st",maxTemp:14.4,minTemp:3.6,icon:"☁️",type:"vydatne"},
@@ -287,15 +266,22 @@ const weatherData = [
   {date:"2026-04-27",dayAbbr:"Po",dayFull:"Pondělí", dayId:"po",maxTemp:13.4,minTemp:2.2,icon:"☁️",type:"vydatne"}
 ];
 
+const kauflandValidity = {
+  from: "2026-04-22",
+  to: "2026-04-28",
+  fromLabel: "od středy 22. 4.",
+  fullLabel: "22. 4. – 28. 4. 2026"
+};
+
 const kauflandDeals = [
-  {name:"Losos filet",  price:"24,90 Kč/100g",pct:54},
-  {name:"Vepřová pečeně",price:"89,90 Kč/kg", pct:60},
-  {name:"Eidam sýr",   price:"16,90 Kč/100g",pct:57},
-  {name:"Florian jogurt",price:"5,90 Kč",     pct:62},
-  {name:"Olma máslo",  price:"28,90 Kč",      pct:15},
-  {name:"Slunka olej", price:"34,90 Kč/L",    pct:53},
-  {name:"Těstoviny",   price:"27,90 Kč",      pct:38},
-  {name:"Mražená zelenina",price:"18,90 Kč",  pct:30}
+  {name:"Losos filet",    price:"24,90/100g",pct:54},
+  {name:"Vepřová pečeně", price:"89,90/kg",  pct:60},
+  {name:"Eidam sýr",      price:"16,90/100g",pct:57},
+  {name:"Florian jogurt", price:"5,90 Kč",   pct:62},
+  {name:"Olma máslo",     price:"28,90 Kč",  pct:15},
+  {name:"Slunka olej",    price:"34,90/L",   pct:53},
+  {name:"Těstoviny",      price:"27,90 Kč",  pct:38},
+  {name:"Mražená zelenina",price:"18,90 Kč", pct:30}
 ];
 
 const mealPlanData = [
@@ -309,80 +295,110 @@ const mealPlanData = [
 ];
 
 const shoppingData = [
-  {id:"sl_k1",name:"Losos filet (chlazený)",    qty:"2 kg",     price:498.00,isAkce:true, source:"kucharkadc",note:"24,90 Kč/100g · -54 %"},
-  {id:"sl_k2",name:"Vepřová pečeně K-Mistři",   qty:"1,5 kg",   price:134.85,isAkce:true, source:null,        note:"89,90 Kč/kg · -60 %"},
-  {id:"sl_k3",name:"Šumavský Eidam sýr",        qty:"600 g",    price:101.40,isAkce:true, source:null,        note:"16,90 Kč/100g · -57 %"},
-  {id:"sl_k4",name:"Olma Florian jogurt",        qty:"8 ks",     price:47.20, isAkce:true, source:null,        note:"5,90 Kč/ks · -62 %"},
-  {id:"sl_k5",name:"Olma máslo",                qty:"2 × 250 g",price:57.80, isAkce:true, source:null,        note:"28,90 Kč/250g · -15 %"},
-  {id:"sl_k6",name:"Slunka slunečnicový olej",  qty:"1 L",      price:34.90, isAkce:true, source:null,        note:"34,90 Kč/L · -53 %"},
-  {id:"sl_k7",name:"Těstoviny (penne/farfalle)", qty:"2 × 500 g",price:55.80, isAkce:true, source:"kucharkadc",note:"27,90 Kč/500g · -38 %"},
-  {id:"sl_k8",name:"Vinica mražená zelenina",   qty:"2 × 450 g",price:37.80, isAkce:true, source:null,        note:"18,90 Kč/450g · -30 %"},
-  {id:"sl_r1", name:"Vejce",                    qty:"24 ks",    price:85.00, isAkce:false,source:null},
-  {id:"sl_r2", name:"Brambory",                 qty:"2 kg",     price:50.00, isAkce:false,source:null},
-  {id:"sl_r3", name:"Celozrnný chléb",          qty:"2 bochníky",price:70.00,isAkce:false,source:null},
-  {id:"sl_r4", name:"Póry",                     qty:"4 ks",     price:60.00, isAkce:false,source:null},
-  {id:"sl_r5", name:"Cibule (červená i bílá)",  qty:"6 ks",     price:30.00, isAkce:false,source:null},
-  {id:"sl_r6", name:"Česnek",                   qty:"1 hlávka", price:15.00, isAkce:false,source:null},
-  {id:"sl_r7", name:"Citróny",                  qty:"4 ks",     price:32.00, isAkce:false,source:null},
-  {id:"sl_r8", name:"Čerstvá petržel a pažitka",qty:"2 svazky", price:30.00, isAkce:false,source:null},
-  {id:"sl_r9", name:"Smetana 30%",              qty:"2 × 200 ml",price:50.00,isAkce:false,source:null},
-  {id:"sl_r10",name:"Tvaroh / žervé",           qty:"500 g",    price:45.00, isAkce:false,source:null},
-  {id:"sl_r11",name:"Med",                      qty:"250 ml",   price:55.00, isAkce:false,source:null},
-  {id:"sl_r12",name:"Mouka (celozrnná špaldová)",qty:"500 g",   price:35.00, isAkce:false,source:null},
-  {id:"sl_r13",name:"Sezónní ovoce",            qty:"400 g",    price:65.00, isAkce:false,source:null},
-  {id:"sl_r14",name:"Batáty",                   qty:"1,6 kg",   price:72.00, isAkce:false,source:"restart"},
-  {id:"sl_r15",name:"Cuketa",                   qty:"500 g",    price:30.00, isAkce:false,source:"restart"},
-  {id:"sl_r16",name:"Brokolice",                qty:"1 hlávka", price:35.00, isAkce:false,source:"restart"},
-  {id:"sl_r17",name:"Kapusta",                  qty:"0,5 hlávky",price:25.00,isAkce:false,source:"restart"},
-  {id:"sl_r18",name:"Halloumi sýr",             qty:"200 g",    price:89.00, isAkce:false,source:"restart"},
-  {id:"sl_r19",name:"Feta sýr",                 qty:"200 g",    price:55.00, isAkce:false,source:"restart"},
-  {id:"sl_r20",name:"Mozzarella",               qty:"125 g",    price:35.00, isAkce:false,source:"restart"},
-  {id:"sl_r21",name:"Celozrnné tortilly",        qty:"8 ks",     price:45.00, isAkce:false,source:"restart"},
-  {id:"sl_r22",name:"Rýže kulatozrnná",         qty:"400 g",    price:30.00, isAkce:false,source:"restart"},
-  {id:"sl_r23",name:"Datle bez pecky",          qty:"200 g",    price:45.00, isAkce:false,source:"restart"},
-  {id:"sl_r24",name:"Vlašské ořechy",           qty:"150 g",    price:55.00, isAkce:false,source:"restart"},
-  {id:"sl_r25",name:"Mleté maso (mix)",         qty:"700 g",    price:91.00, isAkce:false,source:"restart"},
-  {id:"sl_r26",name:"Mleté krůtí maso",         qty:"600 g",    price:72.00, isAkce:false,source:"restart"},
-  {id:"sl_r27",name:"Dijonská hořčice",         qty:"1 sklenička",price:35.00,isAkce:false,source:"restart"},
-  {id:"sl_r28",name:"Kuřecí prsa",              qty:"4 ks",     price:280.00,isAkce:false,source:"kucharkadc"},
-  {id:"sl_r29",name:"Granola",                  qty:"400 g",    price:65.00, isAkce:false,source:"kucharkadc"},
-  {id:"sl_r30",name:"Ovesné vločky",            qty:"400 g",    price:25.00, isAkce:false,source:"kucharkadc"},
-  {id:"sl_r31",name:"Mléko",                    qty:"1 L",      price:30.00, isAkce:false,source:"kucharkadc"},
-  {id:"sl_r32",name:"Kapary",                   qty:"100 g",    price:35.00, isAkce:false,source:"kucharkadc"},
-  {id:"sl_r33",name:"Kuřecí vývar",             qty:"1 L",      price:35.00, isAkce:false,source:"kucharkadc"},
-  {id:"sl_r34",name:"Strouhanka",               qty:"150 g",    price:20.00, isAkce:false,source:"kucharkadc"}
+  {id:"sl_k1",name:"Losos filet (chlazený)",    qty:"2 kg",      price:498.00,isAkce:true, source:"kucharkadc",note:"24,90 Kč/100g · -54 %"},
+  {id:"sl_k2",name:"Vepřová pečeně K-Mistři",   qty:"1,5 kg",    price:134.85,isAkce:true, source:null,        note:"89,90 Kč/kg · -60 %"},
+  {id:"sl_k3",name:"Šumavský Eidam sýr",        qty:"600 g",     price:101.40,isAkce:true, source:null,        note:"16,90 Kč/100g · -57 %"},
+  {id:"sl_k4",name:"Olma Florian jogurt",        qty:"8 ks",      price:47.20, isAkce:true, source:null,        note:"5,90 Kč/ks · -62 %"},
+  {id:"sl_k5",name:"Olma máslo",                qty:"2 × 250 g", price:57.80, isAkce:true, source:null,        note:"28,90 Kč · -15 %"},
+  {id:"sl_k6",name:"Slunka slunečnicový olej",  qty:"1 L",       price:34.90, isAkce:true, source:null,        note:"34,90 Kč/L · -53 %"},
+  {id:"sl_k7",name:"Těstoviny (penne/farfalle)", qty:"2 × 500 g", price:55.80, isAkce:true, source:"kucharkadc",note:"27,90 Kč · -38 %"},
+  {id:"sl_k8",name:"Vinica mražená zelenina",   qty:"2 × 450 g", price:37.80, isAkce:true, source:null,        note:"18,90 Kč · -30 %"},
+  {id:"sl_r1", name:"Vejce",                    qty:"24 ks",     price:85.00, isAkce:false,source:null},
+  {id:"sl_r2", name:"Brambory",                 qty:"2 kg",      price:50.00, isAkce:false,source:null},
+  {id:"sl_r3", name:"Celozrnný chléb",          qty:"2 bochníky",price:70.00, isAkce:false,source:null},
+  {id:"sl_r4", name:"Póry",                     qty:"4 ks",      price:60.00, isAkce:false,source:null},
+  {id:"sl_r5", name:"Cibule",                   qty:"6 ks",      price:30.00, isAkce:false,source:null},
+  {id:"sl_r6", name:"Česnek",                   qty:"1 hlávka",  price:15.00, isAkce:false,source:null},
+  {id:"sl_r7", name:"Citróny",                  qty:"4 ks",      price:32.00, isAkce:false,source:null},
+  {id:"sl_r8", name:"Petržel a pažitka",        qty:"2 svazky",  price:30.00, isAkce:false,source:null},
+  {id:"sl_r9", name:"Smetana 30%",              qty:"2 × 200 ml",price:50.00, isAkce:false,source:null},
+  {id:"sl_r10",name:"Tvaroh / žervé",           qty:"500 g",     price:45.00, isAkce:false,source:null},
+  {id:"sl_r11",name:"Med",                      qty:"250 ml",    price:55.00, isAkce:false,source:null},
+  {id:"sl_r12",name:"Mouka celozrnná špaldová", qty:"500 g",     price:35.00, isAkce:false,source:null},
+  {id:"sl_r13",name:"Sezónní ovoce",            qty:"400 g",     price:65.00, isAkce:false,source:null},
+  {id:"sl_r14",name:"Batáty",                   qty:"1,6 kg",    price:72.00, isAkce:false,source:"restart"},
+  {id:"sl_r15",name:"Cuketa",                   qty:"500 g",     price:30.00, isAkce:false,source:"restart"},
+  {id:"sl_r16",name:"Brokolice",                qty:"1 hlávka",  price:35.00, isAkce:false,source:"restart"},
+  {id:"sl_r17",name:"Kapusta",                  qty:"0,5 hlávky",price:25.00, isAkce:false,source:"restart"},
+  {id:"sl_r18",name:"Halloumi sýr",             qty:"200 g",     price:89.00, isAkce:false,source:"restart"},
+  {id:"sl_r19",name:"Feta sýr",                 qty:"200 g",     price:55.00, isAkce:false,source:"restart"},
+  {id:"sl_r20",name:"Mozzarella",               qty:"125 g",     price:35.00, isAkce:false,source:"restart"},
+  {id:"sl_r21",name:"Celozrnné tortilly",        qty:"8 ks",      price:45.00, isAkce:false,source:"restart"},
+  {id:"sl_r22",name:"Rýže kulatozrnná",         qty:"400 g",     price:30.00, isAkce:false,source:"restart"},
+  {id:"sl_r23",name:"Datle + vlašské ořechy",   qty:"200 g + 150 g",price:100.00,isAkce:false,source:"restart"},
+  {id:"sl_r24",name:"Mleté maso (mix)",         qty:"700 g",     price:91.00, isAkce:false,source:"restart"},
+  {id:"sl_r25",name:"Mleté krůtí maso",         qty:"600 g",     price:72.00, isAkce:false,source:"restart"},
+  {id:"sl_r26",name:"Dijonská hořčice",         qty:"1 sklenička",price:35.00,isAkce:false,source:"restart"},
+  {id:"sl_r27",name:"Kuřecí prsa",              qty:"4 ks (800 g)",price:280.00,isAkce:false,source:"kucharkadc"},
+  {id:"sl_r28",name:"Granola",                  qty:"400 g",     price:65.00, isAkce:false,source:"kucharkadc"},
+  {id:"sl_r29",name:"Ovesné vločky",            qty:"400 g",     price:25.00, isAkce:false,source:"kucharkadc"},
+  {id:"sl_r30",name:"Mléko",                    qty:"1 L",       price:30.00, isAkce:false,source:"kucharkadc"},
+  {id:"sl_r31",name:"Kapary",                   qty:"100 g",     price:35.00, isAkce:false,source:"kucharkadc"},
+  {id:"sl_r32",name:"Kuřecí vývar",             qty:"1 L",       price:35.00, isAkce:false,source:"kucharkadc"},
+  {id:"sl_r33",name:"Strouhanka",               qty:"150 g",     price:20.00, isAkce:false,source:"kucharkadc"}
 ];
 
-/* ═══════════════════════════════════════════════
+/* ══════════════════════════════════════════════
    APP STATE
-═══════════════════════════════════════════════ */
+══════════════════════════════════════════════ */
 const DAY_ORDER = ['ut','st','ct','pa','so','ne','po'];
 
 const appState = {
-  activeDays:   new Set(DAY_ORDER),         // multiselect
-  activeMeals:  {snidane:true, obed:true, vecere:true},
-  mealSources:  {snidane:'both', obed:'both', vecere:'both'},
-  shoppingDay:  'pa',                        // default: pátek
+  activeDays:   new Set(DAY_ORDER),
+  shoppingDay:  'pa',
   showOnlyAkce: false
 };
 
-/* ═══════════════════════════════════════════════
-   MASTER FILTER — called after every state change
-═══════════════════════════════════════════════ */
+/*
+  OPRAVA 4: per-day stav chodů a zdrojů
+  Každý den má vlastní nastavení pro snídaně / oběd / večeři
+*/
+const dayState = {};
+DAY_ORDER.forEach(d => {
+  dayState[d] = {
+    snidane: { show: true, source: 'both' },
+    obed:    { show: true, source: 'both' },
+    vecere:  { show: true, source: 'both' }
+  };
+});
+
+/* ══════════════════════════════════════════════
+   MASTER FILTER — volá se po každé změně stavu
+══════════════════════════════════════════════ */
 function applyFilters() {
   filterDayCards();
-  filterMealSections();
+  DAY_ORDER.forEach(applyDayFilter);
   updateShoppingVisibility();
   recalcTotal();
 }
 
-/* ───── Day cards ───── */
+/* ─── Day cards show/hide ─── */
 function filterDayCards() {
   document.querySelectorAll('.day-card').forEach(card => {
     card.style.display = appState.activeDays.has(card.dataset.day) ? '' : 'none';
   });
 }
 
+/* ─── Per-day meal/source filter ─── */
+function applyDayFilter(dayId) {
+  const dayCard = document.getElementById('day-' + dayId);
+  if (!dayCard) return;
+  const ds = dayState[dayId];
+
+  ['snidane','obed','vecere'].forEach(meal => {
+    const section = dayCard.querySelector(`.meal-section[data-meal="${meal}"]`);
+    if (!section) return;
+    section.style.display = ds[meal].show ? '' : 'none';
+    if (!ds[meal].show) return;
+
+    const src = ds[meal].source;
+    section.querySelectorAll('.recipe-card').forEach(card => {
+      card.style.display = (src === 'both' || src === card.dataset.source) ? '' : 'none';
+    });
+  });
+}
+
+/* ─── Day multiselect ─── */
 function toggleDay(dayId, btn) {
   if (appState.activeDays.has(dayId)) appState.activeDays.delete(dayId);
   else appState.activeDays.add(dayId);
@@ -393,83 +409,90 @@ function toggleDay(dayId, btn) {
 function toggleAllDays(activate) {
   DAY_ORDER.forEach(d => activate ? appState.activeDays.add(d) : appState.activeDays.delete(d));
   document.querySelectorAll('.btn-day').forEach(b =>
-    b.classList.toggle('active', activate));
+    b.classList.toggle('active', activate && b.dataset.dayId !== appState.shoppingDay || activate));
   applyFilters();
 }
 
-/* ───── Shopping day + reorder ───── */
+/* ─── OPRAVA 3: Shopping day → dynamicky překreslit tlačítka zleva doprava ─── */
 function setShoppingDay(dayId) {
   appState.shoppingDay = dayId;
-  // Mark button
-  document.querySelectorAll('.btn-day').forEach(b =>
-    b.classList.toggle('shopping-day', b.dataset.dayId === dayId));
-  reorderDayCards();
+  renderDayButtons();   // přeřadí tlačítka v pořadí od dne po nákupu
+  reorderDayCards();    // přeřadí DOM karty ve stejném pořadí
   updateShoppingInfo();
+  applyFilters();
+}
+
+/* Vrátí pole dayId seřazené od dne po nákupu */
+function getOrderedDays() {
+  if (!appState.shoppingDay) return DAY_ORDER;
+  const shIdx = DAY_ORDER.indexOf(appState.shoppingDay);
+  return Array.from({length: DAY_ORDER.length}, (_, i) =>
+    DAY_ORDER[(shIdx + 1 + i) % DAY_ORDER.length]);
+}
+
+function renderDayButtons() {
+  const container = document.getElementById('day-filters');
+  container.innerHTML = '';
+  getOrderedDays().forEach(dayId => {
+    const meta = weatherData.find(d => d.dayId === dayId);
+    const isActive = appState.activeDays.has(dayId);
+    const btn = document.createElement('button');
+    btn.className = 'btn-day' + (isActive ? ' active' : '');
+    if (dayId === appState.shoppingDay) btn.classList.add('shopping-day');
+    btn.dataset.dayId = dayId;
+    btn.title = meta.dayFull + ' · nákupní den označen žlutě';
+    btn.textContent = meta.dayAbbr + ' ' + meta.date.slice(8, 10) + '.';
+    btn.onclick = () => toggleDay(dayId, btn);
+    container.appendChild(btn);
+  });
 }
 
 function reorderDayCards() {
-  if (!appState.shoppingDay) return;
   const container = document.getElementById('days-container');
-  const shIdx = DAY_ORDER.indexOf(appState.shoppingDay);
-  for (let i = 1; i <= DAY_ORDER.length; i++) {
-    const dayId = DAY_ORDER[(shIdx + i) % DAY_ORDER.length];
+  getOrderedDays().forEach(dayId => {
     const card = document.getElementById('day-' + dayId);
-    if (card) container.appendChild(card); // moves to end in new order
-  }
+    if (card) container.appendChild(card);
+  });
 }
 
 function updateShoppingInfo() {
   const el = document.getElementById('shopping-info');
   if (!appState.shoppingDay) { el.textContent = ''; return; }
-  const dayMeta = weatherData.find(d => d.dayId === appState.shoppingDay);
-  if (dayMeta) el.textContent = `Nakupujete: ${dayMeta.dayFull} · jídelníček začíná den poté`;
+  const meta = weatherData.find(d => d.dayId === appState.shoppingDay);
+  if (meta) el.innerHTML = `🛒 Nakupujete v <b>${meta.dayFull}</b> · jídelníček začíná den poté`;
 }
 
-/* ───── Meal sections ───── */
-function toggleMeal(mealType, btn) {
-  appState.activeMeals[mealType] = !appState.activeMeals[mealType];
-  btn.classList.toggle('active', appState.activeMeals[mealType]);
-  // Disable/enable source select
-  const sel = document.getElementById('src-' + mealType);
-  if (sel) sel.disabled = !appState.activeMeals[mealType];
-  applyFilters();
+/* ─── Per-day controls: toggle meal on/off ─── */
+function toggleDayMeal(dayId, meal, btn) {
+  const st = dayState[dayId][meal];
+  st.show = !st.show;
+  btn.classList.toggle('active', st.show);
+  const sel = document.getElementById(`dcsel-${dayId}-${meal}`);
+  if (sel) sel.disabled = !st.show;
+  applyDayFilter(dayId);
+  updateShoppingVisibility();
+  recalcTotal();
 }
 
-function setMealSource(mealType, source) {
-  appState.mealSources[mealType] = source;
-  applyFilters();
+/* ─── Per-day controls: change source ─── */
+function setDayMealSource(dayId, meal, src) {
+  dayState[dayId][meal].source = src;
+  applyDayFilter(dayId);
+  updateShoppingVisibility();
+  recalcTotal();
 }
 
-function filterMealSections() {
-  document.querySelectorAll('.day-card').forEach(dayCard => {
-    if (!appState.activeDays.has(dayCard.dataset.day)) return;
-
-    ['snidane','obed','vecere'].forEach(mealType => {
-      const section = dayCard.querySelector(`.meal-section[data-meal="${mealType}"]`);
-      if (!section) return;
-
-      const mealOn = appState.activeMeals[mealType];
-      section.style.display = mealOn ? '' : 'none';
-      if (!mealOn) return;
-
-      // Show/hide individual recipe cards by source
-      const src = appState.mealSources[mealType];
-      section.querySelectorAll('.recipe-card').forEach(card => {
-        const cs = card.dataset.source;
-        card.style.display = (src === 'both' || src === cs) ? '' : 'none';
-      });
-    });
-  });
-}
-
-/* ───── Shopping list visibility ───── */
+/* ─── Shopping list visibility (reaktivní) ─── */
 function getActiveSources() {
   const s = new Set();
-  Object.entries(appState.activeMeals).forEach(([meal, on]) => {
-    if (!on) return;
-    const src = appState.mealSources[meal];
-    if (src === 'both' || src === 'restart')    s.add('restart');
-    if (src === 'both' || src === 'kucharkadc') s.add('kucharkadc');
+  DAY_ORDER.forEach(dayId => {
+    if (!appState.activeDays.has(dayId)) return;
+    ['snidane','obed','vecere'].forEach(meal => {
+      if (!dayState[dayId][meal].show) return;
+      const src = dayState[dayId][meal].source;
+      if (src === 'both' || src === 'restart')    s.add('restart');
+      if (src === 'both' || src === 'kucharkadc') s.add('kucharkadc');
+    });
   });
   return s;
 }
@@ -480,44 +503,32 @@ function updateShoppingVisibility() {
   let lastHeader = null, sectionHasItems = false;
 
   document.querySelectorAll('#shopping-body tr').forEach(row => {
-    const isHeader = !!row.querySelector('td[colspan]');
-    if (isHeader) {
-      // Finalise previous section header
+    if (row.querySelector('td[colspan]')) {
       if (lastHeader) lastHeader.style.display = sectionHasItems ? '' : 'none';
-      lastHeader = row;
-      sectionHasItems = false;
+      lastHeader = row; sectionHasItems = false;
       return;
     }
-
     const src = row.dataset.source || '';
-    let vis = true;
-
-    if (noDays) { vis = false; }
-    else if (src === 'restart')    { vis = activeSrc.has('restart'); }
-    else if (src === 'kucharkadc') { vis = activeSrc.has('kucharkadc'); }
-    // src === '' → always visible (shared)
-
+    let vis = !noDays;
+    if (src === 'restart')    vis = vis && activeSrc.has('restart');
+    if (src === 'kucharkadc') vis = vis && activeSrc.has('kucharkadc');
     if (appState.showOnlyAkce && !row.classList.contains('row-akce')) vis = false;
-
     row.style.display = vis ? '' : 'none';
     if (vis) sectionHasItems = true;
   });
-
-  // Last section header
   if (lastHeader) lastHeader.style.display = sectionHasItems ? '' : 'none';
 }
 
 function setAkceFilter(checked) {
   appState.showOnlyAkce = checked;
-  applyFilters();
+  updateShoppingVisibility();
+  recalcTotal();
 }
 
-/* ───── recalcTotal: only visible + unchecked ───── */
 function recalcTotal() {
   let total = 0;
   document.querySelectorAll('#shopping-body tr').forEach(row => {
-    if (row.querySelector('td[colspan]')) return;
-    if (row.style.display === 'none') return;
+    if (row.querySelector('td[colspan]') || row.style.display === 'none') return;
     const chk = row.querySelector('input[type="checkbox"]');
     if (chk && !chk.checked) total += parseFloat(row.dataset.price || 0);
   });
@@ -529,33 +540,64 @@ function toggleShopItem(row) {
   recalcTotal();
 }
 
-/* ═══════════════════════════════════════════════
+/* ══════════════════════════════════════════════
    RENDERING
-═══════════════════════════════════════════════ */
+══════════════════════════════════════════════ */
 const mealConfig = [
   {key:'snidane', label:'🍳 Snídaně', cls:'meal-snidane'},
   {key:'obed',    label:'🥗 Oběd',    cls:'meal-obed'},
   {key:'vecere',  label:'🍽️ Večeře',  cls:'meal-vecere'}
 ];
 const tagLabels = {vydatne:'Vydatné', smisene:'Smíšené', lehke:'Lehké'};
+const typeLabels = {vydatne:'Vydatné recepty', smisene:'Smíšené recepty', lehke:'Lehké recepty'};
 
 function renderDays() {
   const container = document.getElementById('days-container');
   container.innerHTML = mealPlanData.map(day => `
     <div class="day-card mt-5" data-day="${day.dayId}" id="day-${day.dayId}">
-      <div class="flex items-center justify-between bg-white rounded-xl shadow-sm px-4 py-2.5 mb-1.5">
+
+      <!-- Den header -->
+      <div class="flex items-center justify-between bg-white rounded-t-xl shadow-sm px-4 py-2.5">
         <div>
           <h2 class="text-base font-bold text-gray-800">${day.dayFull}
             <span class="text-gray-400 font-normal text-sm ml-1">${day.date.slice(5).replace('-','.')}.2026</span>
           </h2>
-          <span class="text-xs text-gray-400">${{vydatne:'Vydatné recepty',smisene:'Smíšené recepty',lehke:'Lehké recepty'}[day.weather.type]}</span>
+          <span class="text-xs text-gray-400">${typeLabels[day.weather.type]}</span>
         </div>
         <div class="text-right">
           <div class="text-xl">${day.weather.icon}</div>
           <div class="text-xs font-bold text-gray-700">${day.weather.maxTemp}° / ${day.weather.minTemp}°C</div>
         </div>
       </div>
+
+      <!-- OPRAVA 4: per-day controls přímo na kartě -->
+      <div class="day-controls">
+        ${mealConfig.map(mc => {
+          const ds = dayState[day.dayId][mc.key];
+          return `
+            <div class="dc-group">
+              <button class="btn-dc ${ds.show ? 'active' : ''}"
+                      data-meal="${mc.key}"
+                      id="dcbtn-${day.dayId}-${mc.key}"
+                      onclick="toggleDayMeal('${day.dayId}','${mc.key}',this)">
+                ${mc.label}
+              </button>
+              <select class="dc-select"
+                      id="dcsel-${day.dayId}-${mc.key}"
+                      onchange="setDayMealSource('${day.dayId}','${mc.key}',this.value)"
+                      ${ds.show ? '' : 'disabled'}>
+                <option value="both"       ${ds.source==='both'       ?'selected':''}>Oba</option>
+                <option value="restart"    ${ds.source==='restart'    ?'selected':''}>Restart</option>
+                <option value="kucharkadc" ${ds.source==='kucharkadc' ?'selected':''}>Kuchařka</option>
+              </select>
+            </div>
+            ${mc.key !== 'vecere' ? '<div class="dc-sep"></div>' : ''}`;
+        }).join('')}
+      </div>
+
+      <!-- Meal sections -->
       ${mealConfig.map(mc => renderMealSection(mc, day)).join('')}
+
     </div>`).join('');
 }
 
@@ -572,7 +614,7 @@ function renderMealSection(mc, day) {
 }
 
 function renderCard(r) {
-  const tagCls = {vydatne:'tag-vydatne', smisene:'tag-smisene', lehke:'tag-lehke'}[r.tag] || '';
+  const tagCls = {vydatne:'tag-vydatne',smisene:'tag-smisene',lehke:'tag-lehke'}[r.tag] || '';
   return `
     <div class="recipe-card" data-source="${r.source}" onclick="openModal('${r.id}')">
       <span class="src-badge ${r.source}">${r.sourceLabel}</span>
@@ -580,18 +622,20 @@ function renderCard(r) {
       <div class="mt-1 flex gap-2 flex-wrap text-xs text-gray-500">
         <span>⏱ ${r.time}</span>
         <span>🔥 ${r.calories}</span>
-        <span class="px-1.5 py-0.5 rounded text-white text-xs ${tagCls}">${tagLabels[r.tag]||''}</span>
+        <span class="px-1.5 py-0.5 rounded text-white ${tagCls}">${tagLabels[r.tag]||''}</span>
       </div>
       <div class="mt-1.5 text-xs text-blue-500">→ Zobrazit recept</div>
     </div>`;
 }
 
 function renderWeather() {
-  document.getElementById('weather-summary').innerHTML = weatherData.map(d =>
-    `<span class="w-chip">${d.dayAbbr} ${d.icon} ${d.maxTemp}°C</span>`).join('');
+  document.getElementById('weather-summary').innerHTML =
+    weatherData.map(d => `<span class="w-chip">${d.dayAbbr} ${d.icon} ${d.maxTemp}°C</span>`).join('');
 }
 
 function renderDeals() {
+  document.getElementById('letak-badge').textContent = '🏷️ Leták Kaufland: ' + kauflandValidity.fullLabel;
+  document.getElementById('deals-strip-label').textContent = '🏷️ KAUFLAND AKCE ' + kauflandValidity.fromLabel + ':';
   document.getElementById('deals-strip').innerHTML = kauflandDeals.map(d =>
     `<span class="bg-orange-100 text-orange-800 border border-orange-300 px-2 py-0.5 rounded-full font-semibold">
       ${d.name} <b>${d.price}</b> <span class="text-green-700">-${d.pct}%</span>
@@ -600,20 +644,17 @@ function renderDeals() {
 
 function renderShopping() {
   const tbody = document.getElementById('shopping-body');
+  const labels = {akce:`🏷️ KAUFLAND AKCE (platnost ${kauflandValidity.fullLabel})`,sdilene:'📦 Základní suroviny',restart:'🥬 Restart hubnutí',kucharkadc:'👩‍🍳 Kuchařka pro dceru'};
   let lastSection = null;
   tbody.innerHTML = '';
-  const labels = {akce:'🏷️ KAUFLAND AKCE',sdilene:'📦 Základní suroviny',restart:'🥬 Restart hubnutí',kucharkadc:'👩‍🍳 Kuchařka pro dceru'};
-
   shoppingData.forEach(item => {
     const section = item.isAkce ? 'akce' : (item.source || 'sdilene');
-
     if (section !== lastSection) {
       lastSection = section;
       const srcAttr = (section==='restart'||section==='kucharkadc') ? `data-source="${section}"` : '';
       tbody.insertAdjacentHTML('beforeend',
         `<tr ${srcAttr} class="shop-section-header"><td colspan="5">${labels[section]||section}</td></tr>`);
     }
-
     const srcAttr = item.source ? `data-source="${item.source}"` : '';
     tbody.insertAdjacentHTML('beforeend',
       `<tr ${srcAttr} class="${item.isAkce?'row-akce':''} border-b hover:bg-gray-50"
@@ -627,17 +668,16 @@ function renderShopping() {
   });
 }
 
-/* ═══════════════════════════════════════════════
+/* ══════════════════════════════════════════════
    MODAL
-═══════════════════════════════════════════════ */
+══════════════════════════════════════════════ */
 function openModal(id) {
-  const r = recipesData[id];
-  if (!r) return;
+  const r = recipesData[id]; if (!r) return;
   const sc = r.source === 'restart' ? 'var(--c-restart)' : 'var(--c-kucharkadc)';
   document.getElementById('modal-body').innerHTML = `
     <span class="src-badge ${r.source}">${r.sourceLabel}</span>
     <h2 class="text-xl font-bold mt-1 mb-1">${r.name}</h2>
-    <p class="text-sm text-gray-500 mb-3">⏱ ${r.time} &nbsp;|&nbsp; 🔥 ${r.calories} &nbsp;|&nbsp; 👥 4 osoby</p>
+    <p class="text-sm text-gray-500 mb-3">⏱ ${r.time} | 🔥 ${r.calories} | 👥 4 osoby</p>
     <h3 class="font-bold border-b pb-1 mb-2" style="color:${sc}">Ingredience</h3>
     <ul class="space-y-1 mb-4">
       ${r.ingredients.map(i=>`<li class="flex justify-between text-sm border-b border-gray-50 py-1">
@@ -653,26 +693,23 @@ function openModal(id) {
   document.getElementById('recipe-modal').classList.add('active');
   document.body.style.overflow = 'hidden';
 }
-
 function closeModal() {
   document.getElementById('recipe-modal').classList.remove('active');
   document.body.style.overflow = '';
 }
-document.addEventListener('keydown', e => { if (e.key==='Escape') closeModal(); });
+document.addEventListener('keydown', e => { if(e.key==='Escape') closeModal(); });
 
-/* ═══════════════════════════════════════════════
+/* ══════════════════════════════════════════════
    EXPORT
-═══════════════════════════════════════════════ */
+══════════════════════════════════════════════ */
 function generatePDF() {
   const rows = [];
-  let curSection = '';
   document.querySelectorAll('#shopping-body tr').forEach(row => {
-    if (row.style.display === 'none') return;
+    if (row.style.display==='none') return;
     const hd = row.querySelector('td[colspan]');
     if (hd) { rows.push([{text:hd.textContent,bold:true,colSpan:4,fillColor:'#f0f0f0',fontSize:9},'','','']); return; }
-    const chk = row.querySelector('input');
+    const chk = row.querySelector('input'); const done = chk&&chk.checked;
     const tds = row.querySelectorAll('td:not(:first-child):not(:last-child)');
-    const done = chk && chk.checked;
     rows.push([
       {text:done?'✓':'○',alignment:'center',fontSize:9,color:done?'#d32f2f':'#999'},
       {text:tds[0]?.textContent||'',fontSize:9,decoration:done?'lineThrough':null},
@@ -682,8 +719,8 @@ function generatePDF() {
   });
   pdfMake.createPdf({
     content:[
-      {text:'🥗 Nákupní seznam – Jídelníček 21.–27. 4. 2026',style:'h'},
-      {text:'Kaufland akce: Losos -54% | Vepřová -60% | Eidam -57% | Jogurt -62%',style:'sub'},
+      {text:'🥗 Nákupní seznam – Jídelníček 22.–28. 4. 2026',style:'h'},
+      {text:'Kaufland akce od 22. 4.: Losos -54% | Vepřová -60% | Eidam -57% | Jogurt -62%',style:'sub'},
       {table:{widths:[18,'*',80,80],body:[[{text:'',bold:true},{text:'Položka',bold:true,fontSize:9},{text:'Množství',bold:true,fontSize:9,alignment:'center'},{text:'Cena',bold:true,fontSize:9,alignment:'right'}],...rows]},layout:'lightHorizontalLines'},
       {text:`\nCELKEM: ${document.getElementById('total-price').textContent} Kč`,style:'tot'}
     ],
@@ -696,23 +733,21 @@ function generatePDF() {
 function sendEmailPlan() {
   const items = [];
   document.querySelectorAll('#shopping-body tr').forEach(row => {
-    if (row.style.display === 'none') return;
-    if (row.querySelector('td[colspan]')) return;
-    if (row.querySelector('input')?.checked) return;
+    if (row.style.display==='none' || row.querySelector('td[colspan]') || row.querySelector('input')?.checked) return;
     const tds = row.querySelectorAll('td:not(:first-child)');
-    if (tds.length >= 2) items.push(`• ${tds[0].textContent.trim()} – ${tds[1].textContent.trim()}`);
+    if (tds.length>=2) items.push(`• ${tds[0].textContent.trim()} – ${tds[1].textContent.trim()}`);
   });
   emailjs.send('service_2h3ehkd','template_seall0o',{
     to_email:'pragodavid@gmail.com',to_name:'David',
-    subject:'Jídelníček + nákupní seznam 21.–27. 4. 2026',
-    message:`JÍDELNÍČEK 21.–27. 4. 2026\n\nNÁKUPNÍ SEZNAM:\n${items.join('\n')}\n\nCELKEM: ${document.getElementById('total-price').textContent} Kč`
+    subject:'Jídelníček + nákupní seznam 22.–28. 4. 2026',
+    message:`NÁKUPNÍ SEZNAM:\n${items.join('\n')}\n\nCelkem: ${document.getElementById('total-price').textContent} Kč`
   }).then(()=>showToast('📧 E-mail odeslán!')).catch(()=>showToast('⚠️ Chyba odesílání'));
 }
 
 function copyShoppingText() {
-  const lines = ['NÁKUPNÍ SEZNAM – 21.–27. 4. 2026',''];
+  const lines = ['NÁKUPNÍ SEZNAM – 22.–28. 4. 2026',''];
   document.querySelectorAll('#shopping-body tr').forEach(row => {
-    if (row.style.display === 'none') return;
+    if (row.style.display==='none') return;
     const hd = row.querySelector('td[colspan]');
     if (hd) { lines.push('\n'+hd.textContent); return; }
     if (row.querySelector('input')?.checked) return;
@@ -729,18 +764,17 @@ function showToast(msg) {
   setTimeout(()=>t.style.display='none', 3200);
 }
 
-/* ═══════════════════════════════════════════════
+/* ══════════════════════════════════════════════
    INIT
-═══════════════════════════════════════════════ */
+══════════════════════════════════════════════ */
 document.addEventListener('DOMContentLoaded', () => {
   renderWeather();
   renderDeals();
   renderDays();
   renderShopping();
-  // Apply default shopping day (pátek) → reorder cards
-  setShoppingDay('pa');
+  renderDayButtons();   // dynamické pořadí od dne po nákupu (default: pátek → od So)
+  reorderDayCards();    // DOM karty ve stejném pořadí
   updateShoppingInfo();
-  // Initial filter pass
   applyFilters();
 });
 </script>
