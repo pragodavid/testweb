@@ -1,0 +1,83 @@
+{
+  "city": "Mělník",
+  "fetched_at": "2026-05-14T14:44:46.115200",
+  "days": [
+    {
+      "date": "2026-05-14",
+      "weekday": "Thursday",
+      "weekday_cs": "Čtvrtek",
+      "description": "Slabý déšť",
+      "temp_max": 15.4,
+      "temp_min": 7.7,
+      "precip_mm": 0.4,
+      "wind_kmh": 20.6,
+      "suitable_outdoor": false
+    },
+    {
+      "date": "2026-05-15",
+      "weekday": "Friday",
+      "weekday_cs": "Pátek",
+      "description": "Zataženo",
+      "temp_max": 15.9,
+      "temp_min": 7.6,
+      "precip_mm": 0.0,
+      "wind_kmh": 11.6,
+      "suitable_outdoor": true
+    },
+    {
+      "date": "2026-05-16",
+      "weekday": "Saturday",
+      "weekday_cs": "Sobota",
+      "description": "Zataženo",
+      "temp_max": 16.0,
+      "temp_min": 5.8,
+      "precip_mm": 0.0,
+      "wind_kmh": 17.3,
+      "suitable_outdoor": true
+    },
+    {
+      "date": "2026-05-17",
+      "weekday": "Sunday",
+      "weekday_cs": "Neděle",
+      "description": "Zataženo",
+      "temp_max": 14.7,
+      "temp_min": 6.1,
+      "precip_mm": 0.0,
+      "wind_kmh": 10.7,
+      "suitable_outdoor": true
+    },
+    {
+      "date": "2026-05-18",
+      "weekday": "Monday",
+      "weekday_cs": "Pondělí",
+      "description": "Zataženo",
+      "temp_max": 16.3,
+      "temp_min": 8.0,
+      "precip_mm": 0.0,
+      "wind_kmh": 8.0,
+      "suitable_outdoor": true
+    },
+    {
+      "date": "2026-05-19",
+      "weekday": "Tuesday",
+      "weekday_cs": "Úterý",
+      "description": "Zataženo",
+      "temp_max": 20.2,
+      "temp_min": 6.9,
+      "precip_mm": 0.0,
+      "wind_kmh": 13.7,
+      "suitable_outdoor": true
+    },
+    {
+      "date": "2026-05-20",
+      "weekday": "Wednesday",
+      "weekday_cs": "Středa",
+      "description": "Slabý déšť",
+      "temp_max": 17.5,
+      "temp_min": 13.5,
+      "precip_mm": 1.8,
+      "wind_kmh": 15.5,
+      "suitable_outdoor": false
+    }
+  ]
+}
