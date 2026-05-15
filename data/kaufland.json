@@ -1,8 +1,9 @@
 {
   "store": "Kaufland",
-  "valid_from": "2026-05-13",
-  "valid_to": "2026-05-19",
-  "fetched_at": "2026-05-14T17:37:54.404415",
+  "store_key": "kaufland",
+  "valid_from": "2026-05-11",
+  "valid_to": "2026-05-17",
+  "fetched_at": "2026-05-15T14:17:26.035561",
   "products": [
     {
       "name": "Rajčata keřík",
@@ -59,26 +60,26 @@
       "unit": "100 g",
       "price": 9.9,
       "price_old": 17.9,
-      "discount_pct": 45,
+      "discount_pct": 44,
       "valid_from": "2026-05-13",
       "valid_to": "2026-05-19",
       "store": "Kaufland"
     },
     {
       "name": "Hermelín s bílou plísní na povrchu",
-      "brand": "SEDLČANSKÝ",
+      "brand": "Sedlčanský",
       "category": "mlecne",
       "unit": "100 g",
       "price": 28.9,
       "price_old": 47.9,
-      "discount_pct": 40,
+      "discount_pct": 39,
       "valid_from": "2026-05-13",
       "valid_to": "2026-05-19",
       "store": "Kaufland"
     },
     {
       "name": "Brambůrky",
-      "brand": "HOBŽOVY STRÁŽNICKÉ",
+      "brand": "Hobžovy Strážnické",
       "category": "trvanlive",
       "unit": "60 g",
       "price": 8.9,
@@ -90,7 +91,7 @@
     },
     {
       "name": "Máslo",
-      "brand": "TATRA",
+      "brand": "Tatra",
       "category": "mlecne",
       "unit": "250 g",
       "price": 29.9,
@@ -107,7 +108,7 @@
       "unit": "1 svazek",
       "price": 7.9,
       "price_old": 14.9,
-      "discount_pct": 47,
+      "discount_pct": 46,
       "valid_from": "2026-05-13",
       "valid_to": "2026-05-19",
       "store": "Kaufland"
@@ -119,7 +120,7 @@
       "unit": "1 kg",
       "price": 69.9,
       "price_old": 231.9,
-      "discount_pct": 70,
+      "discount_pct": 69,
       "valid_from": "2026-05-13",
       "valid_to": "2026-05-19",
       "store": "Kaufland"
@@ -137,20 +138,32 @@
       "store": "Kaufland"
     },
     {
+      "name": "Kmotrovky",
+      "brand": "Kmotr",
+      "category": "trvanlive",
+      "unit": "100 g",
+      "price": 39.9,
+      "price_old": 47.9,
+      "discount_pct": 16,
+      "valid_from": "2026-05-13",
+      "valid_to": "2026-05-19",
+      "store": "Kaufland"
+    },
+    {
       "name": "Šunka od kosti výběrová",
-      "brand": "PRANTL",
+      "brand": "Prantl",
       "category": "maso",
       "unit": "100 g",
       "price": 19.9,
       "price_old": 31.9,
-      "discount_pct": 38,
+      "discount_pct": 37,
       "valid_from": "2026-05-13",
       "valid_to": "2026-05-19",
       "store": "Kaufland"
     },
     {
       "name": "Selský jogurt bílý",
-      "brand": "HOLLANDIA",
+      "brand": "Hollandia",
       "category": "mlecne",
       "unit": "500 g",
       "price": 13.9,
