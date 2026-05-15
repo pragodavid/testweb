@@ -1,14 +1,13 @@
 {
-  "generated_at": "2026-05-15T14:24:14.688527",
-  "total_price": 1150.4,
-  "total_savings": 579.0,
+  "generated_at": "2026-05-15T14:57:01.778683",
+  "total_price": 561.3,
+  "total_savings": 593.0,
   "groups": {
     "Kaufland": [
       {
         "name": "Hermelín s bílou plísní na povrchu",
         "amounts": [
-          "100 g",
-          "200 g"
+          "400 g (4 ks)"
         ],
         "akce": true,
         "store": "Kaufland",
@@ -21,10 +20,24 @@
         }
       },
       {
+        "name": "Hořčice nebo máslo",
+        "amounts": [
+          "dle chuti"
+        ],
+        "akce": true,
+        "store": "Kaufland",
+        "price_approx": 29.9,
+        "akce_detail": {
+          "price": 29.9,
+          "price_old": 52.9,
+          "discount_pct": 43,
+          "valid_to": "2026-05-19"
+        }
+      },
+      {
         "name": "Kuřecí horní stehna",
         "amounts": [
-          "600 g (vykostěná)",
-          "600 g (nakrájená na nudličky)"
+          "1 kg"
         ],
         "akce": true,
         "store": "Kaufland",
@@ -39,7 +52,7 @@
       {
         "name": "Loupák máslový",
         "amounts": [
-          "2 ks (120 g)"
+          "4 ks"
         ],
         "akce": true,
         "store": "Kaufland",
@@ -54,8 +67,7 @@
       {
         "name": "Meloun vodní",
         "amounts": [
-          "500 g",
-          "500 g"
+          "1 kg"
         ],
         "akce": true,
         "store": "Kaufland",
@@ -73,22 +85,10 @@
           "30 g",
           "50 g",
           "30 g",
+          "50 g",
+          "50 g",
+          "30 g",
           "30 g"
-        ],
-        "akce": true,
-        "store": "Kaufland",
-        "price_approx": 29.9,
-        "akce_detail": {
-          "price": 29.9,
-          "price_old": 52.9,
-          "discount_pct": 43,
-          "valid_to": "2026-05-19"
-        }
-      },
-      {
-        "name": "Máslo (na smažení)",
-        "amounts": [
-          "20 g"
         ],
         "akce": true,
         "store": "Kaufland",
@@ -103,13 +103,11 @@
       {
         "name": "Rajčata keřík",
         "amounts": [
-          "500 g",
+          "200 g",
           "300 g",
           "500 g",
-          "200 g",
-          "200 g",
-          "200 g",
-          "200 g"
+          "500 g",
+          "300 g"
         ],
         "akce": true,
         "store": "Kaufland",
@@ -124,11 +122,7 @@
       {
         "name": "Selský jogurt bílý",
         "amounts": [
-          "500 g",
-          "200 g",
-          "200 g",
-          "200 g",
-          "100 g"
+          "500 g"
         ],
         "akce": true,
         "store": "Kaufland",
@@ -143,10 +137,8 @@
       {
         "name": "Sýr Eidam 30%",
         "amounts": [
+          "100 g",
           "200 g",
-          "100 g",
-          "100 g",
-          "100 g",
           "100 g"
         ],
         "akce": true,
@@ -160,9 +152,9 @@
         }
       },
       {
-        "name": "Vepřová krkovice bez kosti",
+        "name": "Vepřová krkovice bez kosti, v celku",
         "amounts": [
-          "4 plátky (cca 600-700 g)"
+          "600 g"
         ],
         "akce": true,
         "store": "Kaufland",
@@ -177,8 +169,7 @@
       {
         "name": "Vepřová kýta bez kosti",
         "amounts": [
-          "600 g",
-          "4 plátky (cca 600 g)"
+          "400 g"
         ],
         "akce": true,
         "store": "Kaufland",
@@ -193,9 +184,10 @@
       {
         "name": "Ředkvičky",
         "amounts": [
-          "2 svazky",
-          "2 svazky",
-          "2 svazky"
+          "1 svazek",
+          "1 svazek",
+          "1 svazek",
+          "0.5 svazku"
         ],
         "akce": true,
         "store": "Kaufland",
@@ -210,9 +202,6 @@
       {
         "name": "Šunka od kosti výběrová",
         "amounts": [
-          "200 g",
-          "100 g",
-          "100 g",
           "100 g",
           "100 g"
         ],
@@ -231,9 +220,8 @@
       {
         "name": "Kanadské borůvky",
         "amounts": [
-          "125 g",
-          "125 g",
-          "125 g"
+          "125 g (1 balení)",
+          "125 g (1 balení)"
         ],
         "akce": true,
         "store": "Lidl",
@@ -246,9 +234,25 @@
         }
       },
       {
+        "name": "Kuřecí prsní šunka",
+        "amounts": [
+          "100 g"
+        ],
+        "akce": true,
+        "store": "Lidl",
+        "price_approx": 18.9,
+        "akce_detail": {
+          "price": 18.9,
+          "price_old": 32.9,
+          "discount_pct": 42,
+          "valid_to": "2026-05-17"
+        }
+      },
+      {
         "name": "Mozzarella classic/light",
         "amounts": [
-          "2 balení (440 g)"
+          "220 g (1 balení)",
+          "440 g (2 balení)"
         ],
         "akce": true,
         "store": "Lidl",
@@ -263,13 +267,9 @@
       {
         "name": "Paprika červená",
         "amounts": [
-          "1 ks",
-          "2 ks",
-          "1 ks",
-          "2 ks",
-          "1 ks",
-          "1 ks",
-          "1 ks"
+          "200 g",
+          "150 g",
+          "300 g"
         ],
         "akce": true,
         "store": "Lidl",
@@ -284,45 +284,59 @@
     ],
     "Ostatní": [
       {
+        "name": "Bagety",
+        "amounts": [
+          "4 ks"
+        ],
+        "akce": false,
+        "store": null,
+        "price_approx": 0,
+        "akce_detail": null
+      },
+      {
+        "name": "Balzamikový ocet (volitelné)",
+        "amounts": [
+          "dle chuti"
+        ],
+        "akce": false,
+        "store": null,
+        "price_approx": 0,
+        "akce_detail": null
+      },
+      {
         "name": "Brambory",
         "amounts": [
           "800 g",
-          "800 g",
-          "200 g"
+          "1 kg",
+          "1 kg"
         ],
         "akce": false,
         "store": null,
-        "price_approx": 25.0,
+        "price_approx": 0,
         "akce_detail": null
       },
       {
-        "name": "Brusinkový džem",
+        "name": "Bylinky (oregano, bazalka)",
         "amounts": [
-          "4 lžíce"
+          "dle chuti"
         ],
         "akce": false,
         "store": null,
-        "price_approx": 30.0,
-        "akce_detail": null
-      },
-      {
-        "name": "Celozrnný chléb",
-        "amounts": [
-          "8 plátků"
-        ],
-        "akce": false,
-        "store": null,
-        "price_approx": 30.0,
+        "price_approx": 0,
         "akce_detail": null
       },
       {
         "name": "Chléb",
         "amounts": [
-          "4 plátky"
+          "dle chuti",
+          "dle chuti",
+          "dle chuti",
+          "dle chuti",
+          "dle chuti"
         ],
         "akce": false,
         "store": null,
-        "price_approx": 15.0,
+        "price_approx": 0,
         "akce_detail": null
       },
       {
@@ -334,185 +348,160 @@
         ],
         "akce": false,
         "store": null,
-        "price_approx": 10.0,
+        "price_approx": 0,
         "akce_detail": null
       },
       {
         "name": "Hladká mouka",
         "amounts": [
-          "200 g"
+          "100 g"
         ],
         "akce": false,
         "store": null,
-        "price_approx": 10.0,
+        "price_approx": 0,
         "akce_detail": null
       },
       {
         "name": "Jarní cibulka",
         "amounts": [
-          "dle chuti"
+          "2 ks"
         ],
         "akce": false,
         "store": null,
-        "price_approx": 10.0,
+        "price_approx": 0,
         "akce_detail": null
       },
       {
-        "name": "Jarní cibulka/pažitka",
+        "name": "Koření na kuře",
         "amounts": [
           "dle chuti"
         ],
         "akce": false,
         "store": null,
-        "price_approx": 10.0,
+        "price_approx": 0,
         "akce_detail": null
       },
       {
-        "name": "Kořenová zelenina (mrkev, petržel)",
-        "amounts": [
-          "300 g"
-        ],
-        "akce": false,
-        "store": null,
-        "price_approx": 20.0,
-        "akce_detail": null
-      },
-      {
-        "name": "Koření na kuře, sůl, pepř",
+        "name": "Med",
         "amounts": [
           "dle chuti"
         ],
         "akce": false,
         "store": null,
-        "price_approx": 10.0,
+        "price_approx": 0,
         "akce_detail": null
       },
       {
-        "name": "Med/javorový sirup",
+        "name": "Med nebo granola",
         "amounts": [
-          "dle chuti",
           "dle chuti"
         ],
         "akce": false,
         "store": null,
-        "price_approx": 30.0,
+        "price_approx": 0,
         "akce_detail": null
       },
       {
         "name": "Mléko",
         "amounts": [
-          "100 ml",
-          "500 ml"
+          "100 ml"
         ],
         "akce": false,
         "store": null,
-        "price_approx": 5.0,
+        "price_approx": 0,
         "akce_detail": null
       },
       {
-        "name": "Mléko/voda",
+        "name": "Měkký tvaroh",
         "amounts": [
-          "800 ml"
+          "250 g"
         ],
         "akce": false,
         "store": null,
-        "price_approx": 25.0,
+        "price_approx": 0,
         "akce_detail": null
       },
       {
-        "name": "Ocet, cukr",
+        "name": "Ocet, cukr, sůl",
         "amounts": [
           "dle chuti"
         ],
         "akce": false,
         "store": null,
-        "price_approx": 5.0,
-        "akce_detail": null
-      },
-      {
-        "name": "Okurka salátová",
-        "amounts": [
-          "1 ks"
-        ],
-        "akce": false,
-        "store": null,
-        "price_approx": 20.0,
+        "price_approx": 0,
         "akce_detail": null
       },
       {
         "name": "Olej",
         "amounts": [
-          "2 lžíce",
-          "2 lžíce",
+          "dle potřeby",
+          "dle potřeby"
+        ],
+        "akce": false,
+        "store": null,
+        "price_approx": 0,
+        "akce_detail": null
+      },
+      {
+        "name": "Olej na smažení",
+        "amounts": [
+          "dle potřeby"
+        ],
+        "akce": false,
+        "store": null,
+        "price_approx": 0,
+        "akce_detail": null
+      },
+      {
+        "name": "Olivový olej",
+        "amounts": [
           "2 lžíce",
           "2 lžíce",
           "2 lžíce"
         ],
         "akce": false,
         "store": null,
-        "price_approx": 15.0,
-        "akce_detail": null
-      },
-      {
-        "name": "Olivový olej",
-        "amounts": [
-          "3 lžíce"
-        ],
-        "akce": false,
-        "store": null,
-        "price_approx": 25.0,
-        "akce_detail": null
-      },
-      {
-        "name": "Ovesné vločky",
-        "amounts": [
-          "200 g"
-        ],
-        "akce": false,
-        "store": null,
-        "price_approx": 20.0,
-        "akce_detail": null
-      },
-      {
-        "name": "Rohliky",
-        "amounts": [
-          "4 ks"
-        ],
-        "akce": false,
-        "store": null,
-        "price_approx": 16.0,
+        "price_approx": 0,
         "akce_detail": null
       },
       {
         "name": "Rýže",
         "amounts": [
-          "300 g (suchá)",
-          "300 g (suchá)"
+          "250 g"
         ],
         "akce": false,
         "store": null,
-        "price_approx": 35.0,
+        "price_approx": 0,
         "akce_detail": null
       },
       {
-        "name": "Různé pečivo",
+        "name": "Salátové listy",
         "amounts": [
-          "4 ks",
-          "4 ks"
+          "dle chuti"
         ],
         "akce": false,
         "store": null,
-        "price_approx": 20.0,
+        "price_approx": 0,
         "akce_detail": null
       },
       {
-        "name": "Sladká mletá paprika",
+        "name": "Strouhanka",
         "amounts": [
-          "1 lžíce"
+          "150 g"
         ],
         "akce": false,
         "store": null,
-        "price_approx": 15.0,
+        "price_approx": 0,
+        "akce_detail": null
+      },
+      {
+        "name": "Sůl",
+        "amounts": [
+          "dle chuti"
+        ],
+        "akce": false,
+        "store": null,
+        "price_approx": 0,
         "akce_detail": null
       },
       {
@@ -526,37 +515,27 @@
         ],
         "akce": false,
         "store": null,
-        "price_approx": 5.0,
+        "price_approx": 0,
         "akce_detail": null
       },
       {
-        "name": "Sůl, pepř, bylinky",
+        "name": "Sůl, pepř, koření",
         "amounts": [
           "dle chuti"
         ],
         "akce": false,
         "store": null,
-        "price_approx": 5.0,
+        "price_approx": 0,
         "akce_detail": null
       },
       {
-        "name": "Sůl, pepř, čerstvá petrželka",
+        "name": "Tatarská omáčka",
         "amounts": [
           "dle chuti"
         ],
         "akce": false,
         "store": null,
-        "price_approx": 10.0,
-        "akce_detail": null
-      },
-      {
-        "name": "Toustový chléb",
-        "amounts": [
-          "8 plátků"
-        ],
-        "akce": false,
-        "store": null,
-        "price_approx": 25.0,
+        "price_approx": 0,
         "akce_detail": null
       },
       {
@@ -566,77 +545,50 @@
         ],
         "akce": false,
         "store": null,
-        "price_approx": 30.0,
+        "price_approx": 0,
         "akce_detail": null
       },
       {
         "name": "Vejce",
         "amounts": [
-          "2 ks"
+          "2 ks",
+          "8 ks",
+          "8 ks"
         ],
         "akce": false,
         "store": null,
-        "price_approx": 10.0,
-        "akce_detail": null
-      },
-      {
-        "name": "Veka (nebo rohlíky)",
-        "amounts": [
-          "1/2 ks (nebo 4 ks)"
-        ],
-        "akce": false,
-        "store": null,
-        "price_approx": 25.0,
-        "akce_detail": null
-      },
-      {
-        "name": "Zeleninový vývar (nebo bujón)",
-        "amounts": [
-          "1 l"
-        ],
-        "akce": false,
-        "store": null,
-        "price_approx": 20.0,
+        "price_approx": 0,
         "akce_detail": null
       },
       {
         "name": "Čerstvá bazalka",
         "amounts": [
-          "svazek"
+          "1 svazek"
         ],
         "akce": false,
         "store": null,
-        "price_approx": 20.0,
+        "price_approx": 0,
         "akce_detail": null
       },
       {
-        "name": "Čerstvé bylinky (pažitka, petrželka)",
+        "name": "Čerstvé okurky",
         "amounts": [
-          "dle chuti"
+          "2 ks"
         ],
         "akce": false,
         "store": null,
-        "price_approx": 15.0,
+        "price_approx": 0,
         "akce_detail": null
       },
       {
-        "name": "Čerstvé pečivo (bagetky)",
+        "name": "Česnek",
         "amounts": [
-          "4 ks"
+          "2 stroužky",
+          "2 stroužky"
         ],
         "akce": false,
         "store": null,
-        "price_approx": 40.0,
-        "akce_detail": null
-      },
-      {
-        "name": "Špetka soli",
-        "amounts": [
-          "dle chuti"
-        ],
-        "akce": false,
-        "store": null,
-        "price_approx": 2.0,
+        "price_approx": 0,
         "akce_detail": null
       }
     ]
@@ -645,8 +597,7 @@
     {
       "name": "Hermelín s bílou plísní na povrchu",
       "amounts": [
-        "100 g",
-        "200 g"
+        "400 g (4 ks)"
       ],
       "akce": true,
       "store": "Kaufland",
@@ -659,11 +610,25 @@
       }
     },
     {
+      "name": "Hořčice nebo máslo",
+      "amounts": [
+        "dle chuti"
+      ],
+      "akce": true,
+      "store": "Kaufland",
+      "price_approx": 29.9,
+      "akce_detail": {
+        "price": 29.9,
+        "price_old": 52.9,
+        "discount_pct": 43,
+        "valid_to": "2026-05-19"
+      }
+    },
+    {
       "name": "Kanadské borůvky",
       "amounts": [
-        "125 g",
-        "125 g",
-        "125 g"
+        "125 g (1 balení)",
+        "125 g (1 balení)"
       ],
       "akce": true,
       "store": "Lidl",
@@ -678,8 +643,7 @@
     {
       "name": "Kuřecí horní stehna",
       "amounts": [
-        "600 g (vykostěná)",
-        "600 g (nakrájená na nudličky)"
+        "1 kg"
       ],
       "akce": true,
       "store": "Kaufland",
@@ -692,9 +656,24 @@
       }
     },
     {
+      "name": "Kuřecí prsní šunka",
+      "amounts": [
+        "100 g"
+      ],
+      "akce": true,
+      "store": "Lidl",
+      "price_approx": 18.9,
+      "akce_detail": {
+        "price": 18.9,
+        "price_old": 32.9,
+        "discount_pct": 42,
+        "valid_to": "2026-05-17"
+      }
+    },
+    {
       "name": "Loupák máslový",
       "amounts": [
-        "2 ks (120 g)"
+        "4 ks"
       ],
       "akce": true,
       "store": "Kaufland",
@@ -709,8 +688,7 @@
     {
       "name": "Meloun vodní",
       "amounts": [
-        "500 g",
-        "500 g"
+        "1 kg"
       ],
       "akce": true,
       "store": "Kaufland",
@@ -725,7 +703,8 @@
     {
       "name": "Mozzarella classic/light",
       "amounts": [
-        "2 balení (440 g)"
+        "220 g (1 balení)",
+        "440 g (2 balení)"
       ],
       "akce": true,
       "store": "Lidl",
@@ -743,22 +722,10 @@
         "30 g",
         "50 g",
         "30 g",
+        "50 g",
+        "50 g",
+        "30 g",
         "30 g"
-      ],
-      "akce": true,
-      "store": "Kaufland",
-      "price_approx": 29.9,
-      "akce_detail": {
-        "price": 29.9,
-        "price_old": 52.9,
-        "discount_pct": 43,
-        "valid_to": "2026-05-19"
-      }
-    },
-    {
-      "name": "Máslo (na smažení)",
-      "amounts": [
-        "20 g"
       ],
       "akce": true,
       "store": "Kaufland",
@@ -773,13 +740,9 @@
     {
       "name": "Paprika červená",
       "amounts": [
-        "1 ks",
-        "2 ks",
-        "1 ks",
-        "2 ks",
-        "1 ks",
-        "1 ks",
-        "1 ks"
+        "200 g",
+        "150 g",
+        "300 g"
       ],
       "akce": true,
       "store": "Lidl",
@@ -794,13 +757,11 @@
     {
       "name": "Rajčata keřík",
       "amounts": [
-        "500 g",
+        "200 g",
         "300 g",
         "500 g",
-        "200 g",
-        "200 g",
-        "200 g",
-        "200 g"
+        "500 g",
+        "300 g"
       ],
       "akce": true,
       "store": "Kaufland",
@@ -815,11 +776,7 @@
     {
       "name": "Selský jogurt bílý",
       "amounts": [
-        "500 g",
-        "200 g",
-        "200 g",
-        "200 g",
-        "100 g"
+        "500 g"
       ],
       "akce": true,
       "store": "Kaufland",
@@ -834,10 +791,8 @@
     {
       "name": "Sýr Eidam 30%",
       "amounts": [
+        "100 g",
         "200 g",
-        "100 g",
-        "100 g",
-        "100 g",
         "100 g"
       ],
       "akce": true,
@@ -851,9 +806,9 @@
       }
     },
     {
-      "name": "Vepřová krkovice bez kosti",
+      "name": "Vepřová krkovice bez kosti, v celku",
       "amounts": [
-        "4 plátky (cca 600-700 g)"
+        "600 g"
       ],
       "akce": true,
       "store": "Kaufland",
@@ -868,8 +823,7 @@
     {
       "name": "Vepřová kýta bez kosti",
       "amounts": [
-        "600 g",
-        "4 plátky (cca 600 g)"
+        "400 g"
       ],
       "akce": true,
       "store": "Kaufland",
@@ -884,9 +838,10 @@
     {
       "name": "Ředkvičky",
       "amounts": [
-        "2 svazky",
-        "2 svazky",
-        "2 svazky"
+        "1 svazek",
+        "1 svazek",
+        "1 svazek",
+        "0.5 svazku"
       ],
       "akce": true,
       "store": "Kaufland",
@@ -901,9 +856,6 @@
     {
       "name": "Šunka od kosti výběrová",
       "amounts": [
-        "200 g",
-        "100 g",
-        "100 g",
         "100 g",
         "100 g"
       ],
@@ -918,45 +870,59 @@
       }
     },
     {
+      "name": "Bagety",
+      "amounts": [
+        "4 ks"
+      ],
+      "akce": false,
+      "store": null,
+      "price_approx": 0,
+      "akce_detail": null
+    },
+    {
+      "name": "Balzamikový ocet (volitelné)",
+      "amounts": [
+        "dle chuti"
+      ],
+      "akce": false,
+      "store": null,
+      "price_approx": 0,
+      "akce_detail": null
+    },
+    {
       "name": "Brambory",
       "amounts": [
         "800 g",
-        "800 g",
-        "200 g"
+        "1 kg",
+        "1 kg"
       ],
       "akce": false,
       "store": null,
-      "price_approx": 25.0,
+      "price_approx": 0,
       "akce_detail": null
     },
     {
-      "name": "Brusinkový džem",
+      "name": "Bylinky (oregano, bazalka)",
       "amounts": [
-        "4 lžíce"
+        "dle chuti"
       ],
       "akce": false,
       "store": null,
-      "price_approx": 30.0,
-      "akce_detail": null
-    },
-    {
-      "name": "Celozrnný chléb",
-      "amounts": [
-        "8 plátků"
-      ],
-      "akce": false,
-      "store": null,
-      "price_approx": 30.0,
+      "price_approx": 0,
       "akce_detail": null
     },
     {
       "name": "Chléb",
       "amounts": [
-        "4 plátky"
+        "dle chuti",
+        "dle chuti",
+        "dle chuti",
+        "dle chuti",
+        "dle chuti"
       ],
       "akce": false,
       "store": null,
-      "price_approx": 15.0,
+      "price_approx": 0,
       "akce_detail": null
     },
     {
@@ -968,185 +934,160 @@
       ],
       "akce": false,
       "store": null,
-      "price_approx": 10.0,
+      "price_approx": 0,
       "akce_detail": null
     },
     {
       "name": "Hladká mouka",
       "amounts": [
-        "200 g"
+        "100 g"
       ],
       "akce": false,
       "store": null,
-      "price_approx": 10.0,
+      "price_approx": 0,
       "akce_detail": null
     },
     {
       "name": "Jarní cibulka",
       "amounts": [
-        "dle chuti"
+        "2 ks"
       ],
       "akce": false,
       "store": null,
-      "price_approx": 10.0,
+      "price_approx": 0,
       "akce_detail": null
     },
     {
-      "name": "Jarní cibulka/pažitka",
+      "name": "Koření na kuře",
       "amounts": [
         "dle chuti"
       ],
       "akce": false,
       "store": null,
-      "price_approx": 10.0,
+      "price_approx": 0,
       "akce_detail": null
     },
     {
-      "name": "Kořenová zelenina (mrkev, petržel)",
-      "amounts": [
-        "300 g"
-      ],
-      "akce": false,
-      "store": null,
-      "price_approx": 20.0,
-      "akce_detail": null
-    },
-    {
-      "name": "Koření na kuře, sůl, pepř",
+      "name": "Med",
       "amounts": [
         "dle chuti"
       ],
       "akce": false,
       "store": null,
-      "price_approx": 10.0,
+      "price_approx": 0,
       "akce_detail": null
     },
     {
-      "name": "Med/javorový sirup",
+      "name": "Med nebo granola",
       "amounts": [
-        "dle chuti",
         "dle chuti"
       ],
       "akce": false,
       "store": null,
-      "price_approx": 30.0,
+      "price_approx": 0,
       "akce_detail": null
     },
     {
       "name": "Mléko",
       "amounts": [
-        "100 ml",
-        "500 ml"
+        "100 ml"
       ],
       "akce": false,
       "store": null,
-      "price_approx": 5.0,
+      "price_approx": 0,
       "akce_detail": null
     },
     {
-      "name": "Mléko/voda",
+      "name": "Měkký tvaroh",
       "amounts": [
-        "800 ml"
+        "250 g"
       ],
       "akce": false,
       "store": null,
-      "price_approx": 25.0,
+      "price_approx": 0,
       "akce_detail": null
     },
     {
-      "name": "Ocet, cukr",
+      "name": "Ocet, cukr, sůl",
       "amounts": [
         "dle chuti"
       ],
       "akce": false,
       "store": null,
-      "price_approx": 5.0,
-      "akce_detail": null
-    },
-    {
-      "name": "Okurka salátová",
-      "amounts": [
-        "1 ks"
-      ],
-      "akce": false,
-      "store": null,
-      "price_approx": 20.0,
+      "price_approx": 0,
       "akce_detail": null
     },
     {
       "name": "Olej",
       "amounts": [
-        "2 lžíce",
-        "2 lžíce",
+        "dle potřeby",
+        "dle potřeby"
+      ],
+      "akce": false,
+      "store": null,
+      "price_approx": 0,
+      "akce_detail": null
+    },
+    {
+      "name": "Olej na smažení",
+      "amounts": [
+        "dle potřeby"
+      ],
+      "akce": false,
+      "store": null,
+      "price_approx": 0,
+      "akce_detail": null
+    },
+    {
+      "name": "Olivový olej",
+      "amounts": [
         "2 lžíce",
         "2 lžíce",
         "2 lžíce"
       ],
       "akce": false,
       "store": null,
-      "price_approx": 15.0,
-      "akce_detail": null
-    },
-    {
-      "name": "Olivový olej",
-      "amounts": [
-        "3 lžíce"
-      ],
-      "akce": false,
-      "store": null,
-      "price_approx": 25.0,
-      "akce_detail": null
-    },
-    {
-      "name": "Ovesné vločky",
-      "amounts": [
-        "200 g"
-      ],
-      "akce": false,
-      "store": null,
-      "price_approx": 20.0,
-      "akce_detail": null
-    },
-    {
-      "name": "Rohliky",
-      "amounts": [
-        "4 ks"
-      ],
-      "akce": false,
-      "store": null,
-      "price_approx": 16.0,
+      "price_approx": 0,
       "akce_detail": null
     },
     {
       "name": "Rýže",
       "amounts": [
-        "300 g (suchá)",
-        "300 g (suchá)"
+        "250 g"
       ],
       "akce": false,
       "store": null,
-      "price_approx": 35.0,
+      "price_approx": 0,
       "akce_detail": null
     },
     {
-      "name": "Různé pečivo",
+      "name": "Salátové listy",
       "amounts": [
-        "4 ks",
-        "4 ks"
+        "dle chuti"
       ],
       "akce": false,
       "store": null,
-      "price_approx": 20.0,
+      "price_approx": 0,
       "akce_detail": null
     },
     {
-      "name": "Sladká mletá paprika",
+      "name": "Strouhanka",
       "amounts": [
-        "1 lžíce"
+        "150 g"
       ],
       "akce": false,
       "store": null,
-      "price_approx": 15.0,
+      "price_approx": 0,
+      "akce_detail": null
+    },
+    {
+      "name": "Sůl",
+      "amounts": [
+        "dle chuti"
+      ],
+      "akce": false,
+      "store": null,
+      "price_approx": 0,
       "akce_detail": null
     },
     {
@@ -1160,37 +1101,27 @@
       ],
       "akce": false,
       "store": null,
-      "price_approx": 5.0,
+      "price_approx": 0,
       "akce_detail": null
     },
     {
-      "name": "Sůl, pepř, bylinky",
+      "name": "Sůl, pepř, koření",
       "amounts": [
         "dle chuti"
       ],
       "akce": false,
       "store": null,
-      "price_approx": 5.0,
+      "price_approx": 0,
       "akce_detail": null
     },
     {
-      "name": "Sůl, pepř, čerstvá petrželka",
+      "name": "Tatarská omáčka",
       "amounts": [
         "dle chuti"
       ],
       "akce": false,
       "store": null,
-      "price_approx": 10.0,
-      "akce_detail": null
-    },
-    {
-      "name": "Toustový chléb",
-      "amounts": [
-        "8 plátků"
-      ],
-      "akce": false,
-      "store": null,
-      "price_approx": 25.0,
+      "price_approx": 0,
       "akce_detail": null
     },
     {
@@ -1200,77 +1131,50 @@
       ],
       "akce": false,
       "store": null,
-      "price_approx": 30.0,
+      "price_approx": 0,
       "akce_detail": null
     },
     {
       "name": "Vejce",
       "amounts": [
-        "2 ks"
+        "2 ks",
+        "8 ks",
+        "8 ks"
       ],
       "akce": false,
       "store": null,
-      "price_approx": 10.0,
-      "akce_detail": null
-    },
-    {
-      "name": "Veka (nebo rohlíky)",
-      "amounts": [
-        "1/2 ks (nebo 4 ks)"
-      ],
-      "akce": false,
-      "store": null,
-      "price_approx": 25.0,
-      "akce_detail": null
-    },
-    {
-      "name": "Zeleninový vývar (nebo bujón)",
-      "amounts": [
-        "1 l"
-      ],
-      "akce": false,
-      "store": null,
-      "price_approx": 20.0,
+      "price_approx": 0,
       "akce_detail": null
     },
     {
       "name": "Čerstvá bazalka",
       "amounts": [
-        "svazek"
+        "1 svazek"
       ],
       "akce": false,
       "store": null,
-      "price_approx": 20.0,
+      "price_approx": 0,
       "akce_detail": null
     },
     {
-      "name": "Čerstvé bylinky (pažitka, petrželka)",
+      "name": "Čerstvé okurky",
       "amounts": [
-        "dle chuti"
+        "2 ks"
       ],
       "akce": false,
       "store": null,
-      "price_approx": 15.0,
+      "price_approx": 0,
       "akce_detail": null
     },
     {
-      "name": "Čerstvé pečivo (bagetky)",
+      "name": "Česnek",
       "amounts": [
-        "4 ks"
+        "2 stroužky",
+        "2 stroužky"
       ],
       "akce": false,
       "store": null,
-      "price_approx": 40.0,
-      "akce_detail": null
-    },
-    {
-      "name": "Špetka soli",
-      "amounts": [
-        "dle chuti"
-      ],
-      "akce": false,
-      "store": null,
-      "price_approx": 2.0,
+      "price_approx": 0,
       "akce_detail": null
     }
   ]
