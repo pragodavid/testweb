@@ -1,0 +1,69 @@
+{
+  "store": "Lidl",
+  "store_key": "lidl",
+  "valid_from": "2026-05-11",
+  "valid_to": "2026-05-17",
+  "fetched_at": "2026-05-15T14:17:59.060941",
+  "products": [
+    {
+      "name": "Paprika červená",
+      "brand": null,
+      "category": "zelenina",
+      "unit": "1 kg",
+      "price": 49.9,
+      "price_old": 99.9,
+      "discount_pct": 50,
+      "valid_from": "2026-05-14",
+      "valid_to": "2026-05-17",
+      "store": "Lidl"
+    },
+    {
+      "name": "Kanadské borůvky",
+      "brand": null,
+      "category": "ovoce",
+      "unit": "125 g - balení",
+      "price": 24.9,
+      "price_old": 49.9,
+      "discount_pct": 50,
+      "valid_from": "2026-05-14",
+      "valid_to": "2026-05-17",
+      "store": "Lidl"
+    },
+    {
+      "name": "Mozzarella classic/light",
+      "brand": "PILOS",
+      "category": "mlecne",
+      "unit": "220 g",
+      "price": 12.9,
+      "price_old": 22.9,
+      "discount_pct": 43,
+      "valid_from": "2026-05-14",
+      "valid_to": "2026-05-17",
+      "store": "Lidl"
+    },
+    {
+      "name": "Kuřecí prsní šunka",
+      "brand": "PIKOK PURE",
+      "category": "maso",
+      "unit": "100 g",
+      "price": 18.9,
+      "price_old": 32.9,
+      "discount_pct": 42,
+      "valid_from": "2026-05-14",
+      "valid_to": "2026-05-17",
+      "store": "Lidl"
+    },
+    {
+      "name": "Camembert na grill",
+      "brand": "GRIL & FUN",
+      "category": "mlecne",
+      "unit": "450 g",
+      "price": 84.9,
+      "price_old": 109.9,
+      "discount_pct": 22,
+      "valid_from": "2026-05-14",
+      "valid_to": "2026-05-17",
+      "store": "Lidl"
+    }
+  ]
+}
