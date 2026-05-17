@@ -1,9 +1,9 @@
 {
   "store": "Kaufland",
   "store_key": "kaufland",
-  "valid_from": "2026-05-11",
-  "valid_to": "2026-05-17",
-  "fetched_at": "2026-05-15T14:17:26.035561",
+  "valid_from": "2026-05-13",
+  "valid_to": "2026-05-19",
+  "fetched_at": "2026-05-17T20:54:06.194517",
   "products": [
     {
       "name": "Rajčata keřík",
@@ -54,44 +54,20 @@
       "store": "Kaufland"
     },
     {
-      "name": "Sýr Eidam 30%",
+      "name": "Eidam 30%",
       "brand": null,
       "category": "mlecne",
       "unit": "100 g",
       "price": 9.9,
       "price_old": 17.9,
-      "discount_pct": 44,
-      "valid_from": "2026-05-13",
-      "valid_to": "2026-05-19",
-      "store": "Kaufland"
-    },
-    {
-      "name": "Hermelín s bílou plísní na povrchu",
-      "brand": "Sedlčanský",
-      "category": "mlecne",
-      "unit": "100 g",
-      "price": 28.9,
-      "price_old": 47.9,
-      "discount_pct": 39,
-      "valid_from": "2026-05-13",
-      "valid_to": "2026-05-19",
-      "store": "Kaufland"
-    },
-    {
-      "name": "Brambůrky",
-      "brand": "Hobžovy Strážnické",
-      "category": "trvanlive",
-      "unit": "60 g",
-      "price": 8.9,
-      "price_old": 9.9,
-      "discount_pct": 10,
+      "discount_pct": 45,
       "valid_from": "2026-05-13",
       "valid_to": "2026-05-19",
       "store": "Kaufland"
     },
     {
       "name": "Máslo",
-      "brand": "Tatra",
+      "brand": "TATRA",
       "category": "mlecne",
       "unit": "250 g",
       "price": 29.9,
@@ -108,7 +84,7 @@
       "unit": "1 svazek",
       "price": 7.9,
       "price_old": 14.9,
-      "discount_pct": 46,
+      "discount_pct": 47,
       "valid_from": "2026-05-13",
       "valid_to": "2026-05-19",
       "store": "Kaufland"
@@ -120,7 +96,7 @@
       "unit": "1 kg",
       "price": 69.9,
       "price_old": 231.9,
-      "discount_pct": 69,
+      "discount_pct": 70,
       "valid_from": "2026-05-13",
       "valid_to": "2026-05-19",
       "store": "Kaufland"
@@ -139,31 +115,31 @@
     },
     {
       "name": "Kmotrovky",
-      "brand": "Kmotr",
-      "category": "trvanlive",
+      "brand": "KMOTR",
+      "category": "maso",
       "unit": "100 g",
       "price": 39.9,
       "price_old": 47.9,
-      "discount_pct": 16,
+      "discount_pct": 17,
       "valid_from": "2026-05-13",
       "valid_to": "2026-05-19",
       "store": "Kaufland"
     },
     {
       "name": "Šunka od kosti výběrová",
-      "brand": "Prantl",
+      "brand": "PRANTL",
       "category": "maso",
       "unit": "100 g",
       "price": 19.9,
       "price_old": 31.9,
-      "discount_pct": 37,
+      "discount_pct": 38,
       "valid_from": "2026-05-13",
       "valid_to": "2026-05-19",
       "store": "Kaufland"
     },
     {
       "name": "Selský jogurt bílý",
-      "brand": "Hollandia",
+      "brand": "HOLLANDIA",
       "category": "mlecne",
       "unit": "500 g",
       "price": 13.9,

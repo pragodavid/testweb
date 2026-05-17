@@ -1,14 +1,14 @@
 {
   "kaufland": {
-    "valid_from": "2026-05-11",
-    "valid_to": "2026-05-17",
-    "products_count": 14,
-    "fetched_at": "2026-05-15T14:17:26.037695"
+    "valid_from": "2026-05-13",
+    "valid_to": "2026-05-19",
+    "products_count": 12,
+    "fetched_at": "2026-05-17T20:54:06.197045"
   },
   "lidl": {
-    "valid_from": "2026-05-11",
-    "valid_to": "2026-05-17",
-    "products_count": 5,
-    "fetched_at": "2026-05-15T14:17:59.062202"
+    "valid_from": "2026-05-18",
+    "valid_to": "2026-05-20",
+    "products_count": 7,
+    "fetched_at": "2026-05-17T21:20:44.182621"
   }
 }
