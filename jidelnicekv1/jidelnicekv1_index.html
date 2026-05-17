@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jídelníček v1 – archiv</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,-apple-system,sans-serif;background:#f6f3ec;color:#18180f;min-height:100vh;padding:2rem 1rem}
+.wrap{max-width:600px;margin:0 auto}
+.back{display:inline-flex;align-items:center;gap:.4rem;font-size:.82rem;color:#6a6860;text-decoration:none;margin-bottom:1.5rem}
+.back:hover{color:#18180f}
+h1{font-size:1.3rem;font-weight:700;margin-bottom:.35rem}
+p{font-size:.82rem;color:#6a6860;margin-bottom:1.5rem}
+.list{display:flex;flex-direction:column;gap:.6rem}
+.item{background:#fff;border:1px solid #e6e0d4;border-radius:10px;padding:.85rem 1rem;text-decoration:none;color:#18180f;display:flex;align-items:center;justify-content:space-between;transition:all .15s}
+.item:hover{background:#f0ece3}
+.item-name{font-size:.88rem;font-weight:600}
+.item-date{font-size:.72rem;color:#6a6860}
+.arrow{color:#aaa;font-size:.9rem}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="../">← Zpět na rozcestník</a>
+  <h1>📋 Jídelníček v1</h1>
+  <p>Archiv původních ručně sestavených jídelníčků</p>
+  <div class="list">
+    <a class="item" href="jidelnicek-20-04-26.html">
+      <div>
+        <div class="item-name">Jídelníček</div>
+        <div class="item-date">20. dubna 2026</div>
+      </div>
+      <span class="arrow">→</span>
+    </a>
+    <a class="item" href="jidelnicek-19-04-26.html">
+      <div>
+        <div class="item-name">Jídelníček</div>
+        <div class="item-date">19. dubna 2026</div>
+      </div>
+      <span class="arrow">→</span>
+    </a>
+    <a class="item" href="jidelnicek-15-05-26.html">
+      <div>
+        <div class="item-name">Jídelníček</div>
+        <div class="item-date">15. května 2026</div>
+      </div>
+      <span class="arrow">→</span>
+    </a>
+  </div>
+</div>
+</body>
+</html>
