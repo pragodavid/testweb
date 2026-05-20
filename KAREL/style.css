@@ -117,12 +117,13 @@ html, body {
   border-bottom: var(--border);
   flex-shrink: 0;
   overflow: hidden;
-  transition: max-height 0.3s ease;
+  transition: max-height 0.3s ease, border-width 0.3s ease;
   max-height: 230px;
 }
 
 #agenda-wrapper.collapsed {
   max-height: 0;
+  border-bottom-width: 0;
 }
 
 #agenda-panel {

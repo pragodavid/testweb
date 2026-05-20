@@ -18,14 +18,14 @@
   </div>
 
   <!-- Agenda toggle button -->
-  <div id="agenda-toggle-btn" class="open" onclick="toggleAgenda()">
+  <div id="agenda-toggle-btn" onclick="toggleAgenda()">
     <span class="tog-icon">&#9654;</span>
     <span>NÁPOVĚDA &mdash; SEZNAM PŘÍKAZŮ</span>
     <span style="margin-left:auto;font-size:11px;">[klikni pro skrytí/zobrazení]</span>
   </div>
 
-  <!-- Agenda panel (collapsible) -->
-  <div id="agenda-wrapper" id="agenda-wrapper">
+  <!-- Agenda panel (collapsible) – defaultně zavřená -->
+  <div id="agenda-wrapper" class="collapsed">
     <div id="agenda-panel">
       <!-- Filled by commands.js -->
     </div>
@@ -78,6 +78,8 @@
     const isOpen = !wrapper.classList.contains('collapsed');
     wrapper.classList.toggle('collapsed', isOpen);
     btn.classList.toggle('open', !isOpen);
+    // Po animaci překresli grid aby využil nový prostor
+    setTimeout(() => Animator.renderGrid(), 320);
   }
 
   // ── Animator: inject steps support (needed for IF/WHILE) ──
