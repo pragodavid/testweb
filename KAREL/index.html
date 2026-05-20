@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KAREL – CRT Simulátor</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div id="crt-screen">
+
+  <!-- Title bar -->
+  <div id="title-bar">
+    <span class="title-left">&#9632; KAREL v1.0</span>
+    <span>ROBOT LANGUAGE SIMULATOR &mdash; 1981</span>
+    <span id="clock"></span>
+  </div>
+
+  <!-- Agenda toggle button -->
+  <div id="agenda-toggle-btn" class="open" onclick="toggleAgenda()">
+    <span class="tog-icon">&#9654;</span>
+    <span>NÁPOVĚDA &mdash; SEZNAM PŘÍKAZŮ</span>
+    <span style="margin-left:auto;font-size:11px;">[klikni pro skrytí/zobrazení]</span>
+  </div>
+
+  <!-- Agenda panel (collapsible) -->
+  <div id="agenda-wrapper" id="agenda-wrapper">
+    <div id="agenda-panel">
+      <!-- Filled by commands.js -->
+    </div>
+  </div>
+
+  <!-- Main area: grid + terminal -->
+  <div id="main-area">
+
+    <!-- Left: Grid visualization -->
+    <div id="grid-panel">
+      <div id="grid-label">&#9632; WORLD VIEW &mdash; KAREL GRID</div>
+      <canvas id="karel-grid"></canvas>
+    </div>
+
+    <!-- Right: Terminal -->
+    <div id="terminal-panel">
+      <div id="terminal-output"></div>
+      <div id="input-row">
+        <span id="input-prompt">KAREL&gt;</span>
+        <input
+          id="terminal-input"
+          type="text"
+          autocomplete="off"
+          autocorrect="off"
+          autocapitalize="off"
+          spellcheck="false"
+          placeholder="zadej příkaz..."
+        />
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Scripts – order matters -->
+<script src="world.js"></script>
+<script src="commands.js"></script>
+<script src="animator.js"></script>
+<script src="terminal.js"></script>
+<script src="interpreter.js"></script>
+
+<script>
+  // ── Agenda inject ──
+  document.getElementById('agenda-panel').innerHTML = buildAgendaHTML();
+
+  // ── Agenda toggle ──
+  function toggleAgenda() {
+    const wrapper = document.getElementById('agenda-wrapper');
+    const btn = document.getElementById('agenda-toggle-btn');
+    const isOpen = !wrapper.classList.contains('collapsed');
+    wrapper.classList.toggle('collapsed', isOpen);
+    btn.classList.toggle('open', !isOpen);
+  }
+
+  // ── Animator: inject steps support (needed for IF/WHILE) ──
+  Animator.injectSteps = function(steps) {
+    // Prepend steps to internal queue – exposed via module extension
+    Animator._inject(steps);
+  };
+
+  // Patch Animator to expose inject
+  (function patchAnimator() {
+    let _queue = [];
+    let _running = false;
+    let _onDone = null;
+    let _speed = 350;
+
+    Animator.setSpeed = function(n) {
+      n = Math.max(1, Math.min(10, n));
+      _speed = Math.round(1200 - n * 110);
+    };
+
+    Animator.enqueue = function(steps, doneCallback) {
+      _queue = [...steps];
+      _onDone = doneCallback || null;
+      if (!_running) _runNext();
+    };
+
+    Animator._inject = function(steps) {
+      _queue = [...steps, ..._queue];
+    };
+
+    Animator.isRunning = function() { return _running; };
+
+    function _runNext() {
+      if (_queue.length === 0) {
+        _running = false;
+        if (_onDone) _onDone();
+        return;
+      }
+      _running = true;
+      const step = _queue.shift();
+      try {
+        step();
+      } catch (e) {
+        Terminal.print('❌ ' + e.message);
+        _queue = [];
+        _running = false;
+        if (_onDone) _onDone();
+        Animator.renderGrid();
+        return;
+      }
+      Animator.renderGrid();
+      setTimeout(_runNext, _speed);
+    }
+  })();
+
+  // ── Clock ──
+  function updateClock() {
+    const now = new Date();
+    const hh = String(now.getHours()).padStart(2,'0');
+    const mm = String(now.getMinutes()).padStart(2,'0');
+    const ss = String(now.getSeconds()).padStart(2,'0');
+    document.getElementById('clock').textContent = `${hh}:${mm}:${ss}`;
+  }
+  setInterval(updateClock, 1000);
+  updateClock();
+
+  // ── Init ──
+  Terminal.init();
+  Terminal.printWelcome();
+  Animator.renderGrid();
+
+  // ── Resize handler ──
+  window.addEventListener('resize', () => Animator.renderGrid());
+  // Initial render after layout settles
+  requestAnimationFrame(() => Animator.renderGrid());
+</script>
+
+</body>
+</html>
