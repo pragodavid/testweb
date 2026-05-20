@@ -6,16 +6,16 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --green:      #00ff41;
-  --green-dim:  #00cc33;
-  --green-dark: #003a10;
-  --green-mid:  #007a20;
-  --amber:      #ffb000;
-  --bg:         #030c03;
-  --bg-cell:    #050f05;
-  --scanline:   rgba(0, 0, 0, 0.18);
-  --glow:       0 0 8px #00ff41, 0 0 20px rgba(0,255,65,0.3);
-  --glow-soft:  0 0 4px rgba(0,255,65,0.5);
+  --green:      #39ff6e;
+  --green-dim:  #22dd55;
+  --green-dark: #0a4020;
+  --green-mid:  #18a840;
+  --amber:      #ffc400;
+  --bg:         #020a02;
+  --bg-cell:    #040d04;
+  --scanline:   rgba(0, 0, 0, 0.13);
+  --glow:       0 0 8px #39ff6e, 0 0 22px rgba(57,255,110,0.35);
+  --glow-soft:  0 0 5px rgba(57,255,110,0.6);
   --border:     1px solid var(--green-mid);
   --radius:     4px;
   --font-main:  'VT323', 'Share Tech Mono', monospace;
@@ -65,8 +65,8 @@ html, body {
   position: absolute;
   inset: 0;
   background: radial-gradient(ellipse at center,
-    transparent 60%,
-    rgba(0,0,0,0.7) 100%
+    transparent 55%,
+    rgba(0,0,0,0.65) 100%
   );
   pointer-events: none;
   z-index: 101;
@@ -74,10 +74,10 @@ html, body {
 
 /* ── Title bar ── */
 #title-bar {
-  padding: 4px 16px;
+  padding: 5px 16px;
   border-bottom: var(--border);
-  font-size: 13px;
-  color: var(--green-mid);
+  font-size: 14px;
+  color: var(--green-dim);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -86,7 +86,31 @@ html, body {
   text-transform: uppercase;
 }
 
-#title-bar .title-left { color: var(--green); text-shadow: var(--glow); font-size: 16px; }
+#title-bar .title-left {
+  color: var(--green);
+  text-shadow: var(--glow);
+  font-size: 18px;
+}
+
+/* ── Agenda toggle button ── */
+#agenda-toggle-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 16px;
+  cursor: pointer;
+  background: var(--bg-cell);
+  border-bottom: var(--border);
+  font-size: 15px;
+  letter-spacing: 1px;
+  color: var(--green-dim);
+  flex-shrink: 0;
+  user-select: none;
+}
+
+#agenda-toggle-btn:hover { color: var(--green); text-shadow: var(--glow-soft); }
+#agenda-toggle-btn .tog-icon { display: inline-block; transition: transform 0.25s; }
+#agenda-toggle-btn.open .tog-icon { transform: rotate(90deg); }
 
 /* ── Agenda Panel ── */
 #agenda-wrapper {
@@ -94,69 +118,50 @@ html, body {
   flex-shrink: 0;
   overflow: hidden;
   transition: max-height 0.3s ease;
-  max-height: 220px;
+  max-height: 230px;
 }
 
 #agenda-wrapper.collapsed {
   max-height: 0;
 }
 
-#agenda-toggle {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 4px 16px;
-  cursor: pointer;
-  border-bottom: 1px solid var(--green-dark);
-  background: var(--bg-cell);
-  user-select: none;
-  font-size: 14px;
-  letter-spacing: 1px;
-  color: var(--green-dim);
-  flex-shrink: 0;
-}
-
-#agenda-toggle:hover { color: var(--green); text-shadow: var(--glow-soft); }
-#agenda-toggle .toggle-icon { font-size: 16px; transition: transform 0.2s; }
-#agenda-wrapper.collapsed + #agenda-toggle .toggle-icon { transform: rotate(-90deg); }
-
 #agenda-panel {
-  padding: 8px 16px;
+  padding: 8px 16px 10px;
   overflow-x: auto;
   overflow-y: auto;
-  max-height: 190px;
+  max-height: 200px;
   display: flex;
   flex-wrap: wrap;
-  gap: 12px 24px;
+  gap: 10px 28px;
 }
 
-.agenda-section { min-width: 200px; }
+.agenda-section { min-width: 210px; }
 
 .agenda-category {
   color: var(--amber);
-  font-size: 13px;
+  font-size: 15px;
   letter-spacing: 2px;
-  margin-bottom: 4px;
-  text-shadow: 0 0 6px rgba(255,176,0,0.5);
+  margin-bottom: 3px;
+  text-shadow: 0 0 8px rgba(255,196,0,0.55);
 }
 
 .agenda-row {
   display: flex;
   gap: 8px;
-  font-size: 14px;
-  line-height: 1.5;
+  font-size: 15px;
+  line-height: 1.55;
 }
 
 .agenda-cmd {
   color: var(--green);
   white-space: nowrap;
-  min-width: 160px;
+  min-width: 165px;
   text-shadow: var(--glow-soft);
 }
 
 .agenda-desc {
-  color: var(--green-mid);
-  font-size: 13px;
+  color: var(--green-dim);
+  font-size: 14px;
 }
 
 /* ── Main content area ── */
@@ -164,7 +169,6 @@ html, body {
   display: flex;
   flex: 1;
   overflow: hidden;
-  gap: 0;
 }
 
 /* ── Grid panel (left) ── */
@@ -179,8 +183,8 @@ html, body {
 }
 
 #grid-label {
-  font-size: 12px;
-  color: var(--green-mid);
+  font-size: 13px;
+  color: var(--green-dim);
   letter-spacing: 2px;
   text-align: center;
 }
@@ -206,9 +210,10 @@ html, body {
   overflow-y: auto;
   padding: 10px 14px;
   font-family: var(--font-mono);
-  font-size: 15px;
-  line-height: 1.55;
+  font-size: 16px;
+  line-height: 1.6;
   word-break: break-word;
+  color: var(--green);
 }
 
 /* Custom scrollbar */
@@ -217,26 +222,26 @@ html, body {
 #terminal-output::-webkit-scrollbar-thumb { background: var(--green-dark); border-radius: 3px; }
 
 .term-line { margin-bottom: 1px; }
-.term-prompt { color: var(--amber); text-shadow: 0 0 6px rgba(255,176,0,0.6); }
-.term-input-echo { color: #cfffc8; }
-.term-header { color: var(--green-dim); font-size: 14px; }
+.term-prompt { color: var(--amber); text-shadow: 0 0 7px rgba(255,196,0,0.7); }
+.term-input-echo { color: #b8ffcc; }
+.term-header { color: var(--green-dim); font-size: 15px; }
 
 /* ── Input row ── */
 #input-row {
   display: flex;
   align-items: center;
   border-top: var(--border);
-  padding: 6px 10px;
-  gap: 6px;
+  padding: 7px 10px;
+  gap: 8px;
   background: var(--bg-cell);
   flex-shrink: 0;
 }
 
 #input-prompt {
   color: var(--amber);
-  font-size: 18px;
+  font-size: 20px;
   white-space: nowrap;
-  text-shadow: 0 0 6px rgba(255,176,0,0.6);
+  text-shadow: 0 0 7px rgba(255,196,0,0.7);
 }
 
 #terminal-input {
@@ -246,49 +251,81 @@ html, body {
   outline: none;
   color: var(--green);
   font-family: var(--font-mono);
-  font-size: 16px;
+  font-size: 17px;
   caret-color: var(--green);
   text-shadow: var(--glow-soft);
 }
 
 #terminal-input::placeholder { color: var(--green-dark); }
 
-/* Blinking cursor effect on input */
-@keyframes blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0; }
-}
-
-/* ── Toggle button (outside agenda-wrapper) ── */
-#agenda-toggle-btn {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 3px 16px;
-  cursor: pointer;
-  background: var(--bg-cell);
-  border-bottom: var(--border);
-  font-size: 13px;
-  letter-spacing: 1px;
-  color: var(--green-mid);
-  flex-shrink: 0;
-  user-select: none;
-}
-
-#agenda-toggle-btn:hover { color: var(--green); }
-#agenda-toggle-btn .tog-icon { display: inline-block; transition: transform 0.2s; }
-#agenda-toggle-btn.open .tog-icon { transform: rotate(90deg); }
-
-/* ── Phosphor glow text utilities ── */
+/* ── Utilities ── */
 .glow { text-shadow: var(--glow); }
 .glow-soft { text-shadow: var(--glow-soft); }
 .amber { color: var(--amber); }
 .dim { color: var(--green-mid); }
 
-/* ── Responsive ── */
-@media (max-width: 700px) {
-  #main-area { flex-direction: column; }
-  #grid-panel { border-right: none; border-bottom: var(--border); flex: 0 0 40vh; }
-  #terminal-panel { flex: 1; }
-  #agenda-panel { flex-direction: column; }
+/* ── Responsive – mobil ── */
+@media (max-width: 768px) {
+  html, body { font-size: 16px; overflow: auto; }
+
+  #crt-screen { height: auto; min-height: 100vh; overflow: auto; }
+
+  #title-bar {
+    font-size: 12px;
+    padding: 4px 10px;
+    flex-wrap: wrap;
+    gap: 2px;
+  }
+  #title-bar .title-left { font-size: 15px; }
+
+  #agenda-toggle-btn { font-size: 13px; padding: 5px 10px; }
+
+  #agenda-wrapper { max-height: 260px; }
+  #agenda-panel {
+    flex-direction: column;
+    flex-wrap: nowrap;
+    gap: 6px;
+    max-height: 230px;
+    padding: 6px 10px;
+  }
+  .agenda-section { min-width: unset; width: 100%; }
+  .agenda-cmd { min-width: 140px; font-size: 14px; }
+  .agenda-desc { font-size: 13px; }
+  .agenda-category { font-size: 14px; }
+
+  #main-area {
+    flex-direction: column;
+    flex: unset;
+    overflow: visible;
+  }
+
+  #grid-panel {
+    border-right: none;
+    border-bottom: var(--border);
+    flex: 0 0 45vw;
+    min-height: 280px;
+    padding: 6px;
+  }
+
+  #terminal-panel {
+    flex: unset;
+    min-height: 45vh;
+  }
+
+  #terminal-output {
+    font-size: 15px;
+    padding: 8px 10px;
+    min-height: 30vh;
+    max-height: 40vh;
+    overflow-y: auto;
+  }
+
+  #input-row { padding: 6px 8px; gap: 6px; }
+  #input-prompt { font-size: 17px; }
+  #terminal-input { font-size: 16px; }
+}
+
+@media (max-width: 400px) {
+  .agenda-cmd { min-width: 120px; font-size: 13px; }
+  #terminal-output { font-size: 14px; }
 }
