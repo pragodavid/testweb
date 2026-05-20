@@ -1,0 +1,196 @@
+/* style.css – FROGGER CRT styl (shodný s KAREL) */
+
+@import url('https://fonts.googleapis.com/css2?family=VT323&family=Share+Tech+Mono&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --green:      #39ff6e;
+  --green-dim:  #22dd55;
+  --green-dark: #0a4020;
+  --green-mid:  #18a840;
+  --amber:      #ffc400;
+  --red:        #ff4444;
+  --bg:         #020a02;
+  --bg-cell:    #040d04;
+  --scanline:   rgba(0,0,0,0.13);
+  --glow:       0 0 8px #39ff6e, 0 0 22px rgba(57,255,110,0.35);
+  --glow-soft:  0 0 5px rgba(57,255,110,0.6);
+  --border:     1px solid var(--green-mid);
+  --font-main:  'VT323', 'Share Tech Mono', monospace;
+  --font-mono:  'Share Tech Mono', 'VT323', monospace;
+}
+
+html, body {
+  height: 100%;
+  background: #000;
+  color: var(--green);
+  font-family: var(--font-main);
+  overflow: hidden;
+}
+
+/* ── CRT wrapper ── */
+#crt-screen {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Scanlines */
+#crt-screen::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px, transparent 2px,
+    var(--scanline) 2px, var(--scanline) 4px
+  );
+  pointer-events: none;
+  z-index: 100;
+}
+
+/* Vignette */
+#crt-screen::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, transparent 55%, rgba(0,0,0,0.65) 100%);
+  pointer-events: none;
+  z-index: 101;
+}
+
+/* ── Title bar ── */
+#title-bar {
+  padding: 5px 16px;
+  border-bottom: var(--border);
+  font-size: 14px;
+  color: var(--green-dim);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+  letter-spacing: 2px;
+}
+
+#title-bar .title-left {
+  color: var(--green);
+  text-shadow: var(--glow);
+  font-size: 20px;
+}
+
+/* ── HUD – životy, skóre, level, čas ── */
+#hud {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  padding: 5px 16px;
+  border-bottom: var(--border);
+  background: var(--bg-cell);
+  flex-shrink: 0;
+  font-size: 20px;
+  letter-spacing: 1px;
+  flex-wrap: wrap;
+}
+
+.hud-item { display: flex; align-items: center; gap: 6px; }
+.hud-label { color: var(--green-mid); font-size: 14px; }
+.hud-value { color: var(--green); text-shadow: var(--glow-soft); }
+#hud-lives  { color: var(--amber); text-shadow: 0 0 6px rgba(255,196,0,0.6); }
+#hud-time   { color: var(--green); }
+#hud-time.low { color: var(--red); text-shadow: 0 0 8px var(--red); }
+
+/* Time bar */
+#time-bar-wrap {
+  flex: 1;
+  height: 6px;
+  background: var(--green-dark);
+  border-radius: 3px;
+  overflow: hidden;
+  min-width: 60px;
+}
+#time-bar {
+  height: 100%;
+  background: var(--green);
+  transition: width 0.1s linear, background 0.3s;
+  border-radius: 3px;
+}
+#time-bar.low { background: var(--red); box-shadow: 0 0 6px var(--red); }
+
+/* ── Controls info ── */
+#controls-bar {
+  padding: 3px 16px;
+  border-bottom: var(--border);
+  font-size: 13px;
+  color: var(--green-mid);
+  letter-spacing: 1px;
+  display: flex;
+  gap: 20px;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+}
+
+.ctrl-key {
+  color: var(--amber);
+  border: 1px solid var(--amber);
+  padding: 0 4px;
+  border-radius: 2px;
+  font-size: 12px;
+}
+
+/* ── Main area ── */
+#main-area {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+  min-height: 0;
+  justify-content: center;
+  align-items: center;
+  padding: 8px;
+}
+
+/* ── Canvas ── */
+#game-canvas {
+  display: block;
+  image-rendering: pixelated;
+  border: var(--border);
+  box-shadow: 0 0 20px rgba(57,255,110,0.15);
+}
+
+/* ── Game over overlay (restart btn) ── */
+#restart-btn {
+  display: none;
+  position: absolute;
+  bottom: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: transparent;
+  border: 2px solid var(--green);
+  color: var(--green);
+  font-family: var(--font-main);
+  font-size: 22px;
+  padding: 6px 24px;
+  cursor: pointer;
+  letter-spacing: 2px;
+  text-shadow: var(--glow-soft);
+  z-index: 200;
+}
+#restart-btn:hover {
+  background: var(--green);
+  color: #000;
+  box-shadow: var(--glow);
+}
+#restart-btn.visible { display: block; }
+
+/* ── Responsive ── */
+@media (max-width: 600px) {
+  #title-bar { font-size: 11px; }
+  #title-bar .title-left { font-size: 16px; }
+  #hud { font-size: 16px; gap: 12px; padding: 4px 10px; }
+  #controls-bar { font-size: 11px; gap: 10px; padding: 3px 10px; }
+  #main-area { padding: 4px; }
+}

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FROGGER – CRT Arcade</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div id="crt-screen">
+
+  <!-- Title bar -->
+  <div id="title-bar">
+    <span class="title-left">&#9632; FROGGER</span>
+    <span>CRT ARCADE &mdash; 1981</span>
+    <span id="clock"></span>
+  </div>
+
+  <!-- HUD -->
+  <div id="hud">
+    <div class="hud-item">
+      <span class="hud-label">ŽIVOTY</span>
+      <span id="hud-lives">🐸🐸🐸</span>
+    </div>
+    <div class="hud-item">
+      <span class="hud-label">SKÓRE</span>
+      <span class="hud-value" id="hud-score">0</span>
+    </div>
+    <div class="hud-item">
+      <span class="hud-label">LEVEL</span>
+      <span class="hud-value" id="hud-level">1</span>
+    </div>
+    <div class="hud-item" style="flex:1;gap:10px;">
+      <span class="hud-label">ČAS</span>
+      <span class="hud-value" id="hud-time">30</span>
+      <div id="time-bar-wrap"><div id="time-bar"></div></div>
+    </div>
+  </div>
+
+  <!-- Controls -->
+  <div id="controls-bar">
+    <span><span class="ctrl-key">↑↓←→</span> nebo <span class="ctrl-key">WASD</span> pohyb</span>
+    <span><span class="ctrl-key">R</span> restart</span>
+    <span><span class="ctrl-key">P</span> pauza</span>
+    <span>🐸 Dostaň žábu domů!</span>
+  </div>
+
+  <!-- Game canvas -->
+  <div id="main-area">
+    <canvas id="game-canvas"></canvas>
+  </div>
+
+  <!-- Restart button -->
+  <button id="restart-btn" onclick="Game.restart()">[ HRÁT ZNOVU ]</button>
+
+</div>
+
+<script src="levels.js"></script>
+<script src="renderer.js"></script>
+<script src="game.js"></script>
+
+<script>
+  // ── Clock ──
+  function updateClock() {
+    const now = new Date();
+    const hh = String(now.getHours()).padStart(2,'0');
+    const mm = String(now.getMinutes()).padStart(2,'0');
+    const ss = String(now.getSeconds()).padStart(2,'0');
+    document.getElementById('clock').textContent = `${hh}:${mm}:${ss}`;
+  }
+  setInterval(updateClock, 1000);
+  updateClock();
+
+  // ── HUD update ──
+  const TIME_LIMIT = 30;
+
+  function updateHUD(state) {
+    // Lives
+    const livesEl = document.getElementById('hud-lives');
+    livesEl.textContent = '🐸'.repeat(Math.max(0, state.lives));
+
+    // Score
+    document.getElementById('hud-score').textContent = state.score;
+
+    // Level
+    document.getElementById('hud-level').textContent = state.level;
+
+    // Time
+    const t = Math.max(0, Math.ceil(state.timeLeft));
+    const timeEl = document.getElementById('hud-time');
+    timeEl.textContent = t;
+    timeEl.classList.toggle('low', t <= 10);
+
+    // Time bar
+    const bar = document.getElementById('time-bar');
+    const pct = Math.max(0, (state.timeLeft / TIME_LIMIT) * 100);
+    bar.style.width = pct + '%';
+    bar.classList.toggle('low', t <= 10);
+
+    // Restart button
+    const btn = document.getElementById('restart-btn');
+    btn.classList.toggle('visible', state.phase === 'gameover');
+  }
+
+  // ── Keyboard ──
+  let paused = false;
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'r' || e.key === 'R') { Game.restart(); return; }
+    if (e.key === 'p' || e.key === 'P') { paused = !paused; return; }
+    if (paused) return;
+
+    const map = {
+      'ArrowUp':    'up',
+      'ArrowDown':  'down',
+      'ArrowLeft':  'left',
+      'ArrowRight': 'right',
+      'w': 'up', 'W': 'up',
+      's': 'down', 'S': 'down',
+      'a': 'left', 'A': 'left',
+      'd': 'right', 'D': 'right',
+    };
+    if (map[e.key]) {
+      e.preventDefault();
+      Game.move(map[e.key]);
+    }
+  });
+
+  // ── Touch / Swipe pro mobil ──
+  let touchStartX = 0, touchStartY = 0;
+  document.addEventListener('touchstart', e => {
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+  }, { passive: true });
+
+  document.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    const dy = e.changedTouches[0].clientY - touchStartY;
+    if (Math.abs(dx) < 10 && Math.abs(dy) < 10) return;
+    if (Math.abs(dx) > Math.abs(dy)) {
+      Game.move(dx > 0 ? 'right' : 'left');
+    } else {
+      Game.move(dy > 0 ? 'down' : 'up');
+    }
+  }, { passive: true });
+
+  // ── Init ──
+  Renderer.init('game-canvas');
+
+  Game.init(
+    (state, rows, homesFilled) => {
+      if (!paused) Renderer.render(state, rows, homesFilled);
+      updateHUD(state);
+    },
+    (score) => { /* game over handled via state.phase */ },
+    null
+  );
+
+  // Resize
+  window.addEventListener('resize', () => Renderer.resize());
+</script>
+
+</body>
+</html>
