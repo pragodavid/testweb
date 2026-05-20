@@ -170,6 +170,7 @@ html, body {
   display: flex;
   flex: 1;
   overflow: hidden;
+  min-height: 0;
 }
 
 /* ── Grid panel (left) ── */
@@ -179,8 +180,10 @@ html, body {
   flex-direction: column;
   border-right: var(--border);
   min-width: 0;
+  min-height: 0;
   padding: 8px;
   gap: 6px;
+  overflow: hidden;
 }
 
 #grid-label {
@@ -188,10 +191,13 @@ html, body {
   color: var(--green-dim);
   letter-spacing: 2px;
   text-align: center;
+  flex-shrink: 0;
 }
 
 #karel-grid {
   flex: 1;
+  min-height: 0;
+  min-width: 0;
   width: 100%;
   display: block;
   image-rendering: pixelated;
@@ -303,9 +309,11 @@ html, body {
   #grid-panel {
     border-right: none;
     border-bottom: var(--border);
-    flex: 0 0 45vw;
-    min-height: 280px;
+    flex: 0 0 42vh;
+    max-height: 42vh;
+    min-height: 200px;
     padding: 6px;
+    overflow: hidden;
   }
 
   #terminal-panel {

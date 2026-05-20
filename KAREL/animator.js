@@ -46,17 +46,29 @@ const Animator = (() => {
     const canvas = document.getElementById('karel-grid');
     if (!canvas) return;
 
-    const cellSize = Math.min(
-      Math.floor((canvas.clientWidth) / gridW),
-      Math.floor((canvas.clientHeight) / gridH)
-    );
+    // Použij dostupný prostor rodiče, ne canvas samotný (který může být 0)
+    const parent = canvas.parentElement;
+    const labelEl = document.getElementById('grid-label');
+    const labelH = labelEl ? labelEl.offsetHeight + 6 : 0;
+    const availW = parent.clientWidth - 16;   // padding 8px každá strana
+    const availH = parent.clientHeight - labelH - 16;
+
+    const cellSize = Math.max(4, Math.min(
+      Math.floor(availW / gridW),
+      Math.floor(availH / gridH)
+    ));
+
+    const drawW = cellSize * gridW;
+    const drawH = cellSize * gridH;
+
+    canvas.width = drawW;
+    canvas.height = drawH;
+    canvas.style.width = drawW + 'px';
+    canvas.style.height = drawH + 'px';
 
     const ctx = canvas.getContext('2d');
-    canvas.width = canvas.clientWidth;
-    canvas.height = canvas.clientHeight;
-
-    const offsetX = Math.floor((canvas.width - cellSize * gridW) / 2);
-    const offsetY = Math.floor((canvas.height - cellSize * gridH) / 2);
+    const offsetX = 0;
+    const offsetY = 0;
 
     // Background
     ctx.fillStyle = '#0a0a0a';
