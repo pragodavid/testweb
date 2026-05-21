@@ -1,462 +1,8 @@
 {
-  "week_start": "2026-05-17",
-  "week_end": "2026-05-23",
-  "generated_at": "2026-05-17T20:01:18.973187",
+  "week_start": "2026-05-21",
+  "week_end": "2026-05-27",
+  "generated_at": "2026-05-21T16:12:58.194678",
   "days": [
-    {
-      "day": "Neděle",
-      "date": "2026-05-17",
-      "is_weekend": true,
-      "meals": [
-        {
-          "type": "snidane",
-          "name": "Bílý jogurt s borůvkami a cereáliemi",
-          "ingredients": [
-            {
-              "name": "Selský jogurt bílý",
-              "amount": "400 g",
-              "akce": true,
-              "store": "Kaufland",
-              "price_approx": 11.12
-            },
-            {
-              "name": "Kanadské borůvky",
-              "amount": "125 g",
-              "akce": true,
-              "store": "Lidl",
-              "price_approx": 24.9
-            },
-            {
-              "name": "Ovesné vločky / Granola",
-              "amount": "100 g",
-              "akce": false,
-              "store": "Supermarket",
-              "price_approx": 15.0
-            }
-          ],
-          "instructions": "Jogurt rozdělte do misek, přidejte borůvky a posypte ovesnými vločkami nebo granolou.",
-          "prep_minutes": 5,
-          "akce_items": [
-            "Selský jogurt bílý",
-            "Kanadské borůvky"
-          ]
-        },
-        {
-          "type": "obed",
-          "name": "Pečená kuřecí stehna s brambory a paprikou",
-          "ingredients": [
-            {
-              "name": "Kuřecí horní stehna",
-              "amount": "800 g",
-              "akce": true,
-              "store": "Kaufland",
-              "price_approx": 63.92
-            },
-            {
-              "name": "Brambory",
-              "amount": "800 g",
-              "akce": false,
-              "store": "Supermarket",
-              "price_approx": 25.0
-            },
-            {
-              "name": "Paprika červená",
-              "amount": "500 g",
-              "akce": true,
-              "store": "Lidl",
-              "price_approx": 24.95
-            },
-            {
-              "name": "Cibule",
-              "amount": "1 ks",
-              "akce": false,
-              "store": "Supermarket",
-              "price_approx": 5.0
-            },
-            {
-              "name": "Olivový olej",
-              "amount": "2 lžíce",
-              "akce": false,
-              "store": "Supermarket",
-              "price_approx": 5.0
-            },
-            {
-              "name": "Sůl, pepř, paprika koření",
-              "amount": "dle chuti",
-              "akce": false,
-              "store": "Supermarket",
-              "price_approx": 5.0
-            }
-          ],
-          "instructions": "Kuřecí stehna osolte, opepřete a posypte paprikou. Brambory a papriku nakrájejte na větší kusy, smíchejte s cibulí, olejem, solí a pepřem. Vše rozložte na plech a pečte v troubě při 180°C asi 40-50 minut do zlatova. Aktivní příprava do 15 minut.",
-          "prep_minutes": 15,
-          "akce_items": [
-            "Kuřecí horní stehna",
-            "Paprika červená"
-          ]
-        },
-        {
-          "type": "lehka_vecere",
-          "name": "Vaječná omeleta se sýrem Eidam a rajčaty",
-          "ingredients": [
-            {
-              "name": "Vejce",
-              "amount": "6 ks",
-              "akce": false,
-              "store": "Supermarket",
-              "price_approx": 30.0
-            },
-            {
-              "name": "Sýr Eidam 30%",
-              "amount": "100 g",
-              "akce": true,
-              "store": "Kaufland",
-              "price_approx": 9.9
-            },
-            {
-              "name": "Rajčata keřík",
-              "amount": "200 g",
-              "akce": true,
-              "store": "Kaufland",
-              "price_approx": 7.98
-            },
-            {
-              "name": "Máslo",
-              "amount": "20 g",
-              "akce": true,
-              "store": "Kaufland",
-              "price_approx": 2.39
-            },
-            {
-              "name": "Sůl, pepř",
-              "amount": "dle chuti",
-              "akce": false,
-              "store": "Supermarket",
-              "price_approx": 2.0
-            },
-            {
-              "name": "Čerstvé pečivo",
-              "amount": "200 g",
-              "akce": false,
-              "store": "Supermarket",
-              "price_approx": 20.0
-            }
-          ],
-          "instructions": "Vejce rozšlehejte se solí a pepřem. Na pánvi rozehřejte máslo, vlijte vejce a jakmile začnou tuhnout, posypte strouhaným sýrem a nakrájenými rajčaty. Smažte, dokud omeleta není hotová. Podávejte s čerstvým pečivem.",
-          "prep_minutes": 15,
-          "akce_items": [
-            "Sýr Eidam 30%",
-            "Rajčata keřík",
-            "Máslo"
-          ]
-        }
-      ]
-    },
-    {
-      "day": "Pondělí",
-      "date": "2026-05-18",
-      "is_weekend": false,
-      "meals": [
-        {
-          "type": "snidane",
-          "name": "Chléb s máslem, šunkou a ředkvičkami",
-          "ingredients": [
-            {
-              "name": "Chléb",
-              "amount": "8 plátků",
-              "akce": false,
-              "store": "Supermarket",
-              "price_approx": 15.0
-            },
-            {
-              "name": "Máslo",
-              "amount": "30 g",
-              "akce": true,
-              "store": "Kaufland",
-              "price_approx": 3.59
-            },
-            {
-              "name": "Šunka od kosti výběrová",
-              "amount": "100 g",
-              "akce": true,
-              "store": "Kaufland",
-              "price_approx": 19.9
-            },
-            {
-              "name": "Ředkvičky",
-              "amount": "1 svazek",
-              "akce": true,
-              "store": "Kaufland",
-              "price_approx": 7.9
-            }
-          ],
-          "instructions": "Chléb namažte máslem, obložte šunkou a nakrájenými ředkvičkami.",
-          "prep_minutes": 5,
-          "akce_items": [
-            "Máslo",
-            "Šunka od kosti výběrová",
-            "Ředkvičky"
-          ]
-        },
-        {
-          "type": "vecere",
-          "name": "Rychlé vepřové plátky na přírodno s rýží a rajčatovým salátem",
-          "ingredients": [
-            {
-              "name": "Vepřová kýta bez kosti",
-              "amount": "600 g",
-              "akce": true,
-              "store": "Kaufland",
-              "price_approx": 41.94
-            },
-            {
-              "name": "Rýže",
-              "amount": "300 g",
-              "akce": false,
-              "store": "Supermarket",
-              "price_approx": 20.0
-            },
-            {
-              "name": "Rajčata keřík",
-              "amount": "400 g",
-              "akce": true,
-              "store": "Kaufland",
-              "price_approx": 15.96
-            },
-            {
-              "name": "Cibule",
-              "amount": "1 ks",
-              "akce": false,
-              "store": "Supermarket",
-              "price_approx": 5.0
-            },
-            {
-              "name": "Olej",
-              "amount": "2 lžíce",
-              "akce": false,
-              "store": "Supermarket",
-              "price_approx": 5.0
-            },
-            {
-              "name": "Sůl, pepř",
-              "amount": "dle chuti",
-              "akce": false,
-              "store": "Supermarket",
-              "price_approx": 2.0
-            }
-          ],
-          "instructions": "Vepřovou kýtu nakrájejte na tenké plátky, osolte a opepřete. Zprudka osmažte na pánvi z obou stran. Podávejte s uvařenou rýží a salátem z nakrájených rajčat a cibule.",
-          "prep_minutes": 25,
-          "akce_items": [
-            "Vepřová kýta bez kosti",
-            "Rajčata keřík"
-          ]
-        }
-      ]
-    },
-    {
-      "day": "Úterý",
-      "date": "2026-05-19",
-      "is_weekend": false,
-      "meals": [
-        {
-          "type": "snidane",
-          "name": "Loupáky s máslem",
-          "ingredients": [
-            {
-              "name": "Loupák máslový",
-              "amount": "4 ks",
-              "akce": true,
-              "store": "Kaufland",
-              "price_approx": 27.6
-            },
-            {
-              "name": "Máslo",
-              "amount": "20 g",
-              "akce": true,
-              "store": "Kaufland",
-              "price_approx": 2.39
-            },
-            {
-              "name": "Mléko",
-              "amount": "500 ml",
-              "akce": false,
-              "store": "Supermarket",
-              "price_approx": 15.0
-            }
-          ],
-          "instructions": "Loupáky potřete máslem. Podávejte s mlékem.",
-          "prep_minutes": 5,
-          "akce_items": [
-            "Loupák máslový",
-            "Máslo"
-          ]
-        },
-        {
-          "type": "vecere",
-          "name": "Grilovaný Camembert se salátem a brambory",
-          "ingredients": [
-            {
-              "name": "Camembert na grill",
-              "amount": "450 g",
-              "akce": true,
-              "store": "Lidl",
-              "price_approx": 84.9
-            },
-            {
-              "name": "Brambory",
-              "amount": "600 g",
-              "akce": false,
-              "store": "Supermarket",
-              "price_approx": 20.0
-            },
-            {
-              "name": "Paprika červená",
-              "amount": "300 g",
-              "akce": true,
-              "store": "Lidl",
-              "price_approx": 14.99
-            },
-            {
-              "name": "Rajčata keřík",
-              "amount": "200 g",
-              "akce": true,
-              "store": "Kaufland",
-              "price_approx": 7.98
-            },
-            {
-              "name": "Ledový salát",
-              "amount": "1/2 ks",
-              "akce": false,
-              "store": "Supermarket",
-              "price_approx": 10.0
-            },
-            {
-              "name": "Olivový olej, ocet",
-              "amount": "dle chuti",
-              "akce": false,
-              "store": "Supermarket",
-              "price_approx": 5.0
-            }
-          ],
-          "instructions": "Brambory uvařte ve slupce nebo oloupané. Camembert připravte podle návodu na grilu nebo pánvi. Zeleninu nakrájejte, smíchejte a dochuťte zálivkou. Podávejte s brambory a salátem.",
-          "prep_minutes": 25,
-          "akce_items": [
-            "Camembert na grill",
-            "Paprika červená",
-            "Rajčata keřík"
-          ]
-        }
-      ]
-    },
-    {
-      "day": "Středa",
-      "date": "2026-05-20",
-      "is_weekend": false,
-      "meals": [
-        {
-          "type": "snidane",
-          "name": "Míchaná vajíčka se sýrem Eidam a pečivem",
-          "ingredients": [
-            {
-              "name": "Vejce",
-              "amount": "6 ks",
-              "akce": false,
-              "store": "Supermarket",
-              "price_approx": 30.0
-            },
-            {
-              "name": "Sýr Eidam 30%",
-              "amount": "50 g",
-              "akce": true,
-              "store": "Kaufland",
-              "price_approx": 4.95
-            },
-            {
-              "name": "Máslo",
-              "amount": "20 g",
-              "akce": true,
-              "store": "Kaufland",
-              "price_approx": 2.39
-            },
-            {
-              "name": "Čerstvé pečivo",
-              "amount": "200 g",
-              "akce": false,
-              "store": "Supermarket",
-              "price_approx": 20.0
-            },
-            {
-              "name": "Sůl, pepř",
-              "amount": "dle chuti",
-              "akce": false,
-              "store": "Supermarket",
-              "price_approx": 2.0
-            }
-          ],
-          "instructions": "Vejce rozšlehejte se solí a pepřem. Na pánvi rozehřejte máslo, vlijte vejce a za stálého míchání připravte míchaná vajíčka. Před dokončením vmíchejte nastrouhaný sýr. Podávejte s pečivem.",
-          "prep_minutes": 10,
-          "akce_items": [
-            "Sýr Eidam 30%",
-            "Máslo"
-          ]
-        },
-        {
-          "type": "vecere",
-          "name": "Vepřové nudličky na pánvi se zeleninou a kuskusem",
-          "ingredients": [
-            {
-              "name": "Vepřová krkovice bez kosti",
-              "amount": "600 g",
-              "akce": true,
-              "store": "Kaufland",
-              "price_approx": 41.94
-            },
-            {
-              "name": "Paprika červená",
-              "amount": "300 g",
-              "akce": true,
-              "store": "Lidl",
-              "price_approx": 14.99
-            },
-            {
-              "name": "Cibule",
-              "amount": "1 ks",
-              "akce": false,
-              "store": "Supermarket",
-              "price_approx": 5.0
-            },
-            {
-              "name": "Kuskus",
-              "amount": "200 g",
-              "akce": false,
-              "store": "Supermarket",
-              "price_approx": 15.0
-            },
-            {
-              "name": "Olej",
-              "amount": "2 lžíce",
-              "akce": false,
-              "store": "Supermarket",
-              "price_approx": 5.0
-            },
-            {
-              "name": "Sůl, pepř, oblíbené koření",
-              "amount": "dle chuti",
-              "akce": false,
-              "store": "Supermarket",
-              "price_approx": 5.0
-            }
-          ],
-          "instructions": "Krkovici nakrájejte na nudličky, cibuli a papriku na proužky. Maso zprudka orestujte na oleji, přidejte cibuli a papriku, restujte do změknutí. Dochuťte kořením. Kuskus připravte dle návodu (zalijte horkou vodou). Podávejte dohromady.",
-          "prep_minutes": 25,
-          "akce_items": [
-            "Vepřová krkovice bez kosti",
-            "Paprika červená"
-          ]
-        }
-      ]
-    },
     {
       "day": "Čtvrtek",
       "date": "2026-05-21",
@@ -464,97 +10,98 @@
       "meals": [
         {
           "type": "snidane",
-          "name": "Chléb s máslem, Eidamem a ředkvičkami",
+          "name": "Chléb s Tradičním pomazánkovým, šunkou a cherry rajčaty",
           "ingredients": [
             {
-              "name": "Chléb",
-              "amount": "8 plátků",
-              "akce": false,
-              "store": "Supermarket",
-              "price_approx": 15.0
-            },
-            {
-              "name": "Máslo",
-              "amount": "30 g",
+              "name": "Tradiční pomazánkové",
+              "amount": "150 g (1 balení)",
               "akce": true,
               "store": "Kaufland",
-              "price_approx": 3.59
+              "price_approx": 24.9
             },
             {
-              "name": "Sýr Eidam 30%",
+              "name": "Šunka výběrová",
               "amount": "100 g",
               "akce": true,
               "store": "Kaufland",
-              "price_approx": 9.9
+              "price_approx": 16.9
             },
             {
-              "name": "Ředkvičky",
-              "amount": "1 svazek",
+              "name": "Rajčata Cherry keřík",
+              "amount": "250 g",
               "akce": true,
               "store": "Kaufland",
-              "price_approx": 7.9
+              "price_approx": 9.95
+            },
+            {
+              "name": "Chléb",
+              "amount": "dle potřeby",
+              "akce": false,
+              "store": "Kaufland",
+              "price_approx": 30.0
             }
           ],
-          "instructions": "Chléb namažte máslem, obložte plátky sýra a nakrájenými ředkvičkami.",
-          "prep_minutes": 5,
+          "instructions": "Chléb namažte Tradičním pomazánkovým, obložte plátky šunky a ozdobte nakrájenými cherry rajčaty. Podávejte s čajem nebo kávou.",
+          "prep_minutes": 10,
           "akce_items": [
-            "Máslo",
-            "Sýr Eidam 30%",
-            "Ředkvičky"
+            "Tradiční pomazánkové",
+            "Šunka výběrová",
+            "Rajčata Cherry keřík"
           ]
         },
         {
           "type": "vecere",
-          "name": "Kuřecí nudličky s paprikou a rýží",
+          "name": "Rychlé vepřové plátky na pánvi s bramborovou kaší a okurkovým salátem",
           "ingredients": [
             {
-              "name": "Kuřecí horní stehna",
+              "name": "Vepřová pečeně bez kosti, v celku",
               "amount": "600 g",
               "akce": true,
               "store": "Kaufland",
               "price_approx": 47.94
             },
             {
-              "name": "Paprika červená",
-              "amount": "300 g",
+              "name": "Brambory konzumní žluté pozdní",
+              "amount": "1 kg",
               "akce": true,
-              "store": "Lidl",
-              "price_approx": 14.99
+              "store": "Kaufland",
+              "price_approx": 8.95
             },
             {
-              "name": "Cibule",
-              "amount": "1 ks",
-              "akce": false,
-              "store": "Supermarket",
+              "name": "Jihočeské AB směsný tuk",
+              "amount": "50 g",
+              "akce": true,
+              "store": "Kaufland",
               "price_approx": 5.0
             },
             {
-              "name": "Rýže",
-              "amount": "250 g",
+              "name": "Mléko",
+              "amount": "200 ml",
               "akce": false,
-              "store": "Supermarket",
-              "price_approx": 18.0
+              "store": "Kaufland",
+              "price_approx": 7.0
             },
             {
-              "name": "Olej",
-              "amount": "2 lžíce",
-              "akce": false,
-              "store": "Supermarket",
-              "price_approx": 5.0
-            },
-            {
-              "name": "Sůl, pepř, kuřecí koření",
+              "name": "Sůl, pepř",
               "amount": "dle chuti",
               "akce": false,
-              "store": "Supermarket",
-              "price_approx": 5.0
+              "store": "Kaufland",
+              "price_approx": 2.0
+            },
+            {
+              "name": "Okurka salátová",
+              "amount": "1 ks",
+              "akce": false,
+              "store": "Kaufland",
+              "price_approx": 15.0
             }
           ],
-          "instructions": "Kuřecí stehna vykostěte a nakrájejte na nudličky, papriku a cibuli na proužky. Maso orestujte na oleji, přidejte zeleninu a restujte do změknutí. Dochuťte kořením. Podávejte s vařenou rýží.",
+          "instructions": "Vepřovou pečeni nakrájejte na tenké plátky, osolte a opepřete. Na pánvi rozehřejte tuk a plátky zprudka osmahněte z obou stran doměkka (cca 5-7 min). Brambory oloupejte, uvařte doměkka, rozmačkejte s mlékem a kouskem tuku na kaši. Okurku nastrouhejte a dochuťte solí, octem a vodou na salát.",
           "prep_minutes": 25,
           "akce_items": [
-            "Kuřecí horní stehna",
-            "Paprika červená"
+            "Vepřová pečeně bez kosti, v celku",
+            "Brambory konzumní žluté pozdní",
+            "Jihočeské AB směsný tuk"
           ]
         }
       ]
@@ -566,83 +113,61 @@
       "meals": [
         {
           "type": "snidane",
-          "name": "Bílý jogurt s melounem",
+          "name": "Jogurt s meruňkami a müsli",
           "ingredients": [
             {
-              "name": "Selský jogurt bílý",
-              "amount": "400 g",
+              "name": "Jogurt",
+              "amount": "600 g (4 ks)",
               "akce": true,
               "store": "Kaufland",
-              "price_approx": 11.12
+              "price_approx": 27.6
             },
             {
-              "name": "Meloun vodní",
-              "amount": "500 g",
+              "name": "Meruňky",
+              "amount": "250 g",
               "akce": true,
               "store": "Kaufland",
-              "price_approx": 12.45
+              "price_approx": 19.95
+            },
+            {
+              "name": "Müsli",
+              "amount": "100 g",
+              "akce": false,
+              "store": "Kaufland",
+              "price_approx": 25.0
             }
           ],
-          "instructions": "Jogurt rozdělte do misek a přidejte nakrájený meloun.",
+          "instructions": "Jogurt rozdělte do misek. Meruňky nakrájejte na menší kousky a přidejte do jogurtu. Posypte müsli a ihned podávejte.",
           "prep_minutes": 5,
           "akce_items": [
-            "Selský jogurt bílý",
-            "Meloun vodní"
+            "Jogurt",
+            "Meruňky"
           ]
         },
         {
           "type": "vecere",
-          "name": "Rychlá tortilla pizza se šunkou, mozzarellou a rajčaty",
+          "name": "Pizza Ristorante s cherry rajčaty",
           "ingredients": [
             {
-              "name": "Tortilla",
-              "amount": "4 ks",
-              "akce": false,
-              "store": "Supermarket",
-              "price_approx": 35.0
-            },
-            {
-              "name": "Rajčata keřík",
-              "amount": "200 g",
+              "name": "Pizza Ristorante (různé druhy)",
+              "amount": "2 ks (cca 600-700 g)",
               "akce": true,
               "store": "Kaufland",
-              "price_approx": 7.98
+              "price_approx": 99.8
             },
             {
-              "name": "Mozzarella classic/light",
-              "amount": "220 g",
+              "name": "Rajčata Cherry keřík",
+              "amount": "250 g",
               "akce": true,
-              "store": "Lidl",
-              "price_approx": 12.9
-            },
-            {
-              "name": "Kuřecí prsní šunka",
-              "amount": "100 g",
-              "akce": true,
-              "store": "Lidl",
-              "price_approx": 18.9
-            },
-            {
-              "name": "Rajčatový protlak/passata",
-              "amount": "100 g",
-              "akce": false,
-              "store": "Supermarket",
-              "price_approx": 10.0
-            },
-            {
-              "name": "Oregano",
-              "amount": "dle chuti",
-              "akce": false,
-              "store": "Supermarket",
-              "price_approx": 2.0
+              "store": "Kaufland",
+              "price_approx": 9.95
             }
           ],
-          "instructions": "Tortilly potřete rajčatovým protlakem, posypte oreganem. Poklaďte nakrájenou šunkou, plátky mozzarelly a rajčat. Pečte v předehřáté troubě (200°C) asi 8-10 minut, dokud okraje tortill nezezlátnou a sýr se neroztaví.",
+          "instructions": "Pizzu připravte dle návodu na obalu. Během pečení si nakrájejte cherry rajčata na poloviny. Po upečení pizzu posypte čerstvými rajčaty a ihned podávejte.",
           "prep_minutes": 20,
           "akce_items": [
-            "Rajčata keřík",
-            "Mozzarella classic/light",
-            "Kuřecí prsní šunka"
+            "Pizza Ristorante",
+            "Rajčata Cherry keřík"
           ]
         }
       ]
@@ -654,179 +179,652 @@
       "meals": [
         {
           "type": "snidane",
-          "name": "Chléb s míchanými vajíčky a šunkou",
+          "name": "Koblihy s ovocnou náplní a káva",
           "ingredients": [
             {
-              "name": "Vejce",
-              "amount": "6 ks",
-              "akce": false,
-              "store": "Supermarket",
-              "price_approx": 30.0
-            },
-            {
-              "name": "Šunka od kosti výběrová",
-              "amount": "100 g",
+              "name": "Kobliha s ovocnou náplní",
+              "amount": "4 ks (260 g)",
               "akce": true,
               "store": "Kaufland",
-              "price_approx": 19.9
+              "price_approx": 23.6
             },
             {
-              "name": "Máslo",
-              "amount": "20 g",
+              "name": "Zrnková káva Intermezzo",
+              "amount": "30 g (na 4 šálky)",
               "akce": true,
               "store": "Kaufland",
-              "price_approx": 2.39
-            },
-            {
-              "name": "Chléb",
-              "amount": "8 plátků",
-              "akce": false,
-              "store": "Supermarket",
-              "price_approx": 15.0
-            },
-            {
-              "name": "Sůl, pepř",
-              "amount": "dle chuti",
-              "akce": false,
-              "store": "Supermarket",
-              "price_approx": 2.0
+              "price_approx": 8.7
             }
           ],
-          "instructions": "Šunku nakrájejte na kostičky a krátce orestujte na pánvi s máslem. Přidejte rozšlehaná vejce se solí a pepřem a míchejte do ztuhnutí. Podávejte s chlebem.",
-          "prep_minutes": 15,
+          "instructions": "Koblihy ohřejte v mikrovlnné troubě nebo v troubě na pár minut. Mezitím připravte čerstvou kávu. Podávejte jako rychlou a sladkou snídani před odjezdem.",
+          "prep_minutes": 10,
           "akce_items": [
-            "Šunka od kosti výběrová",
-            "Máslo"
+            "Kobliha s ovocnou náplní",
+            "Zrnková káva Intermezzo"
           ]
         },
         {
           "type": "obed",
-          "name": "Vepřové řízky (studené) s čerstvou zeleninou a pečivem (na výlet)",
+          "name": "Balené sendviče se šunkou, sýrem, salát à la krab a cherry rajčata (piknik)",
           "ingredients": [
             {
-              "name": "Vepřová kýta bez kosti",
-              "amount": "600 g",
+              "name": "Chléb/pečivo",
+              "amount": "8 krajíců/4 ks",
+              "akce": false,
+              "store": "Kaufland",
+              "price_approx": 30.0
+            },
+            {
+              "name": "Šunka výběrová",
+              "amount": "150 g",
               "akce": true,
               "store": "Kaufland",
-              "price_approx": 41.94
+              "price_approx": 25.35
+            },
+            {
+              "name": "Eidam 45% plátky",
+              "amount": "150 g",
+              "akce": true,
+              "store": "Kaufland",
+              "price_approx": 23.45
+            },
+            {
+              "name": "Salát à la krab",
+              "amount": "200 g (2 balení)",
+              "akce": true,
+              "store": "Kaufland",
+              "price_approx": 25.8
+            },
+            {
+              "name": "Rajčata Cherry keřík",
+              "amount": "250 g",
+              "akce": true,
+              "store": "Kaufland",
+              "price_approx": 9.95
+            }
+          ],
+          "instructions": "Připravte sendviče s plátky šunky a sýra. K tomu přibalte salát à la krab a čerstvá cherry rajčata. Vše sbalte do krabiček pro snadnou konzumaci venku na závodech a výstavě.",
+          "prep_minutes": 15,
+          "akce_items": [
+            "Šunka výběrová",
+            "Eidam 45% plátky",
+            "Salát à la krab",
+            "Rajčata Cherry keřík"
+          ]
+        },
+        {
+          "type": "vecere",
+          "name": "Lehký tuňákový salát s pečivem a zeleninou",
+          "ingredients": [
+            {
+              "name": "Tuňákový salát",
+              "amount": "2 ks (370 g)",
+              "akce": true,
+              "store": "Kaufland",
+              "price_approx": 57.8
+            },
+            {
+              "name": "Rajčata Cherry keřík",
+              "amount": "250 g",
+              "akce": true,
+              "store": "Kaufland",
+              "price_approx": 9.95
+            },
+            {
+              "name": "Okurka salátová",
+              "amount": "1 ks",
+              "akce": false,
+              "store": "Kaufland",
+              "price_approx": 15.0
+            },
+            {
+              "name": "Ledový salát",
+              "amount": "1/2 hlávky",
+              "akce": false,
+              "store": "Kaufland",
+              "price_approx": 20.0
+            },
+            {
+              "name": "Pečivo (rohlíky/chléb)",
+              "amount": "dle potřeby",
+              "akce": false,
+              "store": "Kaufland",
+              "price_approx": 20.0
+            }
+          ],
+          "instructions": "Zeleninu nakrájejte na kousky a smíchejte s tuňákovým salátem. Můžete dochutit trochou olivového oleje a citronové šťávy. Podávejte s čerstvým pečivem.",
+          "prep_minutes": 10,
+          "akce_items": [
+            "Tuňákový salát",
+            "Rajčata Cherry keřík"
+          ]
+        }
+      ]
+    },
+    {
+      "day": "Neděle",
+      "date": "2026-05-24",
+      "is_weekend": true,
+      "meals": [
+        {
+          "type": "snidane",
+          "name": "Palačinky s jogurtem a meruňkami",
+          "ingredients": [
+            {
+              "name": "Jogurt",
+              "amount": "450 g (3 ks)",
+              "akce": true,
+              "store": "Kaufland",
+              "price_approx": 20.7
+            },
+            {
+              "name": "Meruňky",
+              "amount": "250 g",
+              "akce": true,
+              "store": "Kaufland",
+              "price_approx": 19.95
+            },
+            {
+              "name": "Hladká mouka",
+              "amount": "200 g",
+              "akce": false,
+              "store": "Kaufland",
+              "price_approx": 5.0
+            },
+            {
+              "name": "Mléko",
+              "amount": "400 ml",
+              "akce": false,
+              "store": "Kaufland",
+              "price_approx": 14.0
             },
             {
               "name": "Vejce",
               "amount": "2 ks",
               "akce": false,
-              "store": "Supermarket",
+              "store": "Kaufland",
+              "price_approx": 8.0
+            },
+            {
+              "name": "Jihočeské AB směsný tuk",
+              "amount": "20 g",
+              "akce": true,
+              "store": "Kaufland",
+              "price_approx": 2.0
+            }
+          ],
+          "instructions": "Z mouky, mléka a vajec připravte hladké palačinkové těsto. Na pánvi rozehřejte tuk a usmažte tenké palačinky. Hotové palačinky potřete jogurtem, posypte nakrájenými meruňkami a srolujte nebo přeložte.",
+          "prep_minutes": 25,
+          "akce_items": [
+            "Jogurt",
+            "Meruňky",
+            "Jihočeské AB směsný tuk"
+          ]
+        },
+        {
+          "type": "obed",
+          "name": "Špekáčky na pivě s chlebem a hořčicí",
+          "ingredients": [
+            {
+              "name": "Špekáčkový pikantní točený salám",
+              "amount": "400 g (4 ks)",
+              "akce": true,
+              "store": "Kaufland",
+              "price_approx": 47.6
+            },
+            {
+              "name": "Cibule",
+              "amount": "1 ks",
+              "akce": false,
+              "store": "Kaufland",
+              "price_approx": 5.0
+            },
+            {
+              "name": "Česnek",
+              "amount": "2 stroužky",
+              "akce": false,
+              "store": "Kaufland",
+              "price_approx": 2.0
+            },
+            {
+              "name": "Pivo (světlé)",
+              "amount": "300 ml",
+              "akce": false,
+              "store": "Kaufland",
+              "price_approx": 15.0
+            },
+            {
+              "name": "Kečup",
+              "amount": "3 lžíce",
+              "akce": false,
+              "store": "Kaufland",
+              "price_approx": 5.0
+            },
+            {
+              "name": "Sůl, pepř, mletá paprika",
+              "amount": "dle chuti",
+              "akce": false,
+              "store": "Kaufland",
+              "price_approx": 3.0
+            },
+            {
+              "name": "Chléb, hořčice",
+              "amount": "dle potřeby",
+              "akce": false,
+              "store": "Kaufland",
+              "price_approx": 35.0
+            }
+          ],
+          "instructions": "Špekáčky oloupejte a na koncích nařízněte do kříže. Cibuli nakrájejte na plátky, česnek prolisujte. Na pánvi orestujte cibuli, přidejte česnek, papriku a špekáčky. Zalijte pivem a kečupem, krátce poduste. Podávejte s čerstvým chlebem a hořčicí. Ideální po práci na zahradě nebo výletě na kole.",
+          "prep_minutes": 20,
+          "akce_items": [
+            "Špekáčkový pikantní točený salám"
+          ]
+        },
+        {
+          "type": "vecere",
+          "name": "Zeleninový salát s grilovanými plátky vepřové pečeně a jogurtovým dresinkem",
+          "ingredients": [
+            {
+              "name": "Vepřová pečeně bez kosti, v celku",
+              "amount": "300 g",
+              "akce": true,
+              "store": "Kaufland",
+              "price_approx": 23.97
+            },
+            {
+              "name": "Rajčata Cherry keřík",
+              "amount": "250 g",
+              "akce": true,
+              "store": "Kaufland",
+              "price_approx": 9.95
+            },
+            {
+              "name": "Ledový salát",
+              "amount": "1 hlávka",
+              "akce": false,
+              "store": "Kaufland",
+              "price_approx": 40.0
+            },
+            {
+              "name": "Okurka salátová",
+              "amount": "1 ks",
+              "akce": false,
+              "store": "Kaufland",
+              "price_approx": 15.0
+            },
+            {
+              "name": "Paprika",
+              "amount": "1 ks",
+              "akce": false,
+              "store": "Kaufland",
               "price_approx": 10.0
+            },
+            {
+              "name": "Jogurt",
+              "amount": "150 g (1 ks)",
+              "akce": true,
+              "store": "Kaufland",
+              "price_approx": 6.9
+            },
+            {
+              "name": "Tatarská omáčka",
+              "amount": "50 ml",
+              "akce": true,
+              "store": "Kaufland",
+              "price_approx": 3.45
+            },
+            {
+              "name": "Sůl, pepř, bylinky",
+              "amount": "dle chuti",
+              "akce": false,
+              "store": "Kaufland",
+              "price_approx": 2.0
+            }
+          ],
+          "instructions": "Vepřovou pečeni nakrájejte na tenké plátky, osolte, opepřete a zprudka ugrilujte nebo osmahněte na pánvi. Všechnu zeleninu omyjte a nakrájejte do velké mísy. Z jogurtu a tatarské omáčky vytvořte dresink, dochuťte solí a pepřem. Smíchejte zeleninu s masem a dresinkem.",
+          "prep_minutes": 25,
+          "akce_items": [
+            "Vepřová pečeně bez kosti, v celku",
+            "Rajčata Cherry keřík",
+            "Jogurt",
+            "Tatarská omáčka"
+          ]
+        }
+      ]
+    },
+    {
+      "day": "Pondělí",
+      "date": "2026-05-25",
+      "is_weekend": false,
+      "meals": [
+        {
+          "type": "snidane",
+          "name": "Chléb s taveným sýrem, šunkou a káva",
+          "ingredients": [
+            {
+              "name": "Tavený sýr",
+              "amount": "200 g (1 balení)",
+              "akce": true,
+              "store": "Kaufland",
+              "price_approx": 34.9
+            },
+            {
+              "name": "Šunka výběrová",
+              "amount": "100 g",
+              "akce": true,
+              "store": "Kaufland",
+              "price_approx": 16.9
+            },
+            {
+              "name": "Chléb",
+              "amount": "dle potřeby",
+              "akce": false,
+              "store": "Kaufland",
+              "price_approx": 30.0
+            },
+            {
+              "name": "Zrnková káva Intermezzo",
+              "amount": "30 g (na 4 šálky)",
+              "akce": true,
+              "store": "Kaufland",
+              "price_approx": 8.7
+            }
+          ],
+          "instructions": "Chléb namažte taveným sýrem, obložte plátky šunky. Podávejte s připravenou kávou. Můžete přidat i čerstvou zeleninu.",
+          "prep_minutes": 10,
+          "akce_items": [
+            "Tavený sýr",
+            "Šunka výběrová",
+            "Zrnková káva Intermezzo"
+          ]
+        },
+        {
+          "type": "vecere",
+          "name": "Bramborové placky (bramboráky) s taveným sýrem a rajčatovým salátkem",
+          "ingredients": [
+            {
+              "name": "Brambory konzumní žluté pozdní",
+              "amount": "1 kg",
+              "akce": true,
+              "store": "Kaufland",
+              "price_approx": 8.95
+            },
+            {
+              "name": "Vejce",
+              "amount": "2 ks",
+              "akce": false,
+              "store": "Kaufland",
+              "price_approx": 8.0
             },
             {
               "name": "Hladká mouka",
               "amount": "50 g",
               "akce": false,
-              "store": "Supermarket",
+              "store": "Kaufland",
               "price_approx": 2.0
             },
             {
-              "name": "Strouhanka",
-              "amount": "100 g",
+              "name": "Česnek",
+              "amount": "3 stroužky",
               "akce": false,
-              "store": "Supermarket",
+              "store": "Kaufland",
+              "price_approx": 3.0
+            },
+            {
+              "name": "Majoránka, sůl, pepř",
+              "amount": "dle chuti",
+              "akce": false,
+              "store": "Kaufland",
               "price_approx": 5.0
             },
             {
-              "name": "Olej na smažení",
-              "amount": "100 ml",
-              "akce": false,
-              "store": "Supermarket",
+              "name": "Jihočeské AB směsný tuk",
+              "amount": "100 g",
+              "akce": true,
+              "store": "Kaufland",
               "price_approx": 10.0
             },
             {
-              "name": "Rajčata keřík",
-              "amount": "300 g",
+              "name": "Tavený sýr",
+              "amount": "200 g (1 balení)",
               "akce": true,
               "store": "Kaufland",
-              "price_approx": 11.97
+              "price_approx": 34.9
             },
             {
-              "name": "Paprika červená",
-              "amount": "200 g",
+              "name": "Rajčata Cherry keřík",
+              "amount": "250 g",
               "akce": true,
-              "store": "Lidl",
-              "price_approx": 9.98
+              "store": "Kaufland",
+              "price_approx": 9.95
+            }
+          ],
+          "instructions": "Brambory nastrouhejte, slijte vodu. Smíchejte s vejci, moukou, prolisovaným česnekem, majoránkou, solí a pepřem. Na pánvi rozehřejte tuk a smažte placky dozlatova. Podávejte s taveným sýrem a jednoduchým salátkem z nakrájených cherry rajčat.",
+          "prep_minutes": 30,
+          "akce_items": [
+            "Brambory konzumní žluté pozdní",
+            "Jihočeské AB směsný tuk",
+            "Tavený sýr",
+            "Rajčata Cherry keřík"
+          ]
+        }
+      ]
+    },
+    {
+      "day": "Úterý",
+      "date": "2026-05-26",
+      "is_weekend": false,
+      "meals": [
+        {
+          "type": "snidane",
+          "name": "Ovesná kaše s ovocem (meruňky)",
+          "ingredients": [
+            {
+              "name": "Ovesné vločky",
+              "amount": "200 g",
+              "akce": false,
+              "store": "Kaufland",
+              "price_approx": 15.0
             },
             {
-              "name": "Čerstvé pečivo/bageta",
+              "name": "Mléko",
+              "amount": "500 ml",
+              "akce": false,
+              "store": "Kaufland",
+              "price_approx": 17.5
+            },
+            {
+              "name": "Meruňky",
+              "amount": "250 g",
+              "akce": true,
+              "store": "Kaufland",
+              "price_approx": 19.95
+            },
+            {
+              "name": "Jogurt",
+              "amount": "150 g (1 ks)",
+              "akce": true,
+              "store": "Kaufland",
+              "price_approx": 6.9
+            }
+          ],
+          "instructions": "Ovesné vločky uvařte v mléce doměkka (cca 5-7 min), můžete osladit. Hotovou kaši rozdělte do misek, přidejte nakrájené meruňky a lžíci jogurtu pro krémovost.",
+          "prep_minutes": 10,
+          "akce_items": [
+            "Meruňky",
+            "Jogurt"
+          ]
+        },
+        {
+          "type": "vecere",
+          "name": "Těstoviny s rychlou rajčatovou omáčkou a strouhaným eidamem",
+          "ingredients": [
+            {
+              "name": "Těstoviny (např. špagety)",
               "amount": "400 g",
               "akce": false,
-              "store": "Supermarket",
-              "price_approx": 40.0
+              "store": "Kaufland",
+              "price_approx": 30.0
+            },
+            {
+              "name": "Rajčata Cherry keřík",
+              "amount": "500 g",
+              "akce": true,
+              "store": "Kaufland",
+              "price_approx": 19.9
+            },
+            {
+              "name": "Česnek",
+              "amount": "3 stroužky",
+              "akce": false,
+              "store": "Kaufland",
+              "price_approx": 3.0
+            },
+            {
+              "name": "Cibule",
+              "amount": "1 ks",
+              "akce": false,
+              "store": "Kaufland",
+              "price_approx": 5.0
+            },
+            {
+              "name": "Smetana na vaření",
+              "amount": "200 g",
+              "akce": true,
+              "store": "Kaufland",
+              "price_approx": 12.9
+            },
+            {
+              "name": "Eidam 45% plátky",
+              "amount": "150 g",
+              "akce": true,
+              "store": "Kaufland",
+              "price_approx": 23.45
+            },
+            {
+              "name": "Jihočeské AB směsný tuk",
+              "amount": "20 g",
+              "akce": true,
+              "store": "Kaufland",
+              "price_approx": 2.0
+            },
+            {
+              "name": "Sůl, pepř, bylinky",
+              "amount": "dle chuti",
+              "akce": false,
+              "store": "Kaufland",
+              "price_approx": 3.0
+            }
+          ],
+          "instructions": "Těstoviny uvařte dle návodu. Na pánvi rozehřejte tuk, osmahněte nasekanou cibuli a česnek. Přidejte na poloviny nakrájená cherry rajčata, krátce poduste. Zalijte smetanou, nechte prohřát, dochuťte. Hotové těstoviny promíchejte s omáčkou a posypte nastrouhaným eidamem.",
+          "prep_minutes": 25,
+          "akce_items": [
+            "Rajčata Cherry keřík",
+            "Smetana na vaření",
+            "Eidam 45% plátky",
+            "Jihočeské AB směsný tuk"
+          ]
+        }
+      ]
+    },
+    {
+      "day": "Středa",
+      "date": "2026-05-27",
+      "is_weekend": false,
+      "meals": [
+        {
+          "type": "snidane",
+          "name": "Rohlíky s Jihočeským AB směsným tukem, džemem a jogurt",
+          "ingredients": [
+            {
+              "name": "Rohlíky",
+              "amount": "4 ks",
+              "akce": false,
+              "store": "Kaufland",
+              "price_approx": 16.0
+            },
+            {
+              "name": "Jihočeské AB směsný tuk",
+              "amount": "50 g",
+              "akce": true,
+              "store": "Kaufland",
+              "price_approx": 5.0
+            },
+            {
+              "name": "Džem",
+              "amount": "dle chuti",
+              "akce": false,
+              "store": "Kaufland",
+              "price_approx": 10.0
+            },
+            {
+              "name": "Jogurt",
+              "amount": "450 g (3 ks)",
+              "akce": true,
+              "store": "Kaufland",
+              "price_approx": 20.7
+            }
+          ],
+          "instructions": "Rohlíky rozkrojte a namažte Jihočeským AB směsným tukem, na který rozetřete džem. K rohlíkům podávejte bílý jogurt.",
+          "prep_minutes": 5,
+          "akce_items": [
+            "Jihočeské AB směsný tuk",
+            "Jogurt"
+          ]
+        },
+        {
+          "type": "vecere",
+          "name": "Smažené kuřecí řízky s bramborovou kaší",
+          "ingredients": [
+            {
+              "name": "Kuřecí prsa",
+              "amount": "600 g",
+              "akce": false,
+              "store": "Kaufland",
+              "price_approx": 100.0
+            },
+            {
+              "name": "Hladká mouka, vejce, strouhanka",
+              "amount": "dle potřeby",
+              "akce": false,
+              "store": "Kaufland",
+              "price_approx": 20.0
+            },
+            {
+              "name": "Jihočeské AB směsný tuk",
+              "amount": "100 g",
+              "akce": true,
+              "store": "Kaufland",
+              "price_approx": 10.0
+            },
+            {
+              "name": "Brambory konzumní žluté pozdní",
+              "amount": "1 kg",
+              "akce": true,
+              "store": "Kaufland",
+              "price_approx": 8.95
+            },
+            {
+              "name": "Mléko",
+              "amount": "200 ml",
+              "akce": false,
+              "store": "Kaufland",
+              "price_approx": 7.0
             },
             {
               "name": "Sůl, pepř",
               "amount": "dle chuti",
               "akce": false,
-              "store": "Supermarket",
+              "store": "Kaufland",
               "price_approx": 2.0
             }
           ],
-          "instructions": "Vepřovou kýtu nakrájejte na tenké řízky, naklepejte, osolte a opepřete. Obalte v trojobalu (mouka, vejce, strouhanka) a usmažte dozlatova. Nechte vychladnout. Zeleninu nakrájejte. Vše zabalte s pečivem do krabiček jako piknikový oběd. Příprava řízků: 25 minut.",
-          "prep_minutes": 25,
+          "instructions": "Kuřecí prsa nakrájejte na tenčí řízky, osolte, opepřete a obalte v trojobalu (mouka, vejce, strouhanka). Na pánvi rozehřejte dostatek tuku a řízky smažte dozlatova z obou stran. Brambory oloupejte, uvařte doměkka, rozmačkejte s mlékem a kouskem tuku na kaši. Podávejte s kaší a případným čerstvým salátem.",
+          "prep_minutes": 30,
           "akce_items": [
-            "Vepřová kýta bez kosti",
-            "Rajčata keřík",
-            "Paprika červená"
-          ]
-        },
-        {
-          "type": "lehka_vecere",
-          "name": "Lehký salát Caprese s pečivem",
-          "ingredients": [
-            {
-              "name": "Mozzarella classic/light",
-              "amount": "220 g",
-              "akce": true,
-              "store": "Lidl",
-              "price_approx": 12.9
-            },
-            {
-              "name": "Rajčata keřík",
-              "amount": "400 g",
-              "akce": true,
-              "store": "Kaufland",
-              "price_approx": 15.96
-            },
-            {
-              "name": "Čerstvá bazalka",
-              "amount": "1 svazek",
-              "akce": false,
-              "store": "Supermarket",
-              "price_approx": 25.0
-            },
-            {
-              "name": "Olivový olej",
-              "amount": "2 lžíce",
-              "akce": false,
-              "store": "Supermarket",
-              "price_approx": 5.0
-            },
-            {
-              "name": "Balzamikový krém (volitelné)",
-              "amount": "dle chuti",
-              "akce": false,
-              "store": "Supermarket",
-              "price_approx": 10.0
-            },
-            {
-              "name": "Čerstvé pečivo",
-              "amount": "200 g",
-              "akce": false,
-              "store": "Supermarket",
-              "price_approx": 20.0
-            }
-          ],
-          "instructions": "Mozzarellu a rajčata nakrájejte na plátky, střídavě naskládejte na talíř. Posypte čerstvou bazalkou, zakápněte olivovým olejem a balzamikovým krémem. Podávejte s čerstvým pečivem.",
-          "prep_minutes": 10,
-          "akce_items": [
-            "Mozzarella classic/light",
-            "Rajčata keřík"
+            "Jihočeské AB směsný tuk",
+            "Brambory konzumní žluté pozdní"
           ]
         }
       ]
