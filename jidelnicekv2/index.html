@@ -2,7 +2,7 @@
 <html lang="cs">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Rodinný jídelníček</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -22,7 +22,6 @@ header{background:var(--text);color:#fff;padding:1rem 1.25rem;display:flex;align
 .logo p{font-size:.7rem;color:#aaa;margin-top:1px}
 #server-badge{font-size:.68rem;padding:3px 9px;border-radius:10px;font-weight:600}
 .badge-local{background:#2a7a38;color:#fff}
-.badge-tailscale{background:#1a5fa0;color:#fff}
 .badge-offline{background:#555;color:#fff}
 
 /* ADMIN BANNER */
@@ -183,15 +182,12 @@ nav::-webkit-scrollbar{display:none}
     <p>4 osoby · Mělník · <span id="last-update">načítám...</span></p>
   </div>
   <div style="display:flex;align-items:center;gap:.5rem">
-    <span id="server-badge" class="badge-offline">⚫ offline</span>
+    <span id="server-badge" class="badge-offline"></span>
     <button onclick="openAdmin()" style="background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.25);border-radius:8px;padding:5px 12px;font-size:.75rem;font-weight:600;cursor:pointer">🔧 Admin</button>
   </div>
 </header>
 
-<div id="tailscale-banner" style="display:none;background:#1a5fa0;color:#fff;padding:.6rem 1.25rem;font-size:.78rem;display:none;align-items:center;justify-content:space-between;gap:.5rem;flex-wrap:wrap">
-  <span>📱 Server nedostupný lokálně. Pro admin funkce zapni <strong>Tailscale</strong> na mobilu.</span>
-  <button onclick="retryConnection()" style="background:rgba(255,255,255,.2);color:#fff;border:none;border-radius:6px;padding:3px 10px;font-size:.72rem;cursor:pointer">↻ Zkusit znovu</button>
-</div>
+
 
 <nav>
   <button class="tab active" onclick="showTab('letaky',this)">🏷 Letáky</button>
@@ -326,10 +322,13 @@ nav::-webkit-scrollbar{display:none}
       </div>
 
       <div class="card">
-        <div class="card-title">Víkendové plány & generování</div>
-        <textarea id="plan-sobota" placeholder="Plány na sobotu..." style="width:100%;border:1px solid var(--border);border-radius:8px;padding:.65rem;font-size:.82rem;font-family:inherit;resize:vertical;min-height:60px;margin-bottom:.5rem"></textarea>
-        <textarea id="plan-nedele" placeholder="Plány na neděli..." style="width:100%;border:1px solid var(--border);border-radius:8px;padding:.65rem;font-size:.82rem;font-family:inherit;resize:vertical;min-height:60px;margin-bottom:.5rem"></textarea>
-        <textarea id="plan-pref" placeholder="Preference (nepovinné)..." style="width:100%;border:1px solid var(--border);border-radius:8px;padding:.65rem;font-size:.82rem;font-family:inherit;resize:vertical;min-height:50px;margin-bottom:.5rem"></textarea>
+        <div class="card-title">AI generování návrhů</div>
+        <label style="font-size:.72rem;color:var(--muted);display:block;margin-bottom:3px">Jakou kuchařku preferuješ (web, název kuchařky)</label>
+        <textarea id="plan-sobota" placeholder="např. https://www.recepty.cz, Zdeněk Pohlreich, Kuchyně Lidlu..." style="width:100%;border:1px solid var(--border);border-radius:8px;padding:.65rem;font-size:.82rem;font-family:inherit;resize:vertical;min-height:60px;margin-bottom:.75rem"></textarea>
+        <label style="font-size:.72rem;color:var(--muted);display:block;margin-bottom:3px">Specifikuj jaká jídla by tě tento týden zajímala</label>
+        <textarea id="plan-nedele" placeholder="např. něco s kuřecím, lehké letní obědy, bez ryb tento týden..." style="width:100%;border:1px solid var(--border);border-radius:8px;padding:.65rem;font-size:.82rem;font-family:inherit;resize:vertical;min-height:60px;margin-bottom:.75rem"></textarea>
+        <label style="font-size:.72rem;color:var(--muted);display:block;margin-bottom:3px">Jak náročná má být příprava, případně jaké dny máš více času</label>
+        <textarea id="plan-pref" placeholder="např. ve středu mám čas na složitější jídlo, jinak max 20 min..." style="width:100%;border:1px solid var(--border);border-radius:8px;padding:.65rem;font-size:.82rem;font-family:inherit;resize:vertical;min-height:50px;margin-bottom:.75rem"></textarea>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:.5rem">
           <button class="btn btn-sm btn-primary" onclick="savePlans()">Uložit plány</button>
           <button class="btn btn-sm btn-green" onclick="runGenerate()">▶ Generovat</button>
@@ -344,9 +343,8 @@ nav::-webkit-scrollbar{display:none}
 
 <script>
 // ── Konfigurace ───────────────────────────────────────────────────────────────
-const LOCAL_URL     = 'https://192.168.0.153:5443';
-const TAILSCALE_URL = 'https://acer-debian.taildbfb3e.ts.net:5443';
-const DATA_BASE     = 'https://raw.githubusercontent.com/pragodavid/web/main/jidelnicekv2/data/';
+const API_URL = 'https://pragodavid.org';
+const DATA_BASE     = 'https://pragodavid.org/jidelnicekv2/data/';
 
 const STORES = {
   kaufland: {label:'Kaufland', emoji:'🔴', color:'#e63312', bg:'#fff5f5'},
@@ -380,41 +378,18 @@ async function init() {
 
 async function detectServer() {
   const badge = document.getElementById('server-badge');
-  const banner = document.getElementById('tailscale-banner');
-
-  // Zkus lokální IP
+  serverUrl = API_URL;
   try {
-    const r = await fetch(LOCAL_URL + '/api/ping', {signal: AbortSignal.timeout(1500)});
+    const r = await fetch(API_URL + '/api/ping', {signal: AbortSignal.timeout(3000)});
     if(r.ok) {
-      serverUrl = LOCAL_URL;
-      badge.textContent = '🟢 Lokální';
+      badge.textContent = '🟢 Online';
       badge.className = 'badge-local';
-      banner.style.display = 'none';
       return;
     }
   } catch(e) {}
-
-  // Zkus Tailscale
-  try {
-    const r = await fetch(TAILSCALE_URL + '/api/ping', {signal: AbortSignal.timeout(3000)});
-    if(r.ok) {
-      serverUrl = TAILSCALE_URL;
-      badge.textContent = '🔵 Tailscale';
-      badge.className = 'badge-tailscale';
-      banner.style.display = 'none';
-      return;
-    }
-  } catch(e) {}
-
-  // Offline
-  serverUrl = null;
   badge.textContent = '⚫ Offline';
   badge.className = 'badge-offline';
-  banner.style.display = 'flex';
-}
-
-async function retryConnection() {
-  await detectServer();
+  serverUrl = null;
 }
 
 // ── Načítání dat ──────────────────────────────────────────────────────────────
@@ -474,7 +449,7 @@ async function loadAllData() {
   // Poslední aktualizace
   const ts = state.jidelnicek?.generated_at || state.nakup?.generated_at;
   if(ts) document.getElementById('last-update').textContent =
-    'aktualizováno ' + new Date(ts).toLocaleDateString('cs-CZ', {day:'2-digit',month:'2-digit',year:'numeric'});
+    'aktualizováno ' + fmt(ts.split('T')[0]);
 
   renderLetak();
   renderJidelnicek();
@@ -598,7 +573,7 @@ function renderJidelnicek() {
 
   // Info o generování
   const genAt = j.generated_at ? new Date(j.generated_at) : null;
-  const genStr = genAt ? genAt.toLocaleString('cs-CZ', {day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit',timeZone:'Europe/Prague'}) : '—';
+  const genStr = genAt ? genAt.toLocaleString('cs-CZ', {day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'}) : '—';
   document.getElementById('week-range').textContent =
     `${fmtDayFull(j.week_start)} – ${fmtDayFull(j.week_end)}`;
   document.getElementById('jid-generated').textContent = `Naposledy generováno: ${genStr}`;
@@ -627,7 +602,7 @@ function renderJidelnicek() {
         ${day.meals.map((meal,mi)=>`
           <div class="meal">
             <div class="meal-type ${TC[meal.type]}">${TL[meal.type]}</div>
-            <div class="meal-name" onclick="showRecipe(${di},${mi})">${meal.name}</div>
+            <div class="meal-name" onclick="mealClick(${di},${mi})">${meal.name}${meal.source_url ? ' <span style="font-size:.6rem;color:var(--blue)">↗</span>' : ''}</div>
             <div class="meal-meta">⏱ ${meal.prep_minutes} min</div>
             ${meal.akce_items?.length?`<div class="akce-tags">${meal.akce_items.map(a=>`<span class="akce-tag">🏷 ${a}</span>`).join('')}</div>`:''}
           </div>
@@ -635,6 +610,16 @@ function renderJidelnicek() {
       </div>
     </div>`;
   }).join('');
+}
+
+function mealClick(di, mi) {
+  const meal = state.jidelnicek?.days[di]?.meals[mi];
+  if(!meal) return;
+  if(meal.source_url) {
+    window.open(meal.source_url, '_blank');
+  } else {
+    showRecipe(di, mi);
+  }
 }
 
 function showRecipe(di, mi) {
@@ -877,9 +862,9 @@ async function pollLog(store, logEl) {
 async function savePlans() {
   if(!serverUrl) return;
   const data = {
-    sobota: document.getElementById('plan-sobota').value.trim(),
-    nedele: document.getElementById('plan-nedele').value.trim(),
-    preferences: document.getElementById('plan-pref').value.trim(),
+    kucharka: document.getElementById('plan-sobota').value.trim(),
+    jidla: document.getElementById('plan-nedele').value.trim(),
+    narocnost: document.getElementById('plan-pref').value.trim(),
     saved_at: new Date().toISOString(),
   };
   try {
@@ -894,9 +879,19 @@ async function loadPlans() {
     const r = await fetch(serverUrl+'/api/plans');
     if(!r.ok) return;
     const d = await r.json();
-    document.getElementById('plan-sobota').value = d.sobota||'';
-    document.getElementById('plan-nedele').value = d.nedele||'';
-    document.getElementById('plan-pref').value = d.preferences||'';
+    // Vymaž plány starší než 48h
+    if(d.saved_at) {
+      const age = (Date.now() - new Date(d.saved_at).getTime()) / 1000 / 3600;
+      if(age > 48) {
+        document.getElementById('plan-sobota').value = '';
+        document.getElementById('plan-nedele').value = '';
+        document.getElementById('plan-pref').value = '';
+        return;
+      }
+    }
+    document.getElementById('plan-sobota').value = d.kucharka||d.sobota||'';
+    document.getElementById('plan-nedele').value = d.jidla||d.nedele||'';
+    document.getElementById('plan-pref').value = d.narocnost||d.preferences||'';
   } catch(e) {}
 }
 
